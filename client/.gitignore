@@ -1,0 +1,35 @@
+# --- Frontend (React + Vite) ---
+client/node_modules/
+client/dist/
+client/dist-ssr/
+client/.local
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+
+# --- Backend (Python FastAPI) ---
+# This line is critical to stop the error you were seeing
+server/venv/
+server/.venv/
+server/__pycache__/
+server/*.pyc
+server/db.sqlite3
+server/.env
+
+# --- Root & General ---
+node_modules/
+venv/
+.venv/
+.env
+*.log
+.DS_Store
+
+# --- Editor & IDE ---
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
