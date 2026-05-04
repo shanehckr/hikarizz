@@ -18,10 +18,17 @@ Before you clone and run this project, ensure you have the following installed:
 
 ### 2. Frontend Setup (React + Vite)
 Open a terminal in VS Code and run:
-```bash
+
+# Navigate to the client folder
 cd client
+
+# Install all dependencies (Required for first-time setup)
 npm install
+
+# Start the development server
 npm run dev
-```
+
+
+
 
 
