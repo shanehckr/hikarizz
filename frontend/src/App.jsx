@@ -73,6 +73,19 @@ styleTag.textContent = `
   .lqe-dialog-body { line-height: 1.7; color: #b0b3c6; font-size: 0.82rem; }
   .leaflet-tooltip { background: #1a1d26 !important; border: 1px solid #d4a855 !important; color: #e8e2d4 !important; font-family: 'DM Mono', monospace !important; font-size: 0.72rem !important; }
   .MuiDataGrid-root { border: none !important; font-family: 'DM Mono', monospace !important; }
+  /* Fix map overlapping header */
+.leaflet-container {
+  z-index: 0 !important;
+}
+
+.lqe-header {
+  z-index: 1000 !important;
+  position: sticky;
+  top: 0;
+}
+  .lqe-map-wrap {
+  z-index: 1;
+}
 `;
 document.head.appendChild(styleTag);
 
@@ -103,16 +116,56 @@ export default function LandQuarryExplorer() {
   const [materialFilter, setMaterialFilter] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [dashboard, setDashboard] = useState(null);
 
   useEffect(() => {
+    // Fetch quarry data
     fetch('http://localhost:8000/api/quarries')
       .then(r => r.json())
       .then(data => {
-        const withRisk = data.map(q => ({ ...q, riskScore: calculateRiskScore(q) }));
+        const withRisk = data.map(q => ({
+          ...q,
+          riskScore: calculateRiskScore(q)
+        }));
         setAllData(withRisk);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(err => {
+        console.error("quarries error:", err);
+        setLoading(false);
+      });
+
+    // Fetch dashboard data (SAFE)
+    fetch("http://localhost:8000/api/dashboard")
+      .then(r => {
+        if (!r.ok) throw new Error("Dashboard fetch failed");
+        return r.json();
+      })
+      .then(data => {
+        console.log("dashboard data:", data);
+
+        // 🛡️ Ensure top_risk always exists
+        if (!data.top_risk) {
+          data.top_risk = [];
+        }
+
+        setDashboard(data);
+      })
+      .catch(err => {
+        console.error("dashboard error:", err);
+
+        // 🛡️ Prevent crash by setting safe fallback
+        setDashboard({
+          total: 0,
+          expired: 0,
+          producing: 0,
+          high_risk: 0,
+          top_risk: []
+        });
+      });
+
   }, []);
 
   const filteredData = useMemo(() => {
@@ -121,6 +174,14 @@ export default function LandQuarryExplorer() {
     if (materialFilter) r = r.filter(d => d.material === materialFilter);
     return r;
   }, [allData, provinceFilter, materialFilter]);
+
+  const highRisk = filteredData.filter(q => q.riskScore >= 70).length;
+  const expired = filteredData.filter(q => q.status === "Expired").length;
+  const producing = filteredData.filter(q => q.status === "Active").length;
+
+  const topRisk = [...filteredData]
+    .sort((a, b) => b.riskScore - a.riskScore)
+    .slice(0, 5);
 
   const uniqueProvinces = useMemo(() => [...new Set(allData.map(d => d.province))].filter(Boolean).sort(), [allData]);
   const uniqueMaterials = useMemo(() => {
@@ -149,6 +210,36 @@ export default function LandQuarryExplorer() {
     { field: 'area_hectares', headerName: 'Area (Ha)', flex: 0.7, minWidth: 100, type: 'number', renderCell: ({ value }) => <span style={{ color: '#d4a855' }}>{value ? Number(value).toLocaleString() : '—'}</span> },
     { field: 'date_approved', headerName: 'Approved', flex: 0.9, minWidth: 110 },
   ];
+
+  const askAI = async () => {
+    const res = await fetch("http://localhost:8000/api/analyze", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(question)
+    });
+
+    const data = await res.json();
+    setAnswer(data.answer);
+  };
+
+  const cardStyle = {
+    background: "#0e1018",
+    border: "1px solid #2a2d3a",
+    padding: "10px",
+    borderRadius: "4px"
+  };
+
+  const labelStyle = {
+    fontSize: "0.6rem",
+    color: "#6b6d7e",
+    marginBottom: "4px"
+  };
+
+  const valueStyle = {
+    fontSize: "1.2rem",
+    fontWeight: "bold",
+    color: "#d4a855"
+  };
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -180,6 +271,91 @@ export default function LandQuarryExplorer() {
 
         <div className="lqe-body">
           <aside className="lqe-sidebar">
+            {dashboard && (
+              <div style={{ marginBottom: 20 }}>
+                <div className="lqe-sidebar-heading">OVERVIEW</div>
+
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "8px",
+                  marginTop: "10px"
+                }}>
+
+                  <div style={cardStyle}>
+                    <div style={labelStyle}>TOTAL</div>
+                    <div style={valueStyle}>{dashboard.total}</div>
+                  </div>
+
+                  <div style={cardStyle}>
+                    <div style={labelStyle}>HIGH RISK</div>
+                    <div style={{ ...valueStyle, color: "#ef4444" }}>
+                      {dashboard.high_risk}
+                    </div>
+                  </div>
+
+                  <div style={cardStyle}>
+                    <div style={labelStyle}>EXPIRED</div>
+                    <div style={{ ...valueStyle, color: "#f59e0b" }}>
+                      {dashboard.expired}
+                    </div>
+                  </div>
+
+                  <div style={cardStyle}>
+                    <div style={labelStyle}>PRODUCING</div>
+                    <div style={{ ...valueStyle, color: "#22c55e" }}>
+                      {dashboard.producing}
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            )}
+
+            {dashboard?.top_risk && (
+              <div style={{ marginTop: 20 }}>
+                <div className="lqe-sidebar-heading">RISK SCORER</div>
+
+                {dashboard.top_risk.map((q, i) => (
+                  <div key={i} style={{ marginBottom: 8 }}>
+                    <div>{q.contractor}</div>
+                    <div style={{ fontSize: "0.7rem", color: "#aaa" }}>
+                      {q.municipality}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div>
+              <div className="lqe-filter-label" style={{ marginBottom: 8 }}>Ask Anything</div>
+
+              <input
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                placeholder="Ask about the data..."
+                style={{
+                  width: "100%",
+                  marginBottom: 8,
+                  background: "#0e1018",
+                  border: "1px solid #2a2d3a",
+                  color: "#e8e2d4",
+                  padding: "8px"
+                }}
+              />
+
+              <button
+                className="lqe-btn lqe-btn-primary"
+                onClick={askAI}
+              >
+                Ask
+              </button>
+
+              {answer && (
+                <div style={{ marginTop: 10, fontSize: "0.75rem", color: "#b0b3c6" }}>
+                  {answer}
+                </div>
+              )}
+            </div>
             <div className="lqe-sidebar-heading">Filter Data</div>
             <div className="lqe-filter-group">
               <label className="lqe-filter-label">Province</label>
@@ -206,11 +382,11 @@ export default function LandQuarryExplorer() {
             <div className="lqe-map-wrap">
               <div className="lqe-map-label">◉ Live Map View</div>
               <div className="lqe-map-count">{fmtNum(mappable.length)} geocoded permits</div>
-              
+
               {/* ─── MODIFIED MAP CONTAINER ─── */}
-              <MapContainer 
-                center={[12.8797, 121.7740]} 
-                zoom={6} 
+              <MapContainer
+                center={[12.8797, 121.7740]}
+                zoom={6}
                 minZoom={6}
                 maxBounds={phBounds}
                 maxBoundsViscosity={1.0}
