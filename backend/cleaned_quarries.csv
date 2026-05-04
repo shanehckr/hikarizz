@@ -1,0 +1,694 @@
+barangay,municipality,province,material,contractor,operator,managing_official,permit_holder,date_approved,date_expired,area_hectares,status,tin,remarks,year,latitude,longitude,region
+Laiya Aplaya,San Juan,Batangas,Sand and Gravel,"Celis, Teresa D.",None,Teresa D. Celis,CSAG,5/6/2024,5/6/2025,5,Producing,939-814-985-00000,,2024,13.67639466,121.3930411,region iva
+Laiya Aplaya,San Juan,Batangas,Sand and Gravel,"Ereño, Gilbert M.",None,Gilbert M. Ereño,CSAG,5/6/2024,5/6/2025,5,Producing,605-985-112-00000,,2024,13.67639466,121.3930411,region iva
+Laiya Aplaya,San Juan,Batangas,Sand and Gravel,"Llana, Wilfredo R.",None,Wilfredo R. Llana,CSAG,12/4/2023,12/4/2024,4.62,Non-Producing,,Under Renewal,2024,13.67639466,121.3930411,region iva
+Banilad,Nasugbu,Batangas,Sand and Gravel,"Umandal, John Andrae V.",None,John Andrae V. Umandal,CSAG,6/19/2024,6/19/2025,2,Producing,,,2024,14.07348588,120.7436129,region iva
+Bucana,Nasugbu,Batangas,Sand and Silt,"PH-AU Diversified Solution Group of
+Companies Inc.",None,Danilo V. Cinco Jr.,LGU-ISAG,11/3/2022,11/3/2027,5,Non-Producing,,No operation,2024,14.06383442,120.6309325,region iva
+"Tayuman and
+Mabilog na Bundok",Lobo,Batangas,Sand and Gravel,"Ramirez, Kimberly T.",None,Kimberly T. Ramirez,MGB-ISAG,10/21/2022,10/20/2027,19.76,Non-Producing,230-163-144,Suspended,2024,13.65587208,121.2364363,region iva
+"Poblacion and Olo-
+Olo",Lobo,Batangas,Sand and Gravel,"Ramirez, Marcelita T.",None,Marcelita T. Ramirez,MGB-ISAG,10/21/2022,10/20/2027,11.51,Non-Producing,918-541-970,Suspended,2024,13.65236789,121.2108849,region iva
+"Fabrica and
+Lagadlarin",Lobo,Batangas,Sand and Gravel,"Ramirez, Efren M.",None,Efren M. Ramirez,MGB-ISAG,10/21/2022,10/20/2027,9.99,Non-Producing,118-043-144,Suspended,2024,13.64445482,121.200648,region iva
+Pantay Pag-asa,Calaca,Batangas,Aggregates,"HTER Construction and Supply
+Corporation",None,Edgardo D. Ocampo,MPP,9/20/2021,9/20/2026,ND,Producing,009-349-094-000,,2024,13.9581048,120.7914789,region iva
+Poblacion,Lobo,Batangas,Aggregates,"Efren Ramirez Construction and General
+Services Corp.",None,Efren Ramirez,MPP,10/21/2022,10/20/2027,ND,Producing,009-401-953-000,,2024,13.65136702,121.2106703,region iva
+"Baha, Talibayog, Punta and Hukay",Calatagan,Batangas,"Limestone, Shale, Tuff, Silica Sand","Advantage Concrete Industries, Corporation (formerly Asturias Industries, Inc.)",None,Mr. Ricardo L. Yabut,MPSA,7/29/1997,7/29/2032,2336.8,Non-Producing,002-927-430,Exploration,2024,13.90177511,120.6888102,region iva
+"Mabilog na Bundok
+and Nagtalontong",Lobo,Batangas,"gold, silver, copper","Egerton Gold Philippines, Inc.","MRL Gold, Inc.",Edsel Abrasaldo,MPSA,11/21/2002,11/21/2027,1163.62,Non-Producing,201-495-415-000,Exploration,2024,13.67392785,121.2295237,region iva
+Balibago,Lobo,Batangas,"gold, silver, copper","Egerton Gold Philippines, Inc.","MRL Gold, Inc.",Edsel Abrasaldo,MPSA,11/21/2002,11/21/2027,1011.54,Non-Producing,201-495-415-000,Exploration,2024,13.62846844,121.298011,region iva
+Calatagan,Calatagan,Batangas,"Limestone, etc.","LandTech Mining Resources, Inc.",None,Antonio E. Buenaventura,MPSA,8/27/2004,8/27/2035,304.39,Non-Producing,005-179-697,Exploration,2024,13.83269692,120.631746,region iva
+Mapulo,Taysan,Batangas,"Limestone for Cement
+and Shale","Republic Cement and Building Materials,
+Inc.-Batangas Plant",None,Mr. John Reinier H. Hizon,MPSA,9/29/2020,9/29/2045,321.17,Producing,000-237-540-003,,2024,13.73371668,121.1854809,region iva
+San Marcelino,Taysan,Batangas,"Rocks, Aggregates, Base Coarse and Filling
+Materia",2L Batangas Corporation,None,Jenalyn M. Andalis,QP,7/20/2023,7/20/2028,4.98,Producing,009-790-510,,2024,13.75307436,121.2306953,region iva
+Pinagbayanan,Taysan,Batangas,"sand, fill and other
+quarry materials",6G6 Quarrying Services,None,Federico S. Nallada,QP,9/6/2023,9/6/2028,4.91,Producing,ND,,2024,13.75417144,121.2611034,region iva
+Puting Kahoy,Lian,Batangas,"Rocks, Aggregates and
+Filling Materials","A.D. Dela Vega Quarrying Services/
+Alejandro Dela Vega",None,Bernadita Dela Vega,QP,11/4/2022,11/4/2027,4.13,Producing,203-009-962,,2024,13.98822195,120.6518334,region iva
+Sta. Clara,Sto. Tomas City,Batangas,"rocks, aggregates,
+boulders, fill and other quarry materials",Amberhawk Development Corp.,None,Jearmane C. Gabo,QP,7/21/2023,7/21/2028,4.92,Producing,010-709-622-00000,,2024,14.02395863,121.2027117,region iva
+Utod,Nasugbu,Batangas,"Rocks, Boulders and other Quarry Resources",Angel Daniel Pia's Quarrying Services,None,Adrian Nathaniel R. Yago,QP,3/24/2021,3/24/2026,4.48,Non-Producing,ND,No operation,2024,14.12323693,120.6462174,region iva
+Butucan,Nasugbu,Batangas,"Basalt Rock, Aggregates, & other
+Quarry Materials","Barrinuevo, Tomas D.",None,Tomas D. Barrinuevo,QP,3/25/2022,3/25/2027,4.5,Non-Producing,ND,No operation,2024,14.14126098,120.6839354,region iva
+Luya,Calatagan,Batangas,"Rock, Aggregates and
+Filling Materials",Berberabe Solid Aggregates,None,Virgilio M. Berberabe,QP,11/9/2022,11/9/2027,4.97,Producing,105-682-198-0000,,2024,13.91886239,120.6690088,region iva
+Malapad na Bato,Nasugbu,Batangas,"Rock aggregates and
+filling materials","Bobrock Trading and Aggregates Co. /
+Carlo D. Pamintuan",None,Carlo D. Pamintuan,QP,11/10/2022,11/10/2027,4.99,Producing,009-026-470-000,,2024,14.10425151,120.6729913,region iva
+Piña,Taysan,Batangas,"rocks, aggregates, base coarse and other quarry
+materials","Canipaan Earth Resources, Inc.",None,Jose Mariano R. Bondoc,QP,8/10/2023,8/10/2028,3.92,Producing,ND,,2024,13.74214014,121.2279304,region iva
+Lucsuhin,Calatagan,Batangas,"Aggregates and Base
+Coarse","Cornerstone Aggregates, Inc.",None,Reynaldo A. Manlucu,QP,7/30/2021,7/30/2026,4.06,Producing,008-463-778,,2024,13.88798186,120.6487398,region iva
+Sinisian,Calaca,Batangas,Filling Materials,"Delos Reyes, Rolando",None,"Rolando Benedict B. De
+Los Reyes",QP,11/9/2021,11/9/2026,2.54,Producing,290-546-603,,2024,13.9308361,120.8510256,region iva
+Utod,Nasugbu,Batangas,"rocks, boulders, backfill
+and other quarry materials","E.J. CUADRA CONSTRUCTION SUPPLIES
+TRADING / Edgardo J. Cuadra",None,Edgardo J. Cuadra,QP,6/29/2023,6/29/2028,4.91,Non-Producing,ND,No operation,2024,14.12323693,120.6462174,region iva
+Piña,Taysan,Batangas,"Rocks, Boulders and other Quarry Resources",Eco Summit Aggregates Corporation,None,Jenalyn Andalis Wang,QP,10/19/2020,10/19/2025,5,Producing,010-346-722-000,,2024,13.74214014,121.2279304,region iva
+Butucan,Nasugbu,Batangas,"andesite rocks / aggregates, boulders and backfill materials","Elipane, Maribel M. / Maribel M. Elipane Sand and Gravel Quarrying",None,Randie P. Nicanor,QP,3/13/2023,3/13/2028,5,Non-Producing,902-566-016,No operation,2024,14.14126098,120.6839354,region iva
+San Marcelino & Piña,Taysan,Batangas,andesite rocks and other quarry materials,Gelston Trading and Services Inc.,None,Rufina V. Gelston,QP,6/14/2024,6/14/2029,3.39,Producing,ND,,2024,13.75379277,121.2315649,region iva
+Utod,Nasugbu,Batangas,"rocks, aggregates, backfill and other quarry
+materials",Gelston Trading and Services Inc.,None,Rufina V. Gelston,QP,8/28/2024,8/28/2029,4.97,Non-Producing,ND,No operation,2024,14.12323693,120.6462174,region iva
+San Marcelino,Taysan,Batangas,"Rocks, Aggregates, Base Coarseand other quarry materials",Golden Mountain Aggregates Corporation (formerly Gelston Trading and Services Inc.),None,Sovy R. Novio,QP,7/18/2023,7/18/2028,4.33,Producing,618-126-836-000,,2024,,,region iva
+Talon,Tuy,Batangas,Rocks Backfill and other Quarry Materials,"Gobins Construction Supply and Heavy Equipment Rental Corporation / Segundo
+G. Binay",None,Segundo G. Binay,QP,8/3/2021,8/3/2026,5,Non-Producing,ND,No operation,2024,,,region iva
+San Diego,Lian,Batangas,"rocks and filling
+materials","Ilagan, Percy Brando M.",None,Mr. Percy Brando M. Ilagan,QP,2/7/2024,2/7/2029,3,Non-Producing,ND,No operation,2024,,,region iva
+Piña,Taysan,Batangas,"Basalt Rock, Aggregates, and Backfill
+Materials",JFM Enterprises,"JL Supreme Aggregates
+Corporation",Jecko John Santos,QP,12/17/2019,12/17/2024,5,Non-Producing,003-741-366,Under Renewal,2024,,,region iva
+Bilogo,Taysan,Batangas,"Pozzolan, Shale, and Limestone Materials",Joel Chavez Equipment Rentals Corporation / Julianito C. De Chavez,"Republic Cement and Building
+Materials, Inc.",Erwin Cruz / Ruel Guinto,QP,7/30/2021,7/30/2026,5,Producing,000-237-540-003,,2024,,,region iva
+Bunducan,Nasugbu,Batangas,"Andesite rock, base coarse & other quarry
+material",JTCB Quarrying,None,Dionisio I. Tan Jr.,QP,7/22/2022,7/22/2027,4.99,Non-Producing,138-072-234-000,No operation,2024,,,region iva
+Piña,Taysan,Batangas,"Rocks, Backfill and other Quarry Resources",Kimusabi Quarrying,None,Mary Joy M. Matundan,QP,12/21/2020,12/21/2025,5,Producing,263-775-193,,2024,,,region iva
+Pinagbayanan,Taysan,Batangas,"Rocks, Backfill and other Quarry Resources",Lakan Seven Stars Enterprise Corporation / Fausto V. Manzanilla Jr.,None,"Fausto V. Manzanilla, Jr.",QP,11/6/2020,11/6/2025,5,Non-Producing,ND,No operation,2024,,,region iva
+Antipolo Del Sur,Lipa City,Batangas,"basalt rocks and other
+quarry resources","Lescano, Michael E.",None,Michael E. Lescano,QP,10/11/22,10/11/27,0.67,Producing,926-248-660,,2024,,,region iva
+Butucan,Nasugbu,Batangas,"andesite rocks / aggregates, boulders and backfill materials",Levy Quarry Operations / Antonio Levy A. Sto. Domingo IV,None,"Antonio Levy A. Sto.
+Domingo IV",QP,1/18/2023,1/18/2028,4.07,Non-Producing,010-388-844-000,No operation,2024,,,region iva
+Binubusan,Lian,Batangas,"Rock and Backfill
+Materials","Limjoco, Francisco I. III",None,Francisco I. Limjoco III,QP,11/24/2021,11/24/2026,4.96,Producing,256-358-413-000,,2024,,,region iva
+Pinagbayanan,Taysan,Batangas,Rock and Backfilling Materials,"Lopez, Buenaventura R.","Marlon Macatangay
+/Rkam
+Corporation",Marlon Macatangay,QP,6/7/2022,6/7/2027,5,Non-Producing,ND,No operation,2024,,,region iva
+Piña,Taysan,Batangas,"Rocks, Aggregates and
+Backfill Materials",LYZ Quarrying and Trading,None,Gela Garcia,QP,11/25/2024,11/25/2029,5,Producing,739-108-323-0000,,2024,,,region iva
+Utod,Nasugbu,Batangas,"Rocks, Aggregates and
+other quarry resources","Magbitang, Rommel Anthony V.",None,"Rommel Anthony V.
+Magbitang",QP,2/20/2024,2/20/2029,4.14,Producing,277-773-008,,2024,,,region iva
+Piña,Taysan,Batangas,"rocks, aggregates,
+backfill materials","Maharlika Construction and Aggregates
+Supply, OPC",None,Renato M. Legaspi,QP,1/23/2024,1/23/2029,5,Producing,652-672-255-0000,,2024,,,region iva
+Sta. Clara,Sto. Tomas City,Batangas,"andesite/basalt rocks, aggregates and other quarry materials",Makiling Construction Ventures Corp.,None,Edgardo B. Carreon,QP,11/24/2022,11/24/2027,5,Producing,010-044-612-000,,2024,,,region iva
+Sinisian,Calaca,Batangas,"Sand, Gravel and
+Backfill Materials","Marasigan 5R Quarry Operations / Pablo
+M. Marasigan",None,Pablo M. Marasigan,QP,8/5/2021,8/5/2026,3.54,Producing,ND,,2024,,,region iva
+Piña,Taysan,Batangas,"Rocks, Aggregates, Base Coarse & Filling
+Materials",MAV Trading,None,Antonio A. Villena,QP,11/30/2023,11/30/2028,5,Producing,010-433-098,,2024,,,region iva
+Dayap,Nasugbu,Batangas,"rocks, boulder, fill and
+other quarry materials","MAXSELL AGGREGATES TRADING /
+Michael Irvin A. Cua",None,Michael Irvin A. Cua,QP,6/27/2023,6/27/2028,4.67,Producing,306-454-960-00004,,2024,,,region iva
+Antipolo Del Sur,Lipa City,Batangas,Basalt Rocks,"ML Rock Quarry Operations / Leonila J.
+Llanes",None,Leonila J. Llanes,QP,6/25/2020,6/25/2025,1,Producing,176-560-350,,2024,,,region iva
+Antipolo Del Sur,Lipa City,Batangas,"Rocks, Aggregates, Base Coarse & Filling
+Materials",Lorna M. Luancing / LMLuancing Sand and Gravel Trading,"LMLuancing Sand and
+Gravel Trading",Lorna M. Luancing,QP,2/15/2024,2/15/2029,4.92,Producing,168-575-655-000,,2024,,,region iva
+San Marcelino and Piña,Taysan,Batangas,"Rocks, Aggregates, Base Coarse & Filling
+Materials","Montevil Trading/Villena, Hernando",None,Ma. Rosario A. Villena,QP,10/15/2021,10/15/2026,3.72,Producing,007-567-360-001,,2024,,,region iva
+Toong,Tuy,Batangas,"Rock aggregates and
+backfill materials","Ocampo, Gian Nicolo",None,Edgardo D. Ocampo,QP,12/10/2019,12/10/2024,4.65,Non-Producing,009-349-094-000,Under Renewal,2024,,,region iva
+Sinisian,Calaca,Batangas,"Sand and Filling
+Materials","Picazo, Ramoncito D.",None,Ramoncito D. Picazo,QP,1/8/2024,1/8/2029,2.29,Producing,438-300-626-000,,2024,,,region iva
+Sta. Clara,Sto. Tomas City,Batangas,"rocks, aggregates, boulders, fill and other
+quarry materials",Prime Raptor Development Corporation,None,Leonardo Laguidao,QP,7/21/2023,7/21/2028,4.97,Producing,ND,,2024,,,region iva
+Sto. Niño,Batangas City,Batangas,"Rocks, Backfill and Other Quarry Materials",Prime Rock Phil. Inc.,"K and F Construction Development
+Corporation",Hermigildo Alvarez,QP,11/5/2021,11/5/2026,3,Producing,ND,,2024,,,region iva
+Butucan,Nasugbu,Batangas,"Rocks, Aggregates and Filling Materials","Quiniquini, John Jeffrey R.",None,John Jeffrey R. Quiniquini,QP,5/30/2023,5/30/2028,3.71,Producing,137-294-940-000,,2024,,,region iva
+Utod,Nasugbu,Batangas,"Rocks, Aggregates and
+Backfill Materials",RCCMG Star Development Corporation,None,Alvin Laguinlin,QP,3/10/2020,3/10/2025,4.96,Non-Producing,01039-7423,No operation,2024,,,region iva
+Dayap,Nasugbu,Batangas,"Rocks, Backfill and other Quarry Resources",RJ Bearis Construction Inc.,None,Ruben J. Bearis,QP,8/13/2021,8/13/2026,4.54,Producing,558-098-5000,,2024,,,region iva
+Antipolo Del Sur,Lipa City,Batangas,Rocks and Aggregates,"Southern Star Aggregates, Inc.",None,Reynlado S. Castillo,QP,4/15/2024,4/15/2029,5,Producing,253-584-026-000,,2024,,,region iva
+Butucan,Nasugbu,Batangas,"andesite rocks / aggregates, boulders and backfill materials","Tanjangco, Francisco S.",None,Randie P. Nicanor,QP,2/16/2023,2/16/2028,5,Non-Producing,118-043-144-000,No operation,2024,,,region iva
+"Lumbang na
+Matanda",Calaca,Batangas,"Sand and Filling
+Materials","Tolentino, Maria Alicia D.",None,John Philip Tolentino,QP,11/9/2023,11/9/2028,1.1,Producing,282-527-021,,2024,,,region iva
+San Isidro,Rosario,Batangas,"Basalt Rock, Aggregates, & other
+Quarry Materials",Top Gold Builders and Construction Supplies,None,Noli J. Perez,QP,10/30/2020,10/30/2025,4.14,Non-Producing,ND,No operation,2024,,,region iva
+Bacao,Taysan,Batangas,Rocks and Aggregates Materials,Topsteel Aggregates,None,Ron Michael L. Tan,QP,1/4/2023,1/4/2028,5,Producing,459-236-412-001,,2024,,,region iva
+Piña,Taysan,Batangas,"Rock/Aggregates, Base Coarse and Filling
+Materials",Torreverde Corporation,None,Marcklon B. Casais,QP,10/17/2022,10/17/2027,4.6,Producing,009-204-744-000,,2024,,,region iva
+Butucan,Nasugbu,Batangas,"Rocks, Aggregates and
+Filling Materials","Total Quality Builders Ent. Inc./
+Raymundo M. Apacible",None,Raymund M. Apacible,QP,1/17/2022,1/17/2027,4.5,Producing,ND,,2024,,,region iva
+San Marcelino,Taysan,Batangas,"Rocks, boulders, backfill and other
+Quarry Materials",Teravera Corporation (formerly True Rock Aggregates Trading),None,Sunshine Rose Olan,QP,11/6/2020,11/6/2025,5,Producing,479-254-865-001,,2024,,,region iva
+Utod,Nasugbu,Batangas,Rock and Aggregates and Other Quarry Resources,X.Y.Z Construction and Supplies / Enrique M. Castillo,None,Enrique M. Castillo,QP,12/6/2021,12/6/2026,4.42,Non-Producing,ND,No operation,2024,,,region iva
+Offshore,"Manila Bay, Ternate, Naic, Tanza and
+Rosario",Cavite,Marine aggregates,Philippine Reclamation Authority,None,Atty. Janilo E. Rubiato,GSQP,8/11/2008,NA,9966.77,Producing,000-492-049-000,,2024,,,region iva
+Offshore,"Ternate, Naic, Tanza and
+Rosario",Cavite,Marine aggregates,"San Miguel Aerocity, Inc./V.I.L. Mines, Inc.",None,Ricardo L. Yabut,GSQP,3/12/2020,NA,8214.45,Producing,005-262-128-000,,2024,,,region iva
+Brgy. Sapang II,Ternate,Cavite,Filling Materials,ACG Quarrying Services,None,Celso H. Salome II,QP,2/24/2022,2/24/2027,5,Producing,,,2024,,,region iva
+Pinagsanhan B,Maragondon,Cavite,Conglomerate Materials,"Congbalay, Owen Martin K.",None,Owen Martin K. Congbalay,QP,5/27/2020,5/27/2025,4,Producing,263-183-012-000,,2024,,,region iva
+Pinagsanhan B,Maragondon,Cavite,Filling Materials,"Diones, Jenny M.",None,Jenny M. Diones,QP,6/3/2024,6/3/2029,4.99,Producing,263-183-012-000,,2024,,,region iva
+Pinagsanhan B,Maragondon,Cavite,Quarry Materials,JEL Construction Corporation,None,Sandy Mansibang,QP,2/10/2021,2/10/2026,4.34,Non-Producing,,No operation,2024,,,region iva
+Brgy. Sapang II,Ternate,Cavite,Quarry Materials,Tophomes Development Corporation,None,Rodolfo Mariano,QP,12/23/2021,12/23/2026,5,Non-Producing,010-128-118-000,CDO,2024,,,region iva
+Ilog,Magdalena,Laguna,Aggregates,JOGEO-7 Aggregates Corp.,None,Eddie R. Opulencia,MPP,1/11/2022,1/11/2027,NA,Producing,010-586-274,,2024,,,region iva
+Balanac,Magdalena,Laguna,Sand and Gravel,"Jose G. Olivares (Formerly Banahaw
+North Slopes Agg. Corp.)",None,Mr. Jose G. Olivares III,MGB-ISAG,2/20/2024,2/19/2029,9.9,Producing,137-662-831-0000,,2024,,,region iva
+Wawa,Lumban,Laguna,Sand and Gravel,CIVRON Gravel and Sand Trading,None,Nezaida E. Laurenaria,CSAG,8/11/2024,8/10/2024,3.1,Producing,432-350-393-000,,2024,,,region iva
+Wawa,Lumban,Laguna,Sand and Gravel,"ANTONIO A. RANA, SR. Sand and Gravel
+Trading",None,"Mr. Antonio A. Rana, Sr.",CSAG,2/15/2024,2/15/2025,1,Producing,284-314-222-000,,2024,,,region iva
+Wawa,Lumban,Laguna,Sand and Gravel,Samonte Gravel and Sand,None,Engr. Ruben A. Samonte,CSAG,9/5/2024,9/4/2025,2.63,Producing,ND,,2024,,,region iva
+Malabo-Kalantukan & Mojon,Liliw,Laguna,Sand and Gravel,"Samahan ng Magbubuhangin at Truckings ng Malabo-Kalantukan, Mojon, Liliw
+Laguna, Inc.",None,Rolena O. Nazareno,LGU-ISAG,5/31/2023,5/31/2028,4.72,Producing,ND,,2024,,,region iva
+Sabang,Magdalena,Laguna,Sand and Gravel,DCL Builder's Supplies G Trading/Sandrock Aggregates Trading,None,David Labago,LGU-ISAG,8/11/2021,8/11/2026,3.98,Producing,211-875-316-0000,,2024,,,region iva
+Ibabang Atingay,Magdalena,Laguna,"Filling Materials,
+Aggregates",AAMEIO8 Sand and Gravel Quarry,None,Alejandro Delantar,QP,4/21/2021,4/21/2026,2.86,Producing,ND,,2024,,,region iva
+Lamot 2,Calauan,Laguna,Filling materials,"ALCID Realty and Development
+Corporation",None,Ramon Oliver Alcid,QP,8/11/2023,8/10/2028,4.12,Non-producing,602-153-796-000,"Clearing
+operation",2024,,,region iva
+Liyang,Siniloan,Laguna,Basalt/Filling Materials,"A.S.Reyes Enterprises/ JEAN CORDOVA
+TRADING","Jose Cordovan
+C. Cordova",Alberto Reyes,QP,9/7/2022,9/7/2027,2,Producing,161-628-493-000,,2024,,,region iva
+Mabacan,Calauan,Laguna,Filling materials,"BRIA HOMES, INC.",None,Jonathan C. Mayuga,QP,9/5/2023,9/5/2028,4.91,Producing,ND,,2024,,,region iva
+Antipolo,Rizal,Laguna,"Volcanic Cinder/Filling
+Materials",Don Terio's Quarry,None,"Eleuterio Reyes/ Joseph
+Dante Reyes",QP,11/8/2021,11/8/2026,1.2,Producing,570-113-669-179,,2024,,,region iva
+Lewin,Lumban,Laguna,Filling materials,Global Summit Developer Corporation,None,Joselito M. Dreje,QP,11/29/2023,11/28/2028,1.14,Producing,ND,,2024,,,region iva
+Liyang,Siniloan,Laguna,"Filling Materials/Pyroclastic
+Rock",J.A. Quintero Quarry,None,Jorge Quintero,QP,2/2/2023,2/1/2028,3.23,Producing,104-049-603-002,,2024,,,region iva
+"Sitio Mapulang
+Lupa Mayatba",Siniloan,Laguna,Filling Materials,Jean Jenzel Cordova Trading,None,Jean Jenzel Cordova,QP,12/16/2024,12/16/2029,0.47,Producing,ND,,2024,,,region iva
+Ibabang Atingay,Magdalena,Laguna,"Filling Materials,
+Boulders",Marissa Valencia Enteprises,None,Marissa M. Valencia,QP,3/19/2018,3/19/2023,1.59,Non-producing,ND,Expired; CMP,2024,,,region iva
+Ibabang Atingay,Magdalena,Laguna,"Filling Materials,
+Boulders",RRA23 Quarry,None,Romario A. Alias,QP,7/3/2023,7/3/2028,2.06,Producing,204-700-949-00001,,2024,,,region iva
+Bunggo,Calamba,Laguna,Filling Materials,NOREEN AMOR O. FAJARDO,None,Noreen Amor O. Fajardo,QP,10/22/2021,10/22/2026,3.7,Producing,252-685-311-00001,,2024,,,region iva
+Hornalan,Calamba,Laguna,Filling Materials,NATANAUAN CONSTRUCTION,None,James Ian Publico,QP,5/5/2022,5/5/2027,5,Producing,104-609-500-000,,2024,,,region iva
+Balanac,Magdalena,Laguna,"Filling Materials,
+Boulders",JOSE G. OLIVARES III,None,JOSE G. OLIVARES III,QP,4/28/2023,4/28/2028,5,Producing,ND,,2024,,,region iva
+Liyang,Siniloan,Laguna,Filling Materials,Jose Cordovan C. Cordova,None,"Mr. Jose Cordovan C.
+Cordova",QP,2/14/2024,2/13/2029,1,Producing,274-658-083-000,,2024,,,region iva
+Tagbakin,Atimonan,Quezon,Sand and Gravel,"Parafina, Alexander Harold",None,Alexander Harold Parafina,CSAG,5/3/2023,5/3/2024,5,Producing,ND,,2024,,,region iva
+Tinandog,Atimonan,Quezon,Sand and Gravel,"Abaca, Bernardita",None,Bernardita Abaca,LGU-ISAG,2/20/2023,2/19/2028,3.74,Non-Producing,ND,Not operating,2024,,,region iva
+Comon,Infanta,Quezon,Sand and Gravel,"Adornado, Alex",None,Alex Adornado,LGU-ISAG,4/27/2023,4/27/2028,5,Producing,ND,,2024,,,region iva
+Ilayang Lalo,Tayabas,Quezon,Sand and Gravel,"Aguila, Abigail A.",None,Abigail A. Aguila,LGU-ISAG,7/30/2021,7/29/2026,5,Non-Producing,ND,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Alegrado, Myrna V.",None,Myrna V. Alegrado,LGU-ISAG,9/18/2023,9/17/2028,5,Non-Producing,ND,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Atienza, Allen Sr.",None,Allen D. Atienza Sr.,LGU-ISAG,6/28/2022,6/27/2027,5,Non-Producing,172-645-512,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Atienza, Danica Rose A.",None,Danica Rose A. Atienza,LGU-ISAG,6/30/2019,6/29/2024,4.65,Non-Producing,ND,Not operating,2024,,,region iva
+Sto. Cristo,Sariaya,Quezon,Sand and Gravel,"Atienza, Donnalene Jane A.",None,Donnalene Jane A. Atienza,LGU-ISAG,6/30/2019,6/29/2024,4.2,Non-Producing,ND,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Atienza, Teodora A.",None,Teodora A. Atienza,LGU-ISAG,6/28/2022,6/27/2027,5,Non-Producing,255-615-068,Not operating,2024,,,region iva
+Magsikap,General Nakar,Quezon,Sand and Gravel,"Aumentado, Ivy Kezia Joi",None,Ivy Kezia Joi Aumentado,LGU-ISAG,10/9/2023,10/8/2028,5,,ND,"Status Not
+Indicated",2024,,,region iva
+Bamugao,Infanta,Quezon,Sand and Gravel,"Avellaneda, Hernando",None,Hernando Avellaneda,LGU-ISAG,6/28/2022,6/27/2027,2.65,Non-Producing,ND,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Barsaga, Nathaniel",None,Nathaniel Barsaga,LGU-ISAG,9/27/2021,9/26/2026,2.01,Non-Producing,ND,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Buena, Eulalia",None,Eulalia Buena,LGU-ISAG,4/7/2022,4/6/2027,5,Non-Producing,ND,Not operating,2024,,,region iva
+Tumbaga II,Sariaya,Quezon,Sand and Gravel,"Bueta, Allan Francis C.",None,Allan Francis C. Bueta,LGU-ISAG,9/4/2019,9/3/2024,4.43,Non-Producing,908-773-484,Not operating,2024,,,region iva
+Alitao,Tayabas,Quezon,Sand and Gravel,"Bueta, Allan Francis C.",None,Allan Francis C. Bueta,LGU-ISAG,2/10/2021,2/9/2026,5,Non-Producing,ND,Not operating,2024,,,region iva
+Janagdong,Sariaya,Quezon,Sand and Gravel,"Buhay, Pastor O.",None,Pastor O. Buhay,LGU-ISAG,8/15/2023,8/15/2028,5,Producing,ND,,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Cabaysa, Lorna C.",None,Lorna C. Cabaysa,LGU-ISAG,4/7/2022,4/6/2027,5,Producing,ND,,2024,,,region iva
+Ilog,Infanta,Quezon,Sand and Gravel,"Cuento, Justine May",None,Justine May Cuento,LGU-ISAG,7/18/2019,7/17/2024,5,Producing,176-762-408,,2024,,,region iva
+Bamugao,Infanta,Quezon,Sand and Gravel,"Cuerdo, Evie May",None,Evie May Cuerdo,LGU-ISAG,6/28/2022,6/27/2027,2.44,Producing,ND,,2024,,,region iva
+Sto. Cristo,Sariaya,Quezon,Sand and Gravel,"De Austria, Rosalia",None,Rosalia De Austria,LGU-ISAG,6/30/2019,6/29/2024,4.99,Non-Producing,ND,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"De Castro, Heidee",None,Heidee De Castro,LGU-ISAG,4/7/2022,4/6/2027,1.07,Non-Producing,ND,Not operating,2024,,,region iva
+Dagatan,Dolores,Quezon,Sand and Gravel,"De Guzman, Doris",None,Doris De Guzman,LGU-ISAG,6/18/2023,6/17/2028,5,Non-Producing,ND,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"De Jesus, Lalaine",None,Lalaine De Jesus,LGU-ISAG,1/29/2019,1/28/2024,1.47,Non-Producing,152-433-470-001,Expired,2024,,,region iva
+Morong,Sariaya,Quezon,Sand and Gravel,"De Luna, Jocelyn",None,Jocelyn De Luna,LGU-ISAG,9/2/2020,9/1/2025,4.62,Non-Producing,ND,Not operating,2024,,,region iva
+Camaysa,Tayabas,Quezon,Sand and Gravel,"Duaso, Arlene S.",None,Arlene S. Duaso,LGU-ISAG,7/30/2021,7/29/2026,4.83,Non-Producing,ND,Not operating,2024,,,region iva
+Calumpang,Tayabas,Quezon,Sand and Gravel,"Flancia, Marlon",None,Marlon Flancia,LGU-ISAG,10/9/2023,10/8/2028,5,,ND,,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,Globorocks Mining Corporation,None,Ronaldo A. Dimaculangan,LGU-ISAG,11/22/2021,11/21/2026,3.96,Non-Producing,ND,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Hernandez, Crisanta",None,Crisanta Hernandez,LGU-ISAG,10/6/2023,10/6/2028,1.97,,ND,,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Hernandez, Rafael",None,Rafael Hernandez,LGU-ISAG,6/28/2022,6/27/2027,3.43,Producing,ND,,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Ibarola, Catalino",None,Catalino Ibarola,LGU-ISAG,8/15/2023,8/15/2028,5,Non-Producing,ND,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Ilao, Levita Ronna",None,Levita Ronna Ilao,LGU-ISAG,12/9/2021,12/8/2026,1.5,Non-Producing,ND,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Javier, Marilyn G.",None,Marilyn G. Javier,LGU-ISAG,7/22/2020,7/21/2025,5,Producing,ND,,2024,,,region iva
+Antipolo/Salinas,Lucena City,Quezon,Sand and Gravel,"Laredo, Aubrey",None,Aubrey Laredo,LGU-ISAG,6/30/2019,6/29/2024,4.71,Non-Producing,ND,Expired,2024,,,region iva
+Minahan Sur,Gen. Nakar,Quezon,Sand and Gravel,"Laredo, Bryan A.",None,Bryan A. Laredo,LGU-ISAG,6/30/2019,6/29/2024,5,Non-Producing,921-092-978,Expired,2024,,,region iva
+Sil. Domoit,Tayabas,Quezon,Sand and Gravel,"Laredo, Bryan A.",None,Bryan A. Laredo,LGU-ISAG,3/18/2019,3/17/2024,5,Non-Producing,ND,Expired,2024,,,region iva
+Bamugao,Infanta,Quezon,Sand and Gravel,"Leynes, Rochie",None,Rochie Leynes,LGU-ISAG,7/18/2019,7/17/2024,2.92,Non-Producing,ND,Expired,2024,,,region iva
+Del Pilar,Quezon,Quezon,Sand and Gravel,"Lim, Melanio",None,Melanio Lim,LGU-ISAG,1/29/2019,1/28/2024,2.88,Non-Producing,ND,Expired,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Lim, Richard K.",None,Richard K. Lim,LGU-ISAG,3/3/2022,3/2/2027,1.39,Non-Producing,102-290-825,Not operating,2024,,,region iva
+Sabang,Quezon,Quezon,Sand and Gravel,"Llamaz, Alexandria",None,Alexandria Llamaz,LGU-ISAG,4/7/2022,4/6/2027,0.56,Producing,ND,,2024,,,region iva
+Vergana,Lopez,Quezon,Sand and Gravel,"Llano, Nestor Z.",None,Nestor Z. Llano,LGU-ISAG,8/6/2020,8/5/2025,2.5,Non-Producing,ND,Not operating,2024,,,region iva
+Janagdong,Sariaya,Quezon,Sand and Gravel,"Lopez, Wilfredo",None,Wilfredo Lopez,LGU-ISAG,12/15/2023,12/15/2028,4.6,,ND,,2024,,,region iva
+Sto. Cristo,Sariaya,Quezon,Sand and Gravel,"Lubi, Aletha Monette",None,Aletha Monette Lubi,LGU-ISAG,9/18/2023,9/17/2028,2.46,Non-Producing,ND,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Lubi, Anne Lorraine V.",None,Anne Lorraine V. Lubi,LGU-ISAG,9/18/2023,9/17/2028,5,Non-Producing,ND,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Lubi, Kayelette Rose Ann",None,Kayelette Rose Ann Lubi,LGU-ISAG,9/18/2023,9/17/2028,4.44,Non-Producing,ND,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Mauhay, Edilberto A.",None,Edilberto A. Mauhay,LGU-ISAG,4/7/2022,4/6/2027,5,Producing,ND,,2024,,,region iva
+Ilog,Infanta,Quezon,Sand and Gravel,"Mercado, Milagros C.",None,Milagros C. Mercado,LGU-ISAG,10/24/2019,10/23/2024,4.99,Non-Producing,ND,Not operating,2024,,,region iva
+Poblacion,Burdeos,Quezon,Sand and Gravel,"Millare, Agnes T.",None,Agnes T. Millare,LGU-ISAG,12/20/2019,12/19/2024,3.9,Non-Producing,ND,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Ong, Shirley I.",None,Shirley I. Ong,LGU-ISAG,5/23/2023,5/23/2028,5,Producing,ND,,2024,,,region iva
+Bamugao,Infanta,Quezon,Sand and Gravel,"Ponce, Ronnel Neil",None,Ronnel Neil Ponce,LGU-ISAG,6/28/2022,6/27/2027,1.5,Non-Producing,ND,Not operating,2024,,,region iva
+Maligaya,General Nakar,Quezon,Sand and Gravel,"Ruzol, Francis Julio",None,Francis Julio Ruzol,LGU-ISAG,5/23/2023,5/23/2028,4.98,Non-Producing,ND,Not operating,2024,,,region iva
+Talaba,Atimonan,Quezon,Sand and Gravel,"Saldua, Lovely Joy L.",None,Lovely Joy L. Saldua,LGU-ISAG,2/3/2021,2/2/2026,2.05,Producing,ND,,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Santos, Ivan Joseph",None,Ivan Joseph Santos,LGU-ISAG,10/6/2023,10/6/2028,4.99,,ND,,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Sucgang, Nenita C.",None,Nenita C. Sucgang,LGU-ISAG,3/23/2023,3/23/2028,1.94,Producing,ND,,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Sucgang, Ronald",None,Ronald Sucgang,LGU-ISAG,3/23/2023,3/23/2028,4.99,Producing,ND,,2024,,,region iva
+Minahan Norte,General Nakar,Quezon,Sand and Gravel,"Torres, Noel",None,Noel Torres,LGU-ISAG,4/27/2022,4/26/2027,2.44,Non-Producing,ND,Not operating,2024,,,region iva
+Pamplona,Gen. Nakar,Quezon,Sand and Gravel,"Villanueva, Zaldy A.",None,Zaldy A. Villanueva,LGU-ISAG,4/10/2019,4/9/2024,4.37,Non-Producing,ND,Not operating,2024,,,region iva
+Banugao,Infanta,Quezon,Sand and Gravel,"Astoveza, Claro S.",None,Claro S. Astoveza,MGB-ISAG,10/14/2021,10/14/2026,12.52,Producing,135-896-445,,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Luna, Gundelina A.",Elino A. Caringal,Gundelina A. Luna,MGB-ISAG,5/8/2021,5/8/2026,6.66,Producing,114-040-864-000,,2024,,,region iva
+Tumbaga II,Sariaya,Quezon,Sand and Gravel,Unilime Minerals,None,Claro M. Talaga,MGB-ISAG,5/11/2018,5/11/2023,5.48,Non-Producing,160-898-203-003,Expired,2024,,,region iva
+"Tumbaga, Bucal
+and Sampaloc II",Sariaya,Quezon,Sand and Gravel,"Doromal, Vedasto C.",None,Vedasto C. Doromal,MGB-ISAG,5/11/2018,5/11/2023,18.96,Non-Producing,160-898-203-003,Expired,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Rafael N. Tantuco, Sr. (Samson T. De
+Jesus)",None,"Rafael N. Tantuco, Sr.",MGB-ISAG,11/26/2021,11/26/2026,7.3,Producing,102-290-825,,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Lubi, Leticia V.",None,Leticia V. Lubi,MGB-ISAG,5/24/2022,5/24/2027,13.61,Producing,270-424-899-000,,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Aggregates,Alcamont Aggregates,None,Gerardo A. Alcala,MPP,7/26/2021,7/26/2026,NA,Producing,912-983-020-000,,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Aggregates,"First Ridge Concrete Aggregates
+Corporation",None,Hsieh Ong Chiu Yong,MPP,8/1/2019,8/1/2024,NA,Producing,004-726-869-000,Under Renewal,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Aggregates,Globorocks Mining Corporation,None,Ramon A. Preza,MPP,2/16/2023,2/15/2028,NA,Non-Producing,005-375-976-000,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Aggregates,"Greenrock Construction and
+Development Corporation",None,Cirilo R. Cinco,MPP,1/29/2020,1/29/2025,NA,Non-Producing,061-003-826-139,Not operating,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Aggregates,Moonrock Aggregates Corporation,None,Rosendo O. Trinidad,MPP,1/29/2020,1/29/2025,NA,Non-Producing,005-831-836,Not operating,2024,,,region iva
+Dagatan,Dolores,Quezon,Aggregates,Pinagpala PT Aggregates Corporation,None,Francisco S. Tanjangco,MPP,10/29/2020,10/29/2025,NA,Producing,007-426-777-000,,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Aggregates,"Tujunga Crushed Rock and Aggregates
+Corporation",None,Rosanna Blanco,MPP,11/16/2018,11/16/2023,NA,Non-Producing,009-299-683-001,Under Renewal,2024,,,region iva
+Sampaloc II,Sariaya,Quezon,Aggregates,"United Gerong Aggregates Trading
+Corporation",None,Shirley I. Ong,MPP,9/29/2021,9/29/2026,NA,Producing,006-157-457-000,,2024,,,region iva
+Silangan Malicboy,Pagbilao,Quezon,Marbleized Limestone,"Ionic Cementworks Industries, Inc",None,Ferdinand K. Constantino,MPSA,"02/21/2021
+(Renewal)",2/21/2046,35.29,Non-Producing,002-155-476-000,CMP,2024,,,region iva
+"Tagkawayan, Labo & Sta. Elena",Tagkawayan/Lab o and Sta. Elena,Quezon,Nickel and other associated minerals,"V.I. L. Mines, Inc.",None,Ricardo L. Yabut,MPSA,6/25/2010,6/25/2035,11126.36,Non-Producing,005-262-128-000,Exploration,2024,,,region iva
+Landing,Tagkawayan,Quezon,Silica,"Aquino, Julian M.",None,Julian M. Aquino,QP,12/19/2019,12/18/2024,1.57,Producing,ND,,2024,,,region iva
+Malinao Ibaba,Atimonan,Quezon,Limestone,Atimonan Rock Products,None,Jimson Chua,QP,6/28/2022,6/27/2027,2,Producing,124-420-767,,2024,,,region iva
+Sabang,Catanauan,Quezon,Filling Materials,"Briones, Karla",None,Karla Briones,QP,10/9/2023,10/9/2028,3.88,,ND,,2024,,,region iva
+San Isidro,Atimonan,Quezon,Filling Materials,"Caparros, Cesar",None,Cesar Caparros,QP,9/12/2019,9/11/2024,5,Producing,ND,,2024,,,region iva
+Bulo,Buenavista,Quezon,Basalt,"Dosto, Bonifacio",None,Bonifacio Dosto,QP,5/22/2023,5/22/2028,3.74,Producing,ND,,2024,,,region iva
+Pinagbayanan,Pagbilao,Quezon,Filling Materials,G. Herrera Corporation,None,Glenn V. Herrera,QP,11/12/2018,11/11/2023,5,Non-Producing,ND,Under renewal,2024,,,region iva
+Dagatan,Dolores,Quezon,Filling Materials,"Gorostiza, Carmeline M.",None,Carmeline M. Gorostiza,QP,7/16/2018,7/15/2023,4.74,Non-Producing,ND,Expired,2024,,,region iva
+Bulo,Buenavista,Quezon,Basalt,"Gutierrez, Joanah Jarah",None,Joanah Jarah Gutierrez,QP,3/8/2023,3/8/2028,5,Non-Producing,ND,Not operating,2024,,,region iva
+Cadlit,Buenavista,Quezon,Basalt,"Labay, Jovelyn",None,Jovelyn Labay,QP,9/12/2023,9/12/2028,4.99,,ND,,2024,,,region iva
+Palsabangon,Pagbilao,Quezon,Filling Materials,"Laredo, Carol",None,Carol Laredo,QP,8/4/2020,8/3/2025,4,Producing,ND,,2024,,,region iva
+Sta. Catalina,Atimonan,Quezon,Limestone,"Lim, Don Russel",None,Don Russel Lim,QP,2/22/2021,2/22/2026,5,Producing,ND,,2024,,,region iva
+Sta. Catalina,Atimonan,Quezon,Limestone,"Lim, Niel Robert",None,Niel Robert Lim,QP,2/22/2021,2/22/2026,5,Non-Producing,ND,Not operating,2024,,,region iva
+Sta. Catalina,Atimonan,Quezon,Limestone,"Lim, Ric Reagan",None,Ric Reagan Lim,QP,2/22/2021,2/22/2026,5,Producing,ND,,2024,,,region iva
+Sto. Thomas,Tagkawayan,Quezon,Silica,"Lo, Elena",None,Elena Lo,QP,10-03-23,3/10/2028,4.32,Producing,ND,,2024,,,region iva
+"Matandang Sabang
+Sil",Catanauan,Quezon,Limestone,"Madrigal, Jesmael",None,Jesmael Madrigal,QP,2/21/2020,2/20/2025,2.26,Non-Producing,258-053-850,Not operating,2024,,,region iva
+Canalajao,Catanauan,Quezon,Filling Materials,"Mendenilla, Joselito",None,Joselito Mendenilla,QP,5/22/2023,5/22/2028,2.08,Producing,ND,,2024,,,region iva
+Palsabangon,Pagbilao,Quezon,Filling Materials,"Ong, Michael Louis P.",None,Michael Louis P. Ong,QP,5/22/2023,5/22/2028,5,Non-Producing,ND,Not operating,2024,,,region iva
+Palsabangon,Pagbilao,Quezon,Filling Materials,"Ong, Kim Joshua P.",None,Kim Joshua P. Ong,QP,5/22/2023,5/22/2028,5,Non-Producing,ND,Not operating,2024,,,region iva
+Canuyep,Mulanay,Quezon,Filling Materials,"Orfanel, Rodolfo A.",None,Rodolfo A. Orfanel,QP,7/27/2023,7/26/2028,2.42,Non-Producing,ND,Not operating,2024,,,region iva
+Navitas,Catanauan,Quezon,Limestone,"Pasia, Pepito C.",None,Pepito C. Pasia,QP,7/17/2020,7/16/2025,4.95,Non-Producing,ND,Not operating,2024,,,region iva
+Tinandog,Atimonan,Quezon,Limestone,PKL Limestone Quarry,None,ND,QP,3/10/2023,3/10/2028,3.83,Producing,ND,,2024,,,region iva
+Mulguin,Unisan,Quezon,Filling Materials,"Puache, Sebastian",None,Sebastian Puache,QP,6/15/2023,6/15/2028,5,Non-Producing,ND,Not operating,2024,,,region iva
+Rosario,Gumaca,Quezon,Filling Materials,"Rakkk Properties and Development
+Corporation",None,ND,QP,11/12/2018,11/11/2023,0.71,Non-Producing,ND,Under renewal,2024,,,region iva
+"Matandang Sabang
+Sil",Catanauan,Quezon,"Limestone/Filling
+Materials","Rakkk Properties and Development
+Corporation",None,ND,QP,2/20/2023,2/19/2028,3.29,Producing,ND,,2024,,,region iva
+Amuguis,Mulanay,Quezon,Limestone,"Revilla, Bernardo",None,Bernardo Revilla,QP,7/30/2021,7/29/2026,1.56,Producing,ND,,2024,,,region iva
+Kanang Malicboy,Pagbilao,Quezon,Limestone,"Reyes, Albert S.",None,Albert S. Reyes,QP,4/26/2022,4/25/2027,5,Producing,121-179-872,,2024,,,region iva
+Tinandog,Atimonan,Quezon,Filling Materials,"Rivera, Helen",None,Helen Rivera,QP,12/22/2021,12/21/2026,1.44,Non-Producing,ND,Not operating,2024,,,region iva
+Sta. Cecilia,Tagkawayan,Quezon,Filling Materials,"Villanueva, Melliza",None,Melliza Villanueva,QP,11/22/2021,11/21/2026,4.99,Non-Producing,ND,Not operating,2024,,,region iva
+Iba Palsabangon,Pagbilao,Quezon,Filling Materials,"Ong, Maria Christine",None,Maria Christine Ong,QP,3/3/2022,3/2/2027,5,Producing,ND,,2024,,,region iva
+ND,Buenavista,Quezon,Gold,Villa Mina Multi-Purpose Cooperative,None,ND,SSMC,8/29/2024,8/29/2025,5.07,Producing,ND,,2024,,,region iva
+Pantok,Binangonan,Rizal,Limestone,"Island Quarry and Aggregates
+Corporation",None,Atty. Perry L. Pe,PC,2/12/1913,NA,39.29,Producing,000-857-749-000-V,,2024,,,region iva
+Pantok,Binangonan,Rizal,Volcanic Tuff/ Pozzolan,"Island Quarry and Aggregates
+Corporation",None,Atty. Perry L. Pe,PC,4/17/1913,NA,17.16,Producing,000-857-749-000-V,,2024,,,region iva
+Pantok,Binangonan,Rizal,Volcanic Tuff/ Pozzolan,"Island Quarry and Aggregates
+Corporation",None,Atty. Perry L. Pe,PC,5/26/1914,NA,7.56,Producing,000-857-749-000-V,,2024,,,region iva
+Pantok,Binangonan,Rizal,Limestone,"Island Quarry and Aggregates
+Corporation",None,Atty. Perry L. Pe,PC,7/20/1912,NA,37.32,Producing,000-857-749-000-V,,2024,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,Amiterra Aggregates Corporation,None,Ha Ling Chua,MPP,12/21/2023,12/20/2028,NA,Producing,008-859-957-000,,2024,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,"Dream Rock Resources Phils., Inc.",None,Jose Allan Cruz,MPP,1/18/2019,1/17/2024,NA,Producing,008-810-465,Under renewal,2024,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,"D'Prime Rock Crushing Plant
+International Corporation",None,Reynaldo N. Manalansan,MPP,6/7/2021,6/7/2026,NA,Producing,239-356-835-001,,2024,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,"Fabway Stone, Inc.",None,Davison Tangca,MPP,1/4/2023,1/3/2028,NA,Producing,ND,,2024,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,"Montalban Concrete and Asphalt, Inc.",None,Nancy Ong Hsieh,MPP,2/5/2021,2/5/2026,NA,Producing,008-280-281-0004,,2024,,,region iva
+Mayamot,Antipolo City,Rizal,Aggregates,"Supreme Elite Resources, Inc. (formerly Rapid City Realty and Development Corporation)",None,Veronica Iñiguez Lee,MPP,11/25/2022,11/25/2027,NA,Producing,"000-099-110 / 005-
+260-665",,2024,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,Rodrock and Aggregates Corporation,None,Rosita P. Linco,MPP,11/23/2022,11/23/2027,NA,Producing,006-676-442-000,,2024,,,region iva
+San Jose,Rodriguez,Rizal,Aggregates,Solid Integrated Company Inc.,None,"Teodoro C. Rodriquez, Jr.",MPP,5/19/2021,5/19/2026,NA,Producing,000-099-395-000,,2024,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,Solid Integrated Company Inc.,None,"Teodoro C. Rodriquez, Jr.",MPP,3/9/2021,3/9/2026,NA,Producing,000-099-395-000,,2024,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,"Superior Aggregates, Inc.",None,Gerry T. Chua,MPP,5/14/2019,5/14/2024,NA,Producing,004-851-000-000,,2024,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,Viba Aggregates and Marketing,None,"Jose Ferdinand A.
+Baustista",MPP,7/26/2023,7/25/2028,NA,Producing,105-339-034-000,,2024,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,"San Isidro Rock Resources, Inc.",None,Rolando T. Angeles,MPP,2/2/2022,2/2/2027,NA,Producing,ND,,2024,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,"Premium Resources and Exploration
+Corp.",None,Francis Lloyd T. Chua,MPP,6/1/2022,6/1/2027,NA,Producing,009-912-679-000,,2024,,,region iva
+Macabud,Rodriguez,Rizal,Basalt,"ATN Holdings, Inc.",None,Mr. Paul B. Saria,MPSA,1/22/2024,1/22/2048,82.71,Producing,005-056-869-000,,2024,,,region iva
+San Jose,Antipolo City,Rizal,Marbleized Limestone,Caliza Mining and Quarrying Corporation,"Island Quarry
+and Aggregates Corporation",Atty. Perry L. Pe,MPSA,6/17/2023,6/17/2048,46.5,Producing,000-857-749-000,,2024,,,region iva
+San Isidro,Angono,Rizal,Basalt,Concrete Aggregates Corporation,"Helix Aggregates, Inc. (Formerly LafargeHolcim Aggregates,
+Inc.)",Jose Emmanuel H. Jalandoni,MPSA,12/29/2020,12/29/2045,192,Producing,006-954-585-000,,2024,,,region iva
+San Isidro,Angono,Rizal,Basalt,Concrete Aggregates Corporation,"Helix Aggregates, Inc. (Formerly LafargeHolcim Aggregates,
+Inc.)",Jose Emmanuel H. Jalandoni,MPSA,10/23/2021,10/23/2046,19.99,Producing,006-954-585-000,,2024,,,region iva
+Antipolo City,Antipolo City,Rizal,Basalt,"Golden Ores, Inc.",None,William Tieng,MPSA,4/7/1998,4/7/2023,120.85,Non-Producing,,Under Renewal,2024,,,region iva
+San Jose,Antipolo City,Rizal,Basalt,Gozon Development Corporation,None,Atty. Felipe L. Gozon,MPSA,11/11/2009,11/11/2034,159.13,Producing,005-377-650-000,,2024,,,region iva
+Cupang,Antipolo City,Rizal,Basalt,"Hardrock Aggregates, Inc.",None,Alonzo C. Espanola,MPSA,6/17/2004,6/16/2029,45,Producing,001-727-900-000,,2024,,,region iva
+San Jose,Antipolo City,Rizal,Silica,"Island Quarry and Aggregates
+Corporation",None,Atty. Perry L. Pe,MPSA,6/4/1998,6/4/2023,70.98,Non-Producing,000-857-749-000-V,Under Renewal,2024,,,region iva
+San Jose,Antipolo City,Rizal,Limestone,Island Quarry and Aggregates Corporation,None,Atty. Perry L. Pe,MPSA,6/17/2023,6/17/2048,89.34,Non-Producing,000-857-749-000-V,Non-operating/ CMP,2024,,,region iva
+Bagong Nayon,Antipolo City,Rizal,Basalt,"La Concepcion Construction and Development Corporation/Gimeno,
+Rolando B.","Majestic Earth Core Ventures,
+Inc.",Rolando B. Gimeno,MPSA,7/30/2007,7/30/2032,32.5,Non-Producing,008-222-233-000,Not operating,2024,,,region iva
+San Rafael,Rodriguez,Rizal,Basalt,Montalban Millex Aggregates Corporation,None,Igmidio D. Robles,MPSA,7/12/2007,7/12/2032,175.69,Producing,000-097-648-000,,2024,,,region iva
+San Luis and Inarawan,Antipolo City,Rizal,Basalt,"Supreme Elite Resources, Inc. (formerly
+Rapid City Realty and Development Corporation)","Good Seed
+Mining Corporation",Veronica I. Lee,MPSA,7/3/2021,7/3/2046,76.76,Producing,"000-099-110-000 /
+005-260-665-000",,2024,,,region iva
+Dalig,Teresa,Rizal,"Aggregates/Crushed Rocks/Blasted
+Rocks/Base Course",Rapid City Realty and Development Corporation,None,Veronica I. Lee,MPSA,9/24/2022,9/24/2047,87.15,Producing,000-099-110-000,,2024,,,region iva
+San Jose,Antipolo City,Rizal,"Aggregates/Crushed Rocks/Blasted
+Rocks/Base Course",Rapid City Realty and Development Corporation,None,Veronica I. Lee,MPSA,11/20/2022,11/20/2047,40,Producing,000-099-110-000,,2024,,,region iva
+San Jose,Antipolo City,Rizal,Silica,"Supreme Elite Resources, Inc. (formerly Rapid City Realty and Development Corporation)",None,Veronica I. Lee,MPSA,6/4/2023,6/4/2048,54.02,Producing,000-099-110-000,,2024,,,region iva
+Laiya Aplaya,San Juan,Batangas,Sand and Gravel,"Celis, Teresa D.",None,Teresa D. Celis,CSAG,6/16/2025,6/15/2026,5,Producing,939-814-985-00000,,2025,,,region iva
+Laiya Aplaya,San Juan,Batangas,Sand and Gravel,"Ereño, Gilbert M.",None,Gilbert M. Ereño,CSAG,6/16/2025,6/15/2026,5,Producing,605-985-112-00000,,2025,,,region iva
+Laiya Aplaya,San Juan,Batangas,Sand and Gravel,"Llana, Wilfredo R.",None,Wilfredo R. Llana,CSAG,2/3/2025,2/2/2026,4.62,Producing,ND,,2025,,,region iva
+Bucana,Nasugbu,Batangas,Sand and Silt,"PH-AU Diversified Solution Group of
+Companies Inc.",None,Danilo V. Cinco Jr.,LGU-ISAG,11/3/2022,11/3/2027,5,Non-Producing,ND,No operation,2025,,,region iva
+Tayuman and Mabilog na Bundok,Lobo,Batangas,Sand and Gravel,"Ramirez, Kimberly T.",None,Kimberly T. Ramirez,MGB-ISAG,10/21/2022,10/20/2027,19.76,Producing,230-163-144,Partially lifted,2025,,,region iva
+"Poblacion and Olo-
+Olo",Lobo,Batangas,Sand and Gravel,"Ramirez, Marcelita T.",None,Marcelita T. Ramirez,MGB-ISAG,10/21/2022,10/20/2027,11.51,Non-Producing,918-541-970,Suspended,2025,,,region iva
+"Fabrica and
+Lagadlarin",Lobo,Batangas,Sand and Gravel,"Ramirez, Efren M.",None,Efren M. Ramirez,MGB-ISAG,10/21/2022,10/20/2027,9.99,Non-Producing,118-043-144,Suspended,2025,,,region iva
+Pantay Pag-asa,Calaca,Batangas,Aggregates,"HTER Construction and Supply
+Corporation",None,Edgardo D. Ocampo,MPP,9/20/2021,9/20/2026,ND,Producing,009-349-094-000,,2025,,,region iva
+Poblacion,Lobo,Batangas,Aggregates,Efren Ramirez Construction  and General Services Corp.,None,Kimberly T. Ramirez- Lontok,MPP,10/21/2022,10/20/2027,ND,Non-Producing,009-401-953-000,"FMR/DP
+Implementatio n",2025,,,region iva
+"Baha, Talibayog, Punta and Hukay",Calatagan,Batangas,"Limestone, Shale, Tuff, Silica Sand","Advantage Concrete Industries, Corporation (formerly Asturias Industries, Inc.)",None,"Antonio E. Buenaventura, Jr.",MPSA,7/29/1997,7/29/2032,2336.8,Producing,002-927-430,,2025,,,region iva
+Mabilog na Bundok and Nagtalontong,Lobo,Batangas,"gold, silver, copper","Egerton Gold Philippines, Inc.","MRL Gold, Inc.",Edsel Abrasaldo,MPSA,11/21/2002,11/21/2027,1163.62,Non-Producing,201-495-415-000,Exploration,2025,,,region iva
+Balibago,Lobo,Batangas,"gold, silver, copper","Egerton Gold Philippines, Inc.","MRL Gold, Inc.",Edsel Abrasaldo,MPSA,11/21/2002,11/21/2027,1011.54,Non-Producing,201-495-415-000,Exploration,2025,,,region iva
+Calatagan,Calatagan,Batangas,"Limestone, etc.","LandTech Mining Resources, Inc.",None,Antonio E. Buenaventura,MPSA,8/27/2004,8/27/2035,304.39,Non-Producing,005-179-697,Exploration,2025,,,region iva
+Mapulo,Taysan,Batangas,"Limestone for Cement
+and Shale","Republic Cement and Building
+Materials, Inc.-Batangas Plant",None,Mr. John Reinier H. Hizon,MPSA,9/29/2020,9/29/2045,321.17,Producing,000-237-540-003,,2025,,,region iva
+San Marcelino,Taysan,Batangas,"Rocks, Aggregates,
+Base Coarse and Filling Materia",2L Batangas Corporation,None,Jenalyn M. Andalis,QP,7/20/2023,7/19/2028,4.98,Producing,009-790-510,,2025,,,region iva
+Pinagbayanan,Taysan,Batangas,"sand, fill and other
+quarry materials",696 Quarrying Services,None,Federico S. Nallada,QP,9/6/2023,9/5/2028,4.91,Producing,ND,,2025,,,region iva
+Puting Kahoy,Lian,Batangas,"Rocks, Aggregates and Filling Materials",A.D. Dela Vega Quarrying Services/ Alejandro Dela Vega,None,Bernadita Dela Vega,QP,11/4/2022,11/3/2027,4.13,Producing,203-009-962,,2025,,,region iva
+Sta. Clara,Sto. Tomas City,Batangas,"rocks, aggregates, boulders, fill and other quarry materials",Amberhawk Development Corp.,None,Jearmane C. Gabo,QP,7/21/2023,7/20/2028,4.92,Producing,010-709-622-00000,,2025,,,region iva
+Utod,Nasugbu,Batangas,"Rocks, Boulders and other Quarry Resources",Angel Daniel Pia's Quarrying Services,None,Adrian Nathaniel R. Yago,QP,3/24/2021,3/23/2026,4.48,Non-Producing,ND,No operation,2025,,,region iva
+Butucan,Nasugbu,Batangas,"andesite rocks / aggregates, boulders and backfill materials",Antonio Levy A. Sto. Domingo IV / Levy Quarry Operations,None,"Antonio Levy A. Sto.
+Domingo IV",QP,1/18/2023,1/17/2028,4.07,Non-Producing,010-388-844-000,No operation,2025,,,region iva
+Butucan,Nasugbu,Batangas,"Basalt Rock,
+Aggregates, & other Quarry  Materials","Barrinuevo, Tomas D.",None,Tomas D. Barrinuevo,QP,3/25/2022,3/24/2027,4.5,Non-Producing,ND,No operation,2025,,,region iva
+Palikpikan,Balayan,Batangas,"rocks, aggregates,
+boulders, and backfill materials","Baylosis, John Vincent",None,John Vincent Baylosis,QP,6/27/2025,6/26/2030,4.96,Non-Producing,ND,No operation,2025,,,region iva
+Luya,Calatagan,Batangas,"Rock, Aggregates and Filling Materials",Berberabe Solid Aggregates,None,Virgilio M. Berberabe,QP,11/9/2022,11/8/2027,4.97,Producing,105-682-198-0000,,2025,,,region iva
+Malapad na Bato,Nasugbu,Batangas,Rock aggregates and filling materials,Bobrock Trading and Aggregates Co. / Carlo D. Pamintuan,None,Carlo D. Pamintuan,QP,11/10/2022,11/9/2027,4.99,Producing,009-026-470-000,,2025,,,region iva
+Piña,Taysan,Batangas,"rocks, aggregates, base coarse and other quarry  materials","Canipaan Earth Resources, Inc.",None,Jose Mariano R. Bondoc,QP,8/10/2023,8/9/2028,3.92,Producing,ND,,2025,,,region iva
+Tangoy,Taysan,Batangas,Pozzolan and Shale,"Catilo, Arnel D.","Republic
+Cement and Building Materials, Inc.",Erwin Cruz / Ruel Guinto,QP,6/20/2025,6/19/2030,5,Producing,ND,,2025,,,region iva
+Piña,Taysan,Batangas,"rocks, aggregates,
+backfill and other quarry materials","Comia, Marcelo I./ Tierra Rocca Quarrying Operations",None,Marcelo I. Comia,QP,2/10/2025,2/9/2030,4.99,Non-Producing,ND,No operation,2025,,,region iva
+Lucsuhin,Calatagan,Batangas,"Aggregates and Base
+Coarse","Cornerstone Aggregates, Inc.",None,Reynaldo A. Manlucu,QP,7/30/2021,7/30/2026,4.06,Producing,008-463-778,,2025,,,region iva
+Sta. Clara,Sto. Tomas City,Batangas,"rocks, aggregates, boulders, fill and other quarry materials","Cuevas, Teresita A.",None,Teresita A. Cuevas,QP,6/26/2025,6/25/2030,5,Non-Producing,ND,No operation,2025,,,region iva
+Sinisian,Calaca,Batangas,Filling Materials,"Delos Reyes, Rolando",None,Rolando Benedict B. De Los Reyes,QP,11/9/2021,11/8/2026,2.54,Producing,290-546-603,,2025,,,region iva
+Utod,Nasugbu,Batangas,"rocks, boulders, backfill and other quarry materials",E.J. Cuadra Construction Supplies Trading / Edgardo J. Cuadra,None,Edgardo J. Cuadra,QP,6/29/2023,6/28/2028,4.91,Non-Producing,ND,No operation,2025,,,region iva
+Piña,Taysan,Batangas,"Rocks, Boulders and other Quarry Resources",Eco Summit Aggregates Corporation,None,Jenalyn Andalis Wang,QP,10/19/2020,10/19/2025,5,Non-Producing,010-346-722-000,Under Renewal,2025,,,region iva
+Butucan,Nasugbu,Batangas,"andesite rocks / aggregates, boulders and backfill materials","Elipane, Maribel M. / Maribel M. Elipane Sand and Gravel Quarrying",None,Randie P. Nicanor,QP,3/13/2023,3/12/2028,5,Non-Producing,902-566-016,No operation,2025,,,region iva
+Piña,Taysan,Batangas,"rocks, aggregates,
+backfill and other
+quarry materials","Gelston, Rufina V.","Vital Earth Resources, OPC",Rufina V. Gelston,QP,2/14/2025,2/13/2030,4.3,Producing,ND,,2025,,,region iva
+San Marcelino,Taysan,Batangas,andesite rocks and other quarry materials,Gelston Trading and Services Inc.,None,Rufina V. Gelston,QP,6/14/2024,6/13/2029,3.39,Producing,ND,,2025,,,region iva
+Utod,Nasugbu,Batangas,"rocks, aggregates,
+backfill and other quarry materials",Gelston Trading and Services Inc.,None,Rufina V. Gelston,QP,8/28/2024,8/27/2029,4.97,Non-Producing,ND,No operation,2025,,,region iva
+Talon,Tuy,Batangas,Rocks Backfill and other Quarry Materials,Gobins Construction Supply and Heavy Equipment Rental Corporation / Segundo G. Binay,None,Segundo G. Binay,QP,8/3/2021,8/2/2026,5,Non-Producing,ND,No operation,2025,,,region iva
+San Marcelino,Taysan,Batangas,"Rocks, Aggregates, Base Coarseand other quarry materials",Golden Mountain Aggregates Corporation,None,Sovy R. Novio,QP,7/18/2023,7/17/2028,4.33,Producing,618-126-836-000,,2025,,,region iva
+Palikpikan,Balayan,Batangas,"rocks, aggregates,
+boulders, and backfill materials","Gonzalvo, Jenalyn",None,Jenalyn Gonzalvo,QP,6/27/2025,6/26/2030,4.93,Non-Producing,ND,No operation,2025,,,region iva
+San Diego,Lian,Batangas,rocks and filling materials,"Ilagan, Percy Brando M.",None,Mr. Percy Brando M. Ilagan,QP,2/27/2024,2/26/2029,3,Non-Producing,ND,No operation,2025,,,region iva
+Piña,Taysan,Batangas,"Basalt Rock, Aggregates, and Backfill Materials",JL Supreme Aggregates Corporation (formerly JFM Enterprises),None,Jenny Calaminos,QP,2/10/2025,2/9/2030,5,Producing,003-741-366,,2025,,,region iva
+Bunducan,Nasugbu,Batangas,"Andesite rock, base coarse & other quarry
+material",JTCB Quarrying/ Dionisio I. Tan Jr.,None,Dionisio I. Tan Jr.,QP,7/22/2022,7/21/2027,4.99,Non-Producing,138-072-234-000,No operation,2025,,,region iva
+Piña,Taysan,Batangas,"Rocks, Backfill and other Quarry Resources",Kimusabi Quarrying,None,Mary Joy M. Matundan,QP,12/21/2020,12/21/2025,5,Non-Producing,263-775-193,Expired,2025,,,region iva
+Pinagbayanan,Taysan,Batangas,"Rocks, Backfill and other Quarry Resources",Lakan Seven Stars Enterprise Corporation / Fausto V. Manzanilla Jr.,None,"Fausto V. Manzanilla, Jr.",QP,11/6/2020,11/6/2025,5,Non-Producing,ND,Expired,2025,,,region iva
+Antipolo Del Sur,Lipa City,Batangas,basalt rocks and other quarry resources,"Lescano, Michael E.",None,Michael E. Lescano,QP,10/11/2022,10/10/2027,0.67,Producing,926-248-660,,2025,,,region iva
+Binubusan,Lian,Batangas,"Rock and Backfill
+Materials","Limjoco, Francisco I. III",None,Francisco I. Limjoco III,QP,11/24/2021,11/23/2026,4.96,Producing,256-358-413-000,,2025,,,region iva
+Pinagbayanan,Taysan,Batangas,Rock and Backfilling Materials,"Lopez, Buenaventura R.","Marlon Macatangay
+/Rkam
+Corporation",Marlon Macatangay,QP,6/7/2022,6/6/2027,5,Non-Producing,ND,No operation,2025,,,region iva
+Antipolo Del Sur,Lipa City,Batangas,"Rocks, Aggregates,
+Base Coarse & Filling
+Materials",Lorna M. Luancing / LMLuancing Sand and Gravel Trading,"LMLuancing
+Sand and Gravel
+Trading",Lorna M. Luancing,QP,2/15/2024,2/14/2029,4.92,Producing,168-575-655-000,,2025,,,region iva
+Piña,Taysan,Batangas,"Rocks, Aggregates and Backfill Materials",LYZ Quarrying and Trading,None,Gela Garcia,QP,11/25/2024,11/24/2029,5,Producing,739-108-323-0000,,2025,,,region iva
+Utod,Nasugbu,Batangas,"Rocks, Aggregates and other quarry resources","Magbitang, Rommel Anthony V.",None,Rommel Anthony V. Magbitang,QP,2/20/2024,2/19/2029,4.14,Producing,277-773-008,,2025,,,region iva
+Piña,Taysan,Batangas,"rocks, aggregates,
+backfill materials","Maharlika Construction and Aggregates
+Supply, OPC",None,Renato M. Legaspi,QP,1/23/2024,1/22/2029,5,Producing,652-672-255-0000,,2025,,,region iva
+Sta. Clara,Sto. Tomas City,Batangas,"andesite/basalt rocks, aggregates and other quarry materials",Makiling Construction Ventures Corp.,None,Edgardo B. Carreon,QP,11/24/2022,11/23/2027,5,Producing,010-044-612-000,,2025,,,region iva
+Sinisian,Calaca,Batangas,"Sand, Gravel and
+Backfill Materials","Marasigan 5R Quarry Operations /
+Pablo M. Marasigan",None,Pablo M. Marasigan,QP,8/5/2021,8/4/2026,3.54,Producing,ND,,2025,,,region iva
+Piña,Taysan,Batangas,"Rocks, Aggregates,
+Base Coarse & Filling Materials",MAV Trading,None,Antonio A. Villena,QP,11/30/2023,11/29/2028,5,Producing,010-433-098,,2025,,,region iva
+Dayap,Nasugbu,Batangas,"rocks, boulder, fill and other quarry materials","MAXSELL AGGREGATES TRADING /
+Michael Irvin A. Cua",None,Michael Irvin A. Cua,QP,6/27/2023,6/26/2028,4.67,Producing,306-454-960-00004,,2025,,,region iva
+Antipolo Del Sur,Lipa City,Batangas,Basalt Rocks,"ML Rock Quarry Operations / Leonila J.
+Llanes",None,Leonila J. Llanes,QP,6/25/2020,6/24/2025,1,Non-Producing,176-560-350,"Under
+Renewal",2025,,,region iva
+Palikpikan,Balayan,Batangas,"rocks, aggregates,
+boulders, and backfill materials","Moleno, Mario",None,Mario Moleno,QP,6/27/2025,6/26/2030,4.99,Non-Producing,ND,No operation,2025,,,region iva
+San Marcelino and Piña,Taysan,Batangas,"Rocks, Aggregates,
+Base Coarse & Filling Materials","Montevil Trading/Villena, Hernando",None,Ma. Rosario A. Villena,QP,10/15/2021,10/14/2026,3.72,Producing,007-567-360-001,,2025,,,region iva
+Tangoy,Balayan,Batangas,"Rocks, Aggregates and
+Base Coarse","New Sea and Land Realty and
+Development Corporation",None,Ariel Pangilinan,QP,6/4/2025,6/3/2030,5,Producing,003-943-239-000,,2025,,,region iva
+Toong,Tuy,Batangas,"Rock aggregates and
+backfill materials","Ocampo, Gian Nicolo",None,Edgardo D. Ocampo,QP,12/10/2019,12/10/2024,4.65,Non-Producing,009-349-094-000,"Under
+Renewal",2025,,,region iva
+Antipolo Del Sur,Lipa City,Batangas,"Rocks, Aggregates and other quarry resources","Odi, Darius Wilfredo C.",None,Samuel Paul P. Caiga,QP,2/4/2025,2/3/2030,5,Producing,ND,,2025,,,region iva
+Antipolo Del Sur,Lipa City,Batangas,"Rocks, Aggregates and other quarry resources","Odi, Marilou G.",None,Samuel Paul P. Caiga,QP,2/4/2025,2/3/2030,5,Producing,ND,,2025,,,region iva
+Sinisian,Calaca,Batangas,"Sand and Filling
+Materials","Picazo, Ramoncito D.",None,Ramoncito D. Picazo,QP,1/8/2024,1/7/2029,2.29,Producing,438-300-626-000,,2025,,,region iva
+Sta. Clara,Sto. Tomas City,Batangas,"rocks, aggregates, boulders, fill and other quarry materials",Prime Raptor Development Corporation,None,Leonardo Laguidao,QP,7/21/2023,7/20/2028,4.97,Producing,ND,,2025,,,region iva
+Sto. Niño,Batangas City,Batangas,"Rocks, Backfill and Other Quarry Materials",Prime Rock Phil. Inc.,"K and F Construction Development
+Corporation",Hermigildo Alvarez,QP,11/5/2021,11/4/2026,3,Producing,ND,,2025,,,region iva
+Butucan,Nasugbu,Batangas,"Rocks, Aggregates and
+Filling Materials","Quiniquini, John Jeffrey R.",None,John Jeffrey R. Quiniquini,QP,5/30/2023,5/29/2028,3.71,Producing,137-294-940-000,,2025,,,region iva
+Palikpikan,Balayan,Batangas,"rocks, aggregates,
+boulders, and backfill
+materials","Ragasa, Lydia Catalina Tolentino",None,Lydia Catalina Tolentino Ragasa,QP,6/27/2025,6/26/2030,4.82,Non-Producing,ND,No operation,2025,,,region iva
+Piña,Taysan,Batangas,andesite rocks and other quarry materials,"Rance, Maribel F.",None,Renato M. Legaspi,QP,1/7/2025,1/6/2030,4.8,Non-Producing,ND,No operation,2025,,,region iva
+Bilogo,Taysan,Batangas,"Pozzolan, Shale, and Limestone Materials",Republic Cement and Building Materials Inc. (formerly Joel Chavez Equipment Rentals Corporation/ Juanito C. De Chavez),"Republic Cement and Building Materials, Inc.",Erwin Cruz / Ruel Guinto,QP,7/30/2021,7/29/2026,5,Producing,000-237-540-003,,2025,,,region iva
+Utod,Nasugbu,Batangas,"Rocks, Aggregates and Backfill Materials",RCCMG Star Development Corporation,None,Alvin Laguinlin,QP,6/27/2025,6/26/2030,4.96,Non-Producing,01039-7423,No operation,2025,,,region iva
+Dayap,Nasugbu,Batangas,"Rocks, Backfill and other Quarry Resources",RJ Bearis Construction Inc.,None,Ruben J. Bearis,QP,8/13/2021,8/12/2026,4.54,Producing,558-098-5000,,2025,,,region iva
+Piña,Taysan,Batangas,andesite rocks and other quarry materials,"Rosalan, Ronaldo N.",None,Renato M. Legaspi,QP,1/7/2025,1/6/2030,4.8,Non-Producing,ND,No operation,2025,,,region iva
+Antipolo Del Sur,Lipa City,Batangas,Rocks and Aggregates,"Southern Star Aggregates, Inc.",None,Reynaldo S. Castillo,QP,4/15/2024,4/14/2029,5,Producing,253-584-026-000,,2025,,,region iva
+Butucan,Nasugbu,Batangas,"andesite rocks / aggregates, boulders and backfill materials","Tanjangco, Francisco S.",None,Randie P. Nicanor,QP,2/16/2023,2/15/2028,5,Non-Producing,118-043-144-000,No operation,2025,,,region iva
+"Lumbang na
+Matanda",Calaca,Batangas,"Sand and Filling
+Materials","Tolentino, Maria Alicia D.",None,John Philip Tolentino,QP,11/9/2023,11/8/2028,1.1,Producing,282-527-021,,2025,,,region iva
+San Isidro,Rosario,Batangas,"Basalt Rock,
+Aggregates, & other Quarry  Materials",Top Gold Builders and Construction Supplies,None,Noli J. Perez,QP,10/30/2020,10/30/2025,4.14,Non-Producing,ND,No operation,2025,,,region iva
+Bacao,Taysan,Batangas,"Rocks and Aggregates
+Materials",Topsteel Aggregates,None,Ron Michael L. Tan,QP,1/4/2023,1/3/2028,5,Producing,459-236-412-001,,2025,,,region iva
+Piña,Taysan,Batangas,"Rock/Aggregates, Base
+Coarse and Filling Materials",Torreverde Corporation,None,Marcklon B. Casais,QP,10/17/2022,10/16/2027,4.6,Producing,009-204-744-000,,2025,,,region iva
+Butucan,Nasugbu,Batangas,"Rocks, Aggregates and
+Filling Materials","Total Quality Builders Ent. Inc./
+Raymundo M. Apacible",None,Raymund M. Apacible,QP,1/17/2022,1/16/2027,4.5,Producing,008-678-150,,2025,,,region iva
+San Marcelino,Taysan,Batangas,"Rocks, boulders,
+backfill and other Quarry Materials",Teravera Corporation (formerly True Rock Aggregates Trading),None,Sunshine Rose Olan,QP,11/6/2020,11/6/2025,5,Producing,479-254-865-001,,2025,,,region iva
+Piña,Taysan,Batangas,andesite rocks and other quarry materials,"Valenton, Ginalyn D.",None,Renato M. Legaspi,QP,1/7/2025,1/6/2030,4.8,Non-Producing,ND,No operation,2025,,,region iva
+Utod,Nasugbu,Batangas,"Rock and Aggregates
+and Other Quarry
+Resources",X.Y.Z Construction and Supplies / Enrique M. Castillo,None,Enrique M. Castillo,QP,12/6/2021,12/5/2026,4.42,Non-Producing,ND,No operation,2025,,,region iva
+Offshore,"Manila Bay,
+Ternate, Naic, Tanza and",Cavite,Marine aggregates,Philippine Reclamation Authority,None,Atty. Janilo E. Rubiato,GSQP,8/11/2008,NA,9966.77,Producing,000-492-049-000,,2025,,,region iva
+Offshore,"Ternate, Naic,
+Tanza and Rosario",Cavite,Marine aggregates,"San Miguel Aerocity, Inc./V.I.L. Mines, Inc.",None,Ramon S. Ang,GSQP,3/12/2020,NA,8214.45,Producing,005-262-128-000,,2025,,,region iva
+Sapang II,Ternate,Cavite,Filling Materials/ Aggregates,ACG Quarrying Services (Celso H. Salome II),None,Celso H. Salome II,QP,2/24/2022,2/24/2027,5,Producing,ND,,2025,,,region iva
+Pinagsanhan B,Maragondon,Cavite,Filling Materials/ Aggregates,"Andaya, Leopoldo H.",None,Leopoldo H. Andaya,QP,11/13/2025,11/13/2030,4.97,Producing,ND,,2025,,,region iva
+Pinagsanhan B,Maragondon,Cavite,Filling Materials/ Aggregates,"Diones, Jenny M.",None,Jenny M. Diones,QP,8/14/2024,8/14/2029,5,Producing,263-183-012-000,,2025,,,region iva
+Pinagsanhan B,Maragondon,Cavite,Filling Materials/ Aggregates,JEL Construction Corporation,None,Sandy Mansibang,QP,2/10/2021,2/10/2026,4.34,Non-Producing,ND,No operation,2025,,,region iva
+Pinagsanhan B,Maragondon,Cavite,Filling Materials/ Aggregates,OMK Congbalay Enterprises,None,Owen Martin K. Congbalay,QP,5/23/2025,5/23/2030,4,Producing,263-183-012-000,,2025,,,region iva
+Bucal I,Maragondon,Cavite,Filling Materials/ Aggregates,"Stonehub, Inc.",None,ND,QP,11/13/2025,11/13/2030,4.65,Producing,ND,,2025,,,region iva
+Sapang II,Ternate,Cavite,Filling Materials/ Aggregates,Tophomes Development Corporation,None,Rodolfo Mariano,QP,12/23/2021,12/23/2026,5,Non-Producing,010-128-118-000,CDO,2025,,,region iva
+Ilog,Magdalena,Laguna,Aggregates,JOGEO-7 Aggregates Corp.,None,Eddie R. Opulencia,MPP,1/11/2022,1/11/2027,NA,Producing,010-586-274,,2025,,,region iva
+Balanac,Magdalena,Laguna,Sand and Gravel,Jose G. Olivares (Formerly Banahaw North Slopes Agg. Corp.),None,Mr. Jose G. Olivares III,MGB-ISAG,2/20/2024,2/19/2029,9.9,Non-Producing,137-662-831-0000,Suspended,2025,,,region iva
+Wawa,Lumban,Laguna,Sand and Gravel,CIVRON Gravel and Sand Trading,None,Nezaida E. Laurenaria,CSAG,8/11/2024,8/10/2024,3.1,Non-Producing,432-350-393-000,Under Renewal,2025,,,region iva
+Wawa,Lumban,Laguna,Sand and Gravel,"ANTONIO A. RANA, SR. Sand and Gravel Trading",None,"Mr. Antonio A. Rana, Sr.",CSAG,2/15/2024,2/15/2025,1,Producing,284-314-222-000,,2025,,,region iva
+Wawa,Lumban,Laguna,Sand and Gravel,Samonte Gravel and Sand,None,Engr. Ruben A. Samonte,CSAG,9/5/2024,9/4/2025,2.63,Non-Producing,ND,Under Renewal,2025,,,region iva
+Malabo-Kalantukan & Mojon,Liliw,Laguna,Sand and Gravel,"Samahan ng Magbubuhangin at Truckings ng Malabo-Kalantukan, Mojon, Liliw Laguna, Inc.",None,Rolena O. Nazareno,LGU-ISAG,5/31/2023,5/31/2028,4.72,Producing,ND,,2025,,,region iva
+Sabang,Magdalena,Laguna,Sand and Gravel,DCL Builder's Supplies & Trading/Sandrock Aggregates Trading,None,David Labago,LGU-ISAG,8/11/2021,8/11/2026,3.98,Producing,211-875-316-0000,,2025,,,region iva
+Ibabang Atingay,Magdalena,Laguna,"Filling Materials, Aggregates",AAMEIO8 Sand and Gravel Quarry,None,Alejandro Delantar,QP,4/21/2021,4/21/2026,2.86,Producing,ND,,2025,,,region iva
+Lamot 2,Calauan,Laguna,Filling materials,ALCID Realty and Development Corporation,None,Ramon Oliver Alcid,QP,8/11/2023,8/10/2028,4.12,Non-producing,602-153-796-000,Clearing operation,2025,,,region iva
+Liyang,Siniloan,Laguna,Basalt/Filling Materials,A.S.Reyes Enterprises/ JEAN CORDOVA TRADING,"Jose Cordovan
+C. Cordova",Alberto Reyes,QP,9/7/2022,9/7/2027,2,Producing,161-628-493-000,,2025,,,region iva
+Mabacan,Calauan,Laguna,Filling materials,"BRIA HOMES, INC.",None,Jonathan C. Mayuga,QP,9/5/2023,9/5/2028,4.91,Producing,ND,,2025,,,region iva
+Antipolo,Rizal,Laguna,Volcanic Cinder/Filling Materials,Don Terio's Quarry,None,Eleuterio Reyes/ Joseph Dante Reyes,QP,11/8/2021,11/8/2026,1.2,Producing,570-113-669-179,,2025,,,region iva
+Lewin,Lumban,Laguna,Filling materials,Global Summit Developer Corporation,None,Joselito M. Dreje,QP,11/29/2023,11/28/2028,1.14,Producing,ND,,2025,,,region iva
+Liyang,Siniloan,Laguna,"Filling
+Materials/Pyroclastic Rock",J.A. Quintero Quarry,None,Jorge Quintero,QP,2/2/2023,2/1/2028,3.23,Producing,104-049-603-002,,2025,,,region iva
+Sitio Mapulang Lupa Mayatba,Siniloan,Laguna,Filling Materials,Jean Jenzel Cordova Trading,None,Jean Jenzel Cordova,QP,12/16/2024,12/16/2029,0.47,Producing,ND,,2025,,,region iva
+Ibabang Atingay,Magdalena,Laguna,"Filling Materials, Boulders",Marissa Valencia Enteprises,None,Marissa M. Valencia,QP,3/19/2018,3/19/2023,1.59,Non-producing,ND,Expired; CMP,2025,,,region iva
+Ibabang Atingay,Magdalena,Laguna,"Filling Materials, Boulders",RRA23 Quarry,None,Romario A. Alias,QP,7/3/2023,7/3/2028,2.06,Producing,204-700-949-00001,,2025,,,region iva
+Bunggo,Calamba,Laguna,Filling Materials,NOREEN AMOR O. FAJARDO,None,Noreen Amor O. Fajardo,QP,10/22/2021,10/22/2026,3.7,Producing,252-685-311-00001,,2025,,,region iva
+Hornalan,Calamba,Laguna,Filling Materials,NATANAUAN CONSTRUCTION,None,James Ian Publico,QP,5/5/2022,5/5/2027,5,Producing,104-609-500-000,,2025,,,region iva
+Balanac,Magdalena,Laguna,"Filling Materials, Boulders",JOSE G. OLIVARES III,None,JOSE G. OLIVARES III,QP,4/28/2023,4/28/2028,5,Producing,ND,,2025,,,region iva
+Liyang,Siniloan,Laguna,Filling Materials,Jose Cordovan C. Cordova/ ENOCOR CONSTRUCTION SUPPLIES,None,Mr. Jose Cordovan C. Cordova,QP,2/14/2024,2/13/2029,1,Producing,274-658-083-000,,2025,,,region iva
+Ilog,Magdalena,Laguna,Filling Materials/ SB/ Boulders,YL Aggregates Corporation,None,Mr. Celso A. Arago,QP,10/1/2025,10/1/2030,4.75,Producing,ND,,2025,,,region iva
+Tinandog,Atimonan,Quezon,Sand and Gravel,"Abaca, Bernardita",None,Bernardita Abaca,LGU-ISAG,2/20/2023,2/19/2028,3.74,Non-Producing,ND,Not operating,2025,,,region iva
+Comon,Infanta,Quezon,Sand and Gravel,"Adornado, Alex",None,Alex Adornado,LGU-ISAG,4/27/2023,4/27/2028,5,Producing,ND,,2025,,,region iva
+Ilayang Lalo,Tayabas,Quezon,Sand and Gravel,"Aguila, Abigail A.",None,Abigail A. Aguila,LGU-ISAG,7/30/2021,7/29/2026,5,Non-Producing,ND,Not operating,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Alegrado, Myrna V.",None,Myrna V. Alegrado,LGU-ISAG,9/18/2023,9/17/2028,5,Non-Producing,ND,Not operating,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Atienza, Allen Sr.",None,Allen D. Atienza Sr.,LGU-ISAG,6/28/2022,6/27/2027,5,Non-Producing,172-645-512,Not operating,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Atienza, Teodora A.",None,Teodora A. Atienza,LGU-ISAG,6/28/2022,6/27/2027,5,Non-Producing,255-615-068,Not operating,2025,,,region iva
+Magsikap,General Nakar,Quezon,Sand and Gravel,"Aumentado, Ivy Kezia Joi",None,Ivy Kezia Joi Aumentado,LGU-ISAG,10/9/2023,10/8/2028,5,,ND,Status Not Indicated,2025,,,region iva
+Bamugao,Infanta,Quezon,Sand and Gravel,"Avellaneda, Hernando",None,Hernando Avellaneda,LGU-ISAG,6/28/2022,6/27/2027,2.65,Non-Producing,ND,Not operating,2025,,,region iva
+Tongohin,Infanta,Quezon,Sand and Gravel,"Avellaneda, Hernando Sr.",None,"Hernando Avellaneda, Sr.",LGU-ISAG,1/9/2024,1/9/2029,5,,ND,,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Barsaga, Nathaniel",None,Nathaniel Barsaga,LGU-ISAG,9/27/2021,9/26/2026,2.01,Non-Producing,ND,Not operating,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Buena, Eulalia",None,Eulalia Buena,LGU-ISAG,4/7/2022,4/6/2027,5,Non-Producing,ND,Not operating,2025,,,region iva
+Alitao,Tayabas,Quezon,Sand and Gravel,"Bueta, Allan Francis C.",None,Allan Francis C. Bueta,LGU-ISAG,2/10/2021,2/9/2026,5,Non-Producing,ND,Not operating,2025,,,region iva
+Janagdong,Sariaya,Quezon,Sand and Gravel,"Buhay, Pastor O.",None,Pastor O. Buhay,LGU-ISAG,8/15/2023,8/15/2028,5,Producing,ND,,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Cabaysa, Lorna C.",None,Lorna C. Cabaysa,LGU-ISAG,4/7/2022,4/6/2027,5,Producing,ND,,2025,,,region iva
+Bamugao,Infanta,Quezon,Sand and Gravel,"Cuerdo, Evie May",None,Evie May Cuerdo,LGU-ISAG,6/28/2022,6/27/2027,2.44,Producing,ND,,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"De Castro, Heidee",None,Heidee De Castro,LGU-ISAG,4/7/2022,4/6/2027,1.07,Non-Producing,ND,Not operating,2025,,,region iva
+Dagatan,Dolores,Quezon,Sand and Gravel,"De Guzman, Doris",None,Doris De Guzman,LGU-ISAG,6/18/2023,6/17/2028,5,Non-Producing,ND,Not operating,2025,,,region iva
+Morong,Sariaya,Quezon,Sand and Gravel,"De Luna, Jocelyn",None,Jocelyn De Luna,LGU-ISAG,9/2/2020,9/1/2025,4.62,Non-Producing,ND,Not operating,2025,,,region iva
+Camaysa,Tayabas,Quezon,Sand and Gravel,"Duaso, Arlene S.",None,Arlene S. Duaso,LGU-ISAG,7/30/2021,7/29/2026,4.83,Non-Producing,ND,Not operating,2025,,,region iva
+Calumpang,Tayabas,Quezon,Sand and Gravel,"Flancia, Celestial",None,Celestial Flancia,LGU-ISAG,1/29/2024,1/29/2029,1.68,,ND,,2025,,,region iva
+Calumpang,Tayabas,Quezon,Sand and Gravel,"Flancia, Marlon",None,Marlon Flancia,LGU-ISAG,10/9/2023,10/8/2028,5,,ND,,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,Globorocks Mining Corporation,None,Ronaldo A. Dimaculangan,LGU-ISAG,11/22/2021,11/21/2026,3.96,Non-Producing,ND,Not operating,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Hernandez, Crisanta",None,Crisanta Hernandez,LGU-ISAG,10/6/2023,10/6/2028,1.97,,ND,,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Hernandez, Rafael",None,Rafael Hernandez,LGU-ISAG,6/28/2022,6/27/2027,3.43,Producing,ND,,2025,,,region iva
+San Isidro,Atimonan,Quezon,Sand and Gravel,"Hernandez, Santina Leonara P.",None,Santina Leonara P. Hernandez,LGU-ISAG,7/7/2025,7/6/2030,5,,ND,,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Ibarola, Catalino",None,Catalino Ibarola,LGU-ISAG,8/15/2023,8/15/2028,5,Non-Producing,ND,Not operating,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Ilao, Levita Ronna",None,Levita Ronna Ilao,LGU-ISAG,12/9/2021,12/8/2026,1.5,Non-Producing,ND,Not operating,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Javier, Marilyn G.",None,Marilyn G. Javier,LGU-ISAG,7/22/2020,7/21/2025,5,Producing,ND,,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Lim, Richard K.",None,Richard K. Lim,LGU-ISAG,3/3/2022,3/2/2027,1.39,Non-Producing,102-290-825,Not operating,2025,,,region iva
+Sabang,Quezon,Quezon,Sand and Gravel,"Llamaz, Alexandria",None,Alexandria Llamaz,LGU-ISAG,4/7/2022,4/6/2027,0.56,Producing,ND,,2025,,,region iva
+Vergana,Lopez,Quezon,Sand and Gravel,"Llano, Nestor Z.",None,Nestor Z. Llano,LGU-ISAG,8/6/2020,8/5/2025,2.5,Non-Producing,ND,Not operating,2025,,,region iva
+Janagdong,Sariaya,Quezon,Sand and Gravel,"Lopez, Wilfredo",None,Wilfredo Lopez,LGU-ISAG,12/15/2023,12/15/2028,4.6,,ND,,2025,,,region iva
+Sto. Cristo,Sariaya,Quezon,Sand and Gravel,"Lubi, Aletha Monette",None,Aletha Monette Lubi,LGU-ISAG,9/18/2023,9/17/2028,2.46,Non-Producing,ND,Not operating,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Lubi, Anne Lorraine V.",None,Anne Lorraine V. Lubi,LGU-ISAG,9/18/2023,9/17/2028,5,Non-Producing,ND,Not operating,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Lubi, Kayelette Rose Ann",None,Kayelette Rose Ann Lubi,LGU-ISAG,9/18/2023,9/17/2028,4.44,Non-Producing,ND,Not operating,2025,,,region iva
+Ilog,Infanta,Quezon,Sand and Gravel,Lux Dragon (Leonardo Antonio),None,Leonardo Antonio,LGU-ISAG,3/20/2024,3/20/2029,5,,ND,,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Mauhay, Edilberto A.",None,Edilberto A. Mauhay,LGU-ISAG,4/7/2022,4/6/2027,5,Producing,ND,,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Ong, Shirley I.",None,Shirley I. Ong,LGU-ISAG,5/23/2023,5/23/2028,5,Producing,ND,,2025,,,region iva
+Tagbakin,Atimonan,Quezon,Sand and Gravel,"Parafina, Alexander Harold",None,Alexander Harold Parafina,LGU-ISAG,7/2/2024,7/2/2029,5,Producing,ND,,2025,,,region iva
+Silangan Palale,Tayabas,Quezon,Sand and Gravel,"Pasumbal, Loreto",None,Loreto Pasumbal,LGU-ISAG,7/22/2024,7/22/2029,5,,ND,,2025,,,region iva
+Bamugao,Infanta,Quezon,Sand and Gravel,"Ponce, Ronnel Neil",None,Ronnel Neil Ponce,LGU-ISAG,6/28/2022,6/27/2027,1.5,Non-Producing,ND,Not operating,2025,,,region iva
+Maligaya,General Nakar,Quezon,Sand and Gravel,"Ruzol, Francis Julio",None,Francis Julio Ruzol,LGU-ISAG,5/23/2023,5/23/2028,4.98,Non-Producing,ND,Not operating,2025,,,region iva
+Talaba,Atimonan,Quezon,Sand and Gravel,"Saldua, Lovely Joy L.",None,Lovely Joy L. Saldua,LGU-ISAG,2/3/2021,2/2/2026,2.05,Producing,ND,,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Santos, Ivan Joseph",None,Ivan Joseph Santos,LGU-ISAG,10/6/2023,10/6/2028,4.99,,ND,,2025,,,region iva
+Magsaysay,Infanta,Quezon,Sand and Gravel,Silverwilves Const.,None,ND,LGU-ISAG,1/24/2024,1/24/2029,4.99,,ND,,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Sucgang, Nenita C.",None,Nenita C. Sucgang,LGU-ISAG,3/23/2023,3/23/2028,1.94,Producing,ND,,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Sucgang, Ronald",None,Ronald Sucgang,LGU-ISAG,3/23/2023,3/23/2028,4.99,Producing,ND,,2025,,,region iva
+Minahan Norte,General Nakar,Quezon,Sand and Gravel,"Torres, Noel",None,Noel Torres,LGU-ISAG,4/27/2022,4/26/2027,2.44,Non-Producing,ND,Not operating,2025,,,region iva
+Pamplona,Gen. Nakar,Quezon,Sand and Gravel,"Villanueva, Zaldy A.",None,Zaldy A. Villanueva,LGU-ISAG,4/10/2019,4/9/2024,4.37,Non-Producing,ND,Under Renewal,2025,,,region iva
+Banugao,Infanta,Quezon,Sand and Gravel,"Astoveza, Claro S.",None,Claro S. Astoveza,MGB-ISAG,10/14/2021,10/14/2026,12.52,Non-Producing,135-896-445,Suspended,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Luna, Gundelina A.",Elino A. Caringal,Gundelina A. Luna,MGB-ISAG,5/8/2021,5/8/2026,6.66,Producing,114-040-864-000,,2025,,,region iva
+Tumbaga II,Sariaya,Quezon,Sand and Gravel,Unilime Minerals,None,Claro M. Talaga,MGB-ISAG,5/11/2018,5/11/2023,5.48,Non-Producing,160-898-203-003,Expired,2025,,,region iva
+"Tumbaga, Bucal and Sampaloc II",Sariaya,Quezon,Sand and Gravel,"Doromal, Vedasto C.",None,Vedasto C. Doromal,MGB-ISAG,5/11/2018,5/11/2023,18.96,Non-Producing,160-898-203-003,Expired,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Rafael N. Tantuco, Sr. (Samson T. De Jesus)",None,"Rafael N. Tantuco, Sr.",MGB-ISAG,11/26/2021,11/26/2026,7.3,Non-Producing,102-290-825,Not operating; CMP,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Lubi, Leticia V.",None,Leticia V. Lubi,MGB-ISAG,5/24/2022,5/24/2027,13.61,Non-Producing,270-424-899-000,Not operating; CMP,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Sand and Gravel,"Mamuyac, Teresa C.",None,Teresa C. Mamuyac,MGB-ISAG,8/20/2025,8/19/2030,11.91,Producing,157-468-143-000,,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Aggregates,Alcamont Aggregates,None,Gerardo A. Alcala,MPP,7/26/2021,7/26/2026,NA,Non-Producing,912-983-020-000,Suspended,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Aggregates,First Ridge Concrete Aggregates Corporation,None,Hsieh Ong Chiu Yong,MPP,8/1/2019,8/1/2024,NA,Non-Producing,004-726-869-000,Under Renewal,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Aggregates,Globorocks Mining Corporation,None,Ramon A. Preza,MPP,2/16/2023,2/15/2028,NA,Non-Producing,005-375-976-000,Not operating,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Aggregates,Greenrock Construction and Development Corporation,None,Cirilo R. Cinco,MPP,1/29/2020,1/29/2025,NA,Non-Producing,061-003-826-139,Expired,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Aggregates,Moonrock Aggregates Corporation,None,Rosendo O. Trinidad,MPP,1/29/2020,1/29/2025,NA,Non-Producing,005-831-836,Expired,2025,,,region iva
+Dagatan,Dolores,Quezon,Aggregates,Pinagpala PT Aggregates Corporation,None,Ricardo L. Sargan,MPP,10/29/2020,10/29/2025,NA,Non-Producing,007-426-777-000,"FMR/DP
+Implementatio",2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Aggregates,Tujunga Crushed Rock and Aggregates Corporation,None,Felipe K. Tolentino,MPP,2/16/2024,2/15/2029,NA,Non-Producing,009-299-683-001,Non-operating; CMP,2025,,,region iva
+Sampaloc II,Sariaya,Quezon,Aggregates,United Gerong Aggregates Trading Corporation,None,Shirley I. Ong,MPP,9/29/2021,9/29/2026,NA,Producing,006-157-457-000,,2025,,,region iva
+Silangan Malicboy,Pagbilao,Quezon,Marbleized Limestone,"Ionic Cementworks Industries, Inc",None,Ferdinand K. Constantino,MPSA,"02/21/2021
+(Renewal)",2/21/2046,35.29,Non-Producing,002-155-476-000,Non-operating; CMP,2025,,,region iva
+"Tagkawayan, Labo & Sta. Elena","Tagkawayan/La
+bo and Sta. Elena",Quezon,"nickel, gold, copper, etc.","V.I. L. Mines, Inc.",None,John Paul L. Ang,MPSA,6/25/2010,6/25/2035,11126.36,Non-Producing,005-262-128-000,Exploration,2025,,,region iva
+Sipa,Padre Burgos,Quezon,Filling Materials,"Alcala, Ivy",None,Ivy Alcala,QP,6/17/2024,6/17/2029,3.35,,ND,,2025,,,region iva
+Iba Palsabangon,Pagbilao,Quezon,Filling Materials,"Alcala, Olivia M.",None,Olivia M. Alcala,QP,6/26/2025,6/25/2030,5,,ND,,2025,,,region iva
+Landing,Tagkawayan,Quezon,Quarry Materials,"Aquino, Julian M.",None,Julian M. Aquino,QP,7/15/2025,7/14/2030,4.62,Producing,ND,,2025,,,region iva
+Malinao Ibaba,Atimonan,Quezon,Limestone,Atimonan Rock Products,None,Jimson Chua,QP,6/28/2022,6/27/2027,2,Producing,124-420-767,,2025,,,region iva
+Mainit Norte,Perez,Quezon,Silica,"Borgueta, Donato",None,Donato Borgueta,QP,10/9/2024,10/9/2029,0.84,,ND,,2025,,,region iva
+Sabang,Catanauan,Quezon,Filling Materials,"Briones, Karla",None,Karla Briones,QP,10/9/2023,10/9/2028,3.88,,ND,,2025,,,region iva
+San Isidro,Atimonan,Quezon,Filling Materials,"Caparros, Cesar",None,Cesar Caparros,QP,9/12/2019,9/11/2024,5,Producing,ND,,2025,,,region iva
+Bulo,Buenavista,Quezon,Basalt,"Dosto, Bonifacio",None,Bonifacio Dosto,QP,5/22/2023,5/22/2028,3.74,Producing,ND,,2025,,,region iva
+Pinagbayanan,Pagbilao,Quezon,Filling Materials,G. Herrera Corporation,None,Glenn V. Herrera,QP,11/12/2018,11/11/2023,5,Non-Producing,ND,Under renewal,2025,,,region iva
+Dagatan,Dolores,Quezon,Filling Materials,"Gorostiza, Carmeline M.",None,Carmeline M. Gorostiza,QP,7/16/2018,7/15/2023,4.74,Non-Producing,ND,Expired,2025,,,region iva
+Bulo,Buenavista,Quezon,Basalt,"Gutierrez, Joanah Jarah",None,Joanah Jarah Gutierrez,QP,3/8/2023,3/8/2028,5,Non-Producing,ND,Not operating,2025,,,region iva
+Landing,Tagkawayan,Quezon,Filling Materials,"Ilapaan, Eduardo",None,Eduardo Ilapaan,QP,11/6/2024,11/5/2029,4.91,,ND,,2025,,,region iva
+Cadlit,Buenavista,Quezon,Basalt,"Labay, Jovelyn",None,Jovelyn Labay,QP,9/12/2023,9/12/2028,4.99,,ND,,2025,,,region iva
+Palsabangon,Pagbilao,Quezon,Filling Materials,"Laredo, Carol",None,Carol Laredo,QP,8/4/2020,8/3/2025,4,Producing,ND,,2025,,,region iva
+Sta. Catalina,Atimonan,Quezon,Limestone,"Lim, Don Russel",None,Don Russel Lim,QP,2/22/2021,2/22/2026,5,Producing,ND,,2025,,,region iva
+Sta. Catalina,Atimonan,Quezon,Limestone,"Lim, Niel Robert",None,Niel Robert Lim,QP,2/22/2021,2/22/2026,5,Non-Producing,ND,Not operating,2025,,,region iva
+Sta. Catalina,Atimonan,Quezon,Limestone,"Lim, Ric Reagan",None,Ric Reagan Lim,QP,2/22/2021,2/22/2026,5,Producing,ND,,2025,,,region iva
+Sto. Thomas,Tagkawayan,Quezon,Silica,"Lo, Elena",None,Elena Lo,QP,3/10/2023,3/10/2028,4.32,Producing,ND,,2025,,,region iva
+Matandang Sabang Sil,Catanauan,Quezon,Limestone,"Madrigal, Jesmael",None,Jesmael Madrigal,QP,2/21/2020,2/20/2025,2.26,Non-Producing,258-053-850,Not operating,2025,,,region iva
+Canalajao,Catanauan,Quezon,Filling Materials,"Mendenilla, Joselito",None,Joselito Mendenilla,QP,5/22/2023,5/22/2028,2.08,Producing,ND,,2025,,,region iva
+San Vicente,General Luna,Quezon,Filling Materials,"Mendenilla, Patrick Joseph",None,Patrick Joseph Mendenilla,QP,6/5/2024,6/4/2029,3.67,,ND,,2025,,,region iva
+Cabulihan,Unisan,Quezon,Quarry Materials,"Mendiola, Rommel",None,Rommel Mendiola,QP,11/15/2024,10/14/2029,5,,ND,,2025,,,region iva
+Palsabangon,Pagbilao,Quezon,Filling Materials,"Ong, Michael Louis P.",None,Michael Louis P. Ong,QP,5/22/2023,5/22/2028,5,Non-Producing,ND,Not operating,2025,,,region iva
+Palsabangon,Pagbilao,Quezon,Filling Materials,"Ong, Kim Joshua P.",None,Kim Joshua P. Ong,QP,5/22/2023,5/22/2028,5,Non-Producing,ND,Not operating,2025,,,region iva
+Iba Palsabangon,Pagbilao,Quezon,Filling Materials,"Ong, Maria Christine",None,Maria Christine Ong,QP,3/3/2022,3/2/2027,5,Producing,ND,,2025,,,region iva
+Canuyep,Mulanay,Quezon,Filling Materials,"Orfanel, Rodolfo A.",None,Rodolfo A. Orfanel,QP,7/27/2023,7/26/2028,2.42,Non-Producing,ND,Not operating,2025,,,region iva
+Navitas,Catanauan,Quezon,Limestone,"Pasia, Pepito C.",None,Pepito C. Pasia,QP,9/11/2025,9/10/2030,4.95,Non-Producing,ND,Not operating,2025,,,region iva
+Sto. Tomas,Tagkawayan,Quezon,Silica,"Pararillo, Joseph",None,Joseph Pararillo,QP,6/10/2024,6/9/2029,4.57,,ND,,2025,,,region iva
+Tinandog,Atimonan,Quezon,Limestone,PKL Limestone Quarry,None,ND,QP,3/10/2023,3/10/2028,3.83,Producing,ND,,2025,,,region iva
+Mulguin,Unisan,Quezon,Filling Materials,"Puache, Sebastian",None,Sebastian Puache,QP,6/15/2023,6/15/2028,5,Non-Producing,ND,Not operating,2025,,,region iva
+Rosario,Gumaca,Quezon,Filling Materials,Rakkk Properties and Development Corporation,None,ND,QP,11/12/2018,11/11/2023,0.71,Non-Producing,ND,Under renewal,2025,,,region iva
+Matandang Sabang Sil,Catanauan,Quezon,Limestone/Filling Materials,Rakkk Properties and Development Corporation,None,ND,QP,2/20/2023,2/19/2028,3.29,Producing,ND,,2025,,,region iva
+Ibabang Yuni,Mulanay,Quezon,Filling Materials,"Rejano, Rogelio",None,Rogelio Rejano,QP,6/6/2024,6/5/2029,3.67,,ND,,2025,,,region iva
+Amuguis,Mulanay,Quezon,Limestone,"Revilla, Bernardo",None,Bernardo Revilla,QP,7/30/2021,7/29/2026,1.56,Producing,ND,,2025,,,region iva
+Kanang Malicboy,Pagbilao,Quezon,Limestone,"Reyes, Albert S.",None,Albert S. Reyes,QP,4/26/2022,4/25/2027,5,Producing,121-179-872,,2025,,,region iva
+Tinandog,Atimonan,Quezon,Filling Materials,"Rivera, Helen",None,Helen Rivera,QP,12/22/2021,12/21/2026,1.44,Non-Producing,ND,Not operating,2025,,,region iva
+Capaluhan,Calauag,Quezon,Silica,"Romero, Rolando",None,Rolando Romero,QP,1/30/2025,1/30/2029,5,,ND,,2025,,,region iva
+Malinao Ibaba,Atimonan,Quezon,Quarry Materials,"Sebastian, Andres",None,Andres Sebastian,QP,11/25/2024,11/25/2029,4.78,,ND,,2025,,,region iva
+Sipa,Padre Burgos,Quezon,Filling Materials,"Tantuco, Rafael Sr.",None,"Rafael N. Tantuco, Sr.",QP,7/8/2024,7/8/2029,5,,ND,,2025,,,region iva
+Sta. Cecilia,Tagkawayan,Quezon,Filling Materials,"Villanueva, Melliza",None,Melliza Villanueva,QP,11/22/2021,11/21/2026,4.99,Non-Producing,ND,Not operating,2025,,,region iva
+ND,Buenavista,Quezon,Gold,Villa Mina Multi-Purpose Cooperative,None,ND,SSMC,8/29/2024,8/29/2025,5.07,Producing,ND,,2025,,,region iva
+Pantok,Binangonan,Rizal,Limestone,Island Quarry and Aggregates Corporation,None,Herbert M. Consunji,PC,2/12/1913,NA,39.29,Producing,000-857-749-000-V,,2025,,,region iva
+Pantok,Binangonan,Rizal,Volcanic Tuff/ Pozzolan,Island Quarry and Aggregates Corporation,None,Herbert M. Consunji,PC,4/17/1913,NA,17.16,Producing,000-857-749-000-V,,2025,,,region iva
+Pantok,Binangonan,Rizal,Volcanic Tuff/ Pozzolan,Island Quarry and Aggregates Corporation,None,Herbert M. Consunji,PC,5/26/1914,NA,7.56,Producing,000-857-749-000-V,,2025,,,region iva
+Pantok,Binangonan,Rizal,Limestone,Island Quarry and Aggregates Corporation,None,Herbert M. Consunji,PC,7/20/1912,NA,37.32,Producing,000-857-749-000-V,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,Amiterra Aggregates Corporation,None,Ha Ling Chua,MPP,12/21/2023,12/20/2028,NA,Producing,008-859-957-000,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,"Dream Rock Resources Phils., Inc.",None,Dennis C. Sandil,MPP,1/18/2024,1/17/2029,NA,Producing,008-810-465,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,D'Prime Rock Crushing Plant International Corporation,None,Reynaldo N. Manalansan,MPP,6/7/2021,6/7/2026,NA,Non-Producing,239-356-835-001,Cancelled: 08/04/2025,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,"Fabway Stone, Inc.",None,David G. Tangca,MPP,1/4/2023,1/3/2028,NA,Non-Producing,ND,Non-operating; Suspended,2025,,,region iva
+Bagong Nayon,Antipolo City,Rizal,Basalt,Maritoni Carpio De Guzman,None,Maritoni Carpio De Guzman,MPP,12/16/2025,12/15/2030,NA,Non-Producing,,Preliminary evaluation,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,"Montalban Concrete and Asphalt, Inc.",None,Nancy Ong Hsieh,MPP,2/5/2021,2/5/2026,NA,Producing,008-280-281-0004,,2025,,,region iva
+Mayamot,Antipolo City,Rizal,Aggregates,"Supreme Elite Resources, Inc. (formerly Rapid City Realty and Development
+Corporation)",None,Angelita Iniguez Lee,MPP,11/25/2022,11/25/2027,NA,Producing,"000-099-110 / 005-260-
+665",,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,Rodrock and Aggregates Corporation,None,Irene E. Magtanong,MPP,11/23/2022,11/23/2027,NA,Producing,006-676-442-000,,2025,,,region iva
+San Jose,Rodriguez,Rizal,Aggregates,Solid Integrated Company Inc.,None,"Teodoro C. Rodriquez, Jr.",MPP,5/19/2021,5/19/2026,NA,Producing,000-099-395-000,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,Solid Integrated Company Inc.,None,"Teodoro C. Rodriquez, Jr.",MPP,3/9/2021,3/9/2026,NA,Producing,000-099-395-000,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,"Superior  Aggregates, Inc.",None,Gerry T. Chua,MPP,4/2/2025,4/1/2030,NA,Producing,004-851-000-000,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,Viba Aggregates and Marketing,None,Jose Ferdinand A. Baustista,MPP,7/26/2023,7/25/2028,NA,Producing,105-339-034-000,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,"San Isidro Rock Resources, Inc.",None,Rolando T. Angeles,MPP,2/2/2022,2/2/2027,NA,Non-Producing,ND,Suspended,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Aggregates,Premium Resources and Exploration Corp.,None,Francis Lloyd T. Chua,MPP,6/1/2022,6/1/2027,NA,Non-Producing,009-912-679-000,Non-operating,2025,,,region iva
+Macabud,Rodriguez,Rizal,Basalt,"ATN Holdings, Inc.",None,Mr. Arsenio T. Ng,MPSA,1/22/2024,1/22/2048,82.71,Producing,005-056-869-000,,2025,,,region iva
+San Jose,Antipolo City,Rizal,Marbleized Limestone,Caliza Mining and Quarrying Corporation,Island Quarry and Aggregates Corporation,ESTER DEE ROSCA,MPSA,6/17/2023,6/17/2048,46.5,Producing,000-857-749-000,,2025,,,region iva
+San Isidro,Angono,Rizal,Basalt,Concrete Aggregates Corporation,"Helix Aggregates, Inc. (Formerly LafargeHolcim Aggregates, Inc.)",Jose Emmanuel H. Jalandoni,MPSA,12/29/2020,12/29/2045,192,Producing,006-954-585-000,,2025,,,region iva
+San Isidro,Angono,Rizal,Basalt,Concrete Aggregates Corporation,"Helix Aggregates, Inc. (Formerly LafargeHolcim Aggregates, Inc.)",Jose Emmanuel H. Jalandoni,MPSA,10/23/2021,10/23/2046,19.99,Producing,006-954-585-000,,2025,,,region iva
+Antipolo City,Antipolo City,Rizal,"Gold, Base Metals, Rock Aggregates","Golden Ores, Inc.",None,William Tieng,MPSA,4/7/1998,4/7/2023,120.85,Non-Producing,,Non-operating; Under  Renewal,2025,,,region iva
+San Jose,Antipolo City,Rizal,Basalt,Gozon Development Corporation,None,Atty. Felipe L. Gozon,MPSA,11/11/2009,11/11/2034,159.13,Producing,005-377-650-000,,2025,,,region iva
+Cupang,Antipolo City,Rizal,Basalt,"Hardrock Aggregates, Inc.",None,Alonzo C. Espanola,MPSA,6/17/2004,6/16/2029,45,Producing,001-727-900-000,,2025,,,region iva
+San Jose,Antipolo City,Rizal,Silica,Island Quarry and Aggregates Corporation,None,Herbert M. Consunji,MPSA,3/3/2025,6/4/2048,70.98,Non-Producing,000-857-749-000-V,Non- operating/ CMP,2025,,,region iva
+San Jose,Antipolo City,Rizal,Limestone,Island Quarry and Aggregates Corporation,None,Herbert M. Consunji,MPSA,6/17/2023,6/17/2048,89.34,Non-Producing,000-857-749-000-V,"Non-
+operating/ CMP",2025,,,region iva
+Bagong Nayon,Antipolo City,Rizal,Basalt,"La Concepcion Construction and Development Corporation/Gimeno, Rolando B.","Majestic Earth Core Ventures, Inc.",Pedro M. Robles,MPSA,7/30/2007,7/30/2032,32.5,Non-Producing,008-222-233-000,Non- operating/ CMP,2025,,,region iva
+San Rafael,Rodriguez,Rizal,Basalt,Montalban Millex Aggregates Corporation,None,Igmidio D. Robles,MPSA,7/12/2007,7/12/2032,175.69,Producing,000-097-648-000,,2025,,,region iva
+San Luis and Inarawan,Antipolo City,Rizal,Basalt,"Supreme Elite Resources, Inc. (formerly Rapid City Realty and Development
+Corporation)","Good Seed Mining
+Corporation",Angelita Iniguez Lee,MPSA,7/3/2021,7/3/2046,76.76,Producing,"000-099-110-000 / 005-
+260-665-000",,2025,,,region iva
+Dalig,Teresa,Rizal,Aggregates/Crushed Rocks/Blasted Rocks/Base Course,Rapid City Realty and Development Corporation,None,Veronica I. Lee,MPSA,9/24/2022,9/24/2047,87.15,Producing,000-099-110-000,,2025,,,region iva
+San Jose,Antipolo City,Rizal,Aggregates/Crushed Rocks/Blasted Rocks/Base Course,Rapid City Realty and Development Corporation,None,Veronica I. Lee,MPSA,11/20/2022,11/20/2047,40,Producing,000-099-110-000,,2025,,,region iva
+San Jose,Antipolo City,Rizal,Silica,"Supreme Elite Resources, Inc. (formerly
+Rapid City Realty and Development Corporation)",None,Angelita Iniguez Lee,MPSA,6/4/2023,6/4/2048,54.02,Producing,000-099-110-000,,2025,,,region iva
+Pinugay,Baras,Rizal,Basalt,Rapid City Realty and Development Corporation,None,Veronica I. Lee,MPSA,12/17/1999,12/17/2024,124.26,Non-Producing,000-099-110-000,Non-operating; Under renewal,2025,,,region iva
+,"Teresa, Morong, Angono, and Binangonan",Rizal,Silica,Rapid City Realty and Development Corporation,None,Veronica I. Lee,MPSA,6/9/2010,6/9/2035,1015.17,Non-Producing,000-099-110-000,Exploration,2025,,,region iva
+Dulumbayan,Teresa,Rizal,Limestone for Cement; Cement,"Republic Cement and Building Materials, Inc.-Teresa Plant",None,Mr. John Reinier H. Hizon,MPSA,9/20/2024,9/20/2049,154.69,Producing,000-237-540-000,,2025,,,region iva
+Dulumbayan,Teresa,Rizal,Limestone,"Republic Cement and Building Materials, Inc.-Teresa Plant",None,Mr. John Reinier H. Hizon,MPSA,6/23/2000,6/23/2025,36.46,Non-Producing,000-237-540-000,Non- operating/ CMP; Under renewal,2025,,,region iva
+,Teresa and Morong,Rizal,Silica,"Go, Roxanna S.",None,Roxanna S. Go,MPSA,6/25/2010,6/25/2035,114.52,Non-Producing,109-807-542,Exploration,2025,,,region iva
+San Rafael,Rodriguez,Rizal,Basalt,San Rafael Development Corporation,"Majestic Earth Core Ventures,
+Inc.",Salim G. Massab,MPSA,6/4/1999,6/4/2030,103.1,Producing,008-222-233,,2025,,,region iva
+San Jose and Kulasisi,Antipolo City,Rizal,Marbleized Limestone,Teresa Marble Corporation,"Quarry Ventures Philippines, Inc.",Annie G. Dee (TMC) Ester D. Rosca (QVPI),MPSA,12/29/2022,12/29/2047,55.9,Producing,000-284-610-000,,2025,,,region iva
+San Jose and Kulasisi,Antipolo City,Rizal,"Marbleized Limestone, Cement, Limestone for Cement",Teresa Marble Corporation,"Quarry Ventures Philippines, Inc. & Island Quarry and Aggregates Corporation",Annie G. Dee (TMC) Ester D. Rosca (QVPI),MPSA,6/17/2023,6/17/2048,10.91,Producing,000-284-610-000,,2025,,,region iva
+San Jose,Antipolo City,Rizal,Marbleized Limestone,Teresa Marble Corporation,"Quarry Ventures Philippines, Inc.",Annie G. Dee (TMC) Ester D. Rosca (QVPI),MPSA,6/17/2023,6/17/2048,21.35,Producing,000-284-610-000,,2025,,,region iva
+Plaza Aldea,Tanay,Rizal,Limestone,102 Global Rock Corporation,None,David Henry Ordiz III,QP,4/8/2024,4/7/2029,4.58,Producing,009-681-678-000,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Basalt,Biyayang Kalikasan  Corporation,Everlasting Rock Trading,Raul Floro G. Javier,QP,10/15/2020,10/14/2025,4.23,Non-Producing,006-020-514-000,Under Renewal,2025,,,region iva
+Malanday,San Mateo,Rizal,Basalt,Conrock Development Corp.,None,ND,QP,3/27/2024,3/27/2026,5,Producing,ND,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Basalt,"Fabway Stone, Inc.",None,David G. Tangca,QP,7/28/2023,7/27/2028,4.79,Producing,ND,,2025,,,region iva
+Gitnang Bayan II,San Mateo,Rizal,Basalt,"Ignacio, Angelito V.",Monte Rock Corporation,Angelito V. Ignacio,QP,8/9/2023,8/8/2028,4.77,Producing,ND,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Basalt,La Riche Realty and Development Corporation,"Bluerock Aggregates
+Corporation",Kendrick S. Yu,QP,2/20/2024,2/20/2026,5,Producing,202-375-974-000,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Basalt,Marcelo Ko,"Rodrock Aggregates
+Corporation",ND,QP,6/22/2020,6/21/2025,5,Producing,ND,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Basalt,"Miranda, Angelita V.",Starblue Aggregates Inc. & PL Mercado Builders,Angelita V. Miranda,QP,10/2/2020,10/1/2025,4.98,Producing,ND,,2025,,,region iva
+Gitnang Bayan II,San Mateo,Rizal,Basalt,Monterock Corporation,None,Victorina Noche,QP,2/23/2018,2/22/2023,5,Non-Producing,000-098-150-000,Under FMR/DP,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Basalt,Recio + Recio,None,ND,QP,1/22/2024,1/21/2029,4.99,Non-Producing,ND,No operation,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Basalt,"Rodriguez, Teodoro C. Jr.",Solid Integrated Corp. Int.,"Teodoro C. Rodriguez,  Jr.",QP,2/26/2024,2/25/2029,4.98,Producing,000-099-395-000,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Basalt,"Santos, Elvin Loid P.","Starblue Aggregates, Inc.",Elvin Loid P. Santos,QP,4/22/2024,4/22/2026,3.85,Producing,ND,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Basalt,"See, Carmelita L.","Bluerock Aggregates
+Corporation",Carmelita L. See,QP,2/20/2024,2/20/2026,5,Producing,202-375-974-000,,2025,,,region iva
+San Isidro,Rodriguez,Rizal,Basalt,"Yu, Clarence S.","Bluerock Aggregates
+Corporation",Clarense s. Yu,QP,2/20/2024,2/20/2026,5,Producing,202-375-974-000,,2025,,,region iva

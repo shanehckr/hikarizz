@@ -1,34 +1,16 @@
-## 🛠️ Prerequisites
-Before you clone and run this project, ensure you have the following installed:
+# React + Vite
 
-*   **Visual Studio Code** - IDE
-*   **Node.js (v22.14.1)** - For the React frontend: [Download Node.js Official](https://nodejs.org/en/download/prebuilt-installer) 
-*   **Python (3.12.5)** - For the FastAPI backend: [Download Python Official](https://www.python.org/downloads/release/python-3125/)
-*   **Git** - To clone and manage the repository: [Download Git Official](https://git-scm.com/downloads)
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
----
+Currently, two official plugins are available:
 
-## Getting Started
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-### 1. Clone the Repository
-1.  Open VS Code and press **`Ctrl + Shift + P`**.
-2.  Type **`Git: Clone`** and press **Enter**.
-3.  Paste this repository link: `https://github.com/shanehckr/hikarizz.git`
-4.  Select a local folder where you want to save the project.
+## React Compiler
 
-### 2. Frontend Setup (React + Vite)
-Open a terminal in VS Code and run:
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-Navigate to the client folder
-**`cd client`**
+## Expanding the ESLint configuration
 
-Install all dependencies (Required for first-time setup)
-**`npm install`**
-
-Start the development server
-**`npm run dev`**
-
-
-
-
-
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
