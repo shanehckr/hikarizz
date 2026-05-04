@@ -5,6 +5,29 @@ import { DataGrid } from '@mui/x-data-grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Chip } from '@mui/material';
 
+const calculateRiskScore = (q) => {
+  let score = 0;
+
+  // Example logic (you can improve later)
+  if (q.area_hectares) {
+    score += Math.min(30, q.area_hectares / 2);
+  }
+
+  if (q.material?.toLowerCase().includes('sand')) score += 20;
+  if (q.material?.toLowerCase().includes('gravel')) score += 15;
+
+  if (q.status === 'Expired') score += 30;
+  if (q.status === 'Pending') score += 10;
+
+  return Math.min(100, Math.round(score));
+};
+
+const getRiskColor = (score) => {
+  if (score >= 70) return '#ef4444';   // 🔴 High
+  if (score >= 40) return '#f59e0b';   // 🟡 Medium
+  return '#22c55e';                    // 🟢 Low
+};
+
 /* ─── Google Fonts ───────────────────────────────────────────────────── */
 const fontLink = document.createElement('link');
 fontLink.rel = 'stylesheet';
@@ -342,9 +365,9 @@ const totalHa = arr => arr.reduce((s, r) => s + (parseFloat(r.area_hectares) || 
 
 /* ─── Status pill ─────────────────────────────────────────────────────── */
 const STATUS_COLORS = {
-  Active:   { bg: 'rgba(74,222,128,0.1)', color: '#4ade80', border: 'rgba(74,222,128,0.25)' },
-  Expired:  { bg: 'rgba(248,113,113,0.1)', color: '#f87171', border: 'rgba(248,113,113,0.25)' },
-  Pending:  { bg: 'rgba(251,191,36,0.1)', color: '#fbbf24', border: 'rgba(251,191,36,0.25)' },
+  Active: { bg: 'rgba(74,222,128,0.1)', color: '#4ade80', border: 'rgba(74,222,128,0.25)' },
+  Expired: { bg: 'rgba(248,113,113,0.1)', color: '#f87171', border: 'rgba(248,113,113,0.25)' },
+  Pending: { bg: 'rgba(251,191,36,0.1)', color: '#fbbf24', border: 'rgba(251,191,36,0.25)' },
 };
 function StatusPill({ value }) {
   const s = STATUS_COLORS[value] || { bg: 'rgba(255,255,255,0.05)', color: '#8b8ea0', border: '#2a2d3a' };
@@ -359,16 +382,23 @@ function StatusPill({ value }) {
 
 /* ─── Main component ──────────────────────────────────────────────────── */
 export default function LandQuarryExplorer() {
-  const [allData, setAllData]           = useState([]);
+  const [allData, setAllData] = useState([]);
   const [provinceFilter, setProvinceFilter] = useState('');
   const [materialFilter, setMaterialFilter] = useState('');
-  const [isModalOpen, setIsModalOpen]   = useState(false);
-  const [loading, setLoading]           = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('http://localhost:8000/api/quarries')
       .then(r => r.json())
-      .then(data => { setAllData(data); setLoading(false); })
+      .then(data => {
+        const withRisk = data.map(q => ({
+          ...q,
+          riskScore: calculateRiskScore(q)
+        }));
+        setAllData(withRisk);
+        setLoading(false);
+      })
       .catch(() => setLoading(false));
   }, []);
 
@@ -392,7 +422,7 @@ export default function LandQuarryExplorer() {
     const headers = Object.keys(filteredData[0]).join(',');
     const rows = filteredData.map(o => Object.values(o).map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',')).join('\n');
     const blob = new Blob([`${headers}\n${rows}`], { type: 'text/csv' });
-    const url  = URL.createObjectURL(blob);
+    const url = URL.createObjectURL(blob);
     Object.assign(document.createElement('a'), { href: url, download: 'quarry_export.csv' }).click();
     URL.revokeObjectURL(url);
   };
@@ -531,13 +561,24 @@ export default function LandQuarryExplorer() {
                     key={i}
                     center={[quarry.latitude, quarry.longitude]}
                     radius={6}
-                    pathOptions={{ color: '#d4a855', fillColor: '#d4a855', fillOpacity: 0.65, weight: 1.5 }}
+                    pathOptions={{
+                      color: getRiskColor(quarry.riskScore),
+                      fillColor: getRiskColor(quarry.riskScore),
+                      fillOpacity: 0.7,
+                      weight: 1.5
+                    }}
                   >
                     <Tooltip>
                       <div style={{ lineHeight: 1.6 }}>
-                        <div style={{ color: '#d4a855', fontWeight: 500, marginBottom: 2 }}>{quarry.contractor}</div>
+                        <div style={{ color: '#d4a855', fontWeight: 500 }}>
+                          {quarry.contractor}
+                        </div>
+
                         <div>{quarry.material} · {quarry.province}</div>
-                        {quarry.area_hectares && <div style={{ color: '#8b8ea0' }}>{quarry.area_hectares} ha</div>}
+
+                        <div style={{ color: getRiskColor(quarry.riskScore) }}>
+                          Risk: {quarry.riskScore}/100
+                        </div>
                       </div>
                     </Tooltip>
                   </CircleMarker>
