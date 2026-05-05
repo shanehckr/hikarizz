@@ -942,7 +942,7 @@ export default function App() {
     <ThemeProvider theme={muiTheme}>
       <div className={`lqe-root ${themeMode}`}>
         <header className="lqe-header">
-          <div className="lqe-logo">Land Quarry Explorer <span className="lqe-badge">HIKARIZZ 2026</span></div>
+          <div className="lqe-logo">QuarryMap PH <span className="lqe-badge">HIKARIZZ 2026</span></div>
           <div className="lqe-actions">
             <Button variant={page === 'explorer' ? 'contained' : 'outlined'} size="small" onClick={() => setPage('explorer')}>Explorer</Button>
             <Button variant={page === 'why' ? 'contained' : 'outlined'} size="small" onClick={() => setPage('why')}>Why This Project</Button>
