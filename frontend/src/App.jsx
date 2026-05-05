@@ -739,7 +739,7 @@ export default function App() {
         <div className="lqe-stat-card"><div className="lqe-stat-label">Total Permits</div><div className="lqe-stat-value">{stats.permits}</div></div>
         <div className="lqe-stat-card"><div className="lqe-stat-label">Provinces</div><div className="lqe-stat-value">{stats.provinces}</div></div>
         <div className="lqe-stat-card"><div className="lqe-stat-label">Commodities</div><div className="lqe-stat-value">{stats.commodities}</div></div>
-        <div className="lqe-stat-card"><div className="lqe-stat-label">Total Area</div><div className="lqe-stat-value">{stats.area}</div></div>
+        <div className="lqe-stat-card"><div className="lqe-stat-label">Total Area</div><div className="lqe-stat-value">{stats.area} ha</div></div>
       </section>
 
       <div className="lqe-body">
@@ -882,7 +882,7 @@ export default function App() {
                   { field: 'commodity', headerName: 'Commodity', minWidth: 220, flex: 2 },
                   { field: 'status', headerName: 'Status', minWidth: 170, flex: 1.5 },
                   { field: 'riskScore', headerName: 'Risk', minWidth: 90, flex: 0.6 },
-                  { field: 'area_hectares', headerName: 'Area (Ha)', minWidth: 110, flex: 0.8 },
+                  { field: 'area_hectares', headerName: 'Area (ha)', minWidth: 110, flex: 0.8 },
                   { field: 'date_approved', headerName: 'Approved', minWidth: 130, flex: 1 },
                 ]}
                 rowHeight={52}
