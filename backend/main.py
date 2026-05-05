@@ -8,11 +8,13 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 import os
 import traceback
+
+
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 if not api_key: print("WARNING: GEMINI_API_KEY not found in environment variables.")
 genai.configure(api_key=api_key)
-model = genai.GenerativeModel(model_name='gemini-2.0-flash', system_instruction=("You are the Hikarizz AI Assistant for Hikarizz Project. Use the provided quarry data from the Philippines to answer questions. If the question is not about quarries, environmental risks, or the dataset, politely decline and steer the user back to land quarrying topics."))
+model = genai.GenerativeModel(model_name='gemini-2.5-flash', system_instruction=("You are the Hikarizz AI Assistant for Hikarizz Project. Use the provided quarry data from the Philippines to answer questions. If the question is not about quarries, environmental risks, or the dataset, politely decline and steer the user back to land quarrying topics."))
 app = FastAPI()
 app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:5174/"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 def get_db_connection():
