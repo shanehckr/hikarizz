@@ -455,12 +455,25 @@ styleTag.textContent = `
 
   .project-page { flex: 1; min-height: 0; overflow: auto; background: var(--bg); padding: 28px; }
   .project-shell { max-width: 980px; margin: 0 auto; display: grid; gap: 22px; }
-  .project-hero { padding: 28px 0 14px; border-bottom: 1px solid var(--line); }
-  .project-hero h1 { margin: 0 0 12px; font-size: clamp(2rem, 5vw, 4rem); color: var(--text); line-height: 1; letter-spacing: 0; }
-  .project-hero p { max-width: 760px; color: var(--muted); font-size: 1.02rem; line-height: 1.6; }
+  .project-hero { padding: 34px 0 20px; border-bottom: 1px solid var(--line); text-align: center; }
+  .project-hero h1 {
+    max-width: 860px;
+    margin: 0 auto 14px;
+    font-size: clamp(2.1rem, 4.2vw, 3.45rem);
+    color: var(--text);
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+  .project-hero p {
+    max-width: 780px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
   .project-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-  .project-card { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); padding: 18px; }
-  .project-card h2 { margin: 0 0 8px; font-size: 1rem; color: var(--accent); letter-spacing: 0; }
+  .project-card { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); padding: 18px; text-align: left; }
+  .project-card h2 { margin: 0 0 8px; font-size: 1rem; color: var(--accent); letter-spacing: 0; line-height: 1.25; }
   .project-card p { margin: 0; color: var(--muted); line-height: 1.5; font-size: 0.92rem; }
 
   .MuiDataGrid-root { width: 100% !important; border: 1px solid var(--line) !important; border-radius: 8px !important; overflow: hidden; }
@@ -990,8 +1003,8 @@ export default function App() {
         <DialogContent dividers>
           <div style={{ fontSize: '0.95rem', lineHeight: 1.6, textAlign: 'center' }}>
             The data used in this system is sourced from the official records of the<br /><br />
-            <b>MINES AND GEOSCIENCES BUREAU</b><br />
-            REGIONAL OFFICE<br />
+            <b>MINES AND GEOSCIENCES BUREAU</b><br/>
+            REGIONAL OFFICE<br/>
             DIRECTORY OF OPERATING MINES AND QUARRIES
           </div>
         </DialogContent>
