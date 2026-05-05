@@ -470,12 +470,22 @@ styleTag.textContent = `
   .lqe-root.light .MuiDataGrid-columnHeaders, .lqe-root.light .MuiDataGrid-footerContainer { background: #eef1ea !important; color: #182018 !important; }
 
   @media (max-width: 900px) {
-    .lqe-header { height: auto; min-height: 60px; align-items: flex-start; padding: 12px; flex-direction: column; }
-    .lqe-actions { justify-content: flex-start; }
+    .lqe-header { height: auto; min-height: 52px; align-items: center; padding: 8px 10px; gap: 8px; }
+    .lqe-logo { flex: 1 1 auto; min-width: 0; font-size: clamp(0.95rem, 3vw, 1.2rem); overflow: hidden; text-overflow: ellipsis; }
+    .lqe-badge { font-size: 0.52rem; margin-left: 5px; padding: 2px 5px; }
+    .lqe-actions { flex: 0 0 auto; gap: 6px; justify-content: flex-end; flex-wrap: nowrap; }
+    .lqe-actions .MuiButton-root { min-width: 0; padding: 5px 8px; font-size: 0.68rem; }
+    .lqe-actions .MuiIconButton-root { padding: 5px; }
     .lqe-stats { grid-template-columns: repeat(2, 1fr); }
     .lqe-sidebar { position: absolute; top: 121px; bottom: 0; z-index: 800; box-shadow: 8px 0 24px rgba(0,0,0,0.25); }
     .project-grid { grid-template-columns: 1fr; }
     .view-toolbar { height: auto; align-items: flex-start; flex-direction: column; }
+  }
+
+  @media (max-width: 560px) {
+    .lqe-actions { gap: 4px; }
+    .lqe-actions .MuiButton-root { padding: 5px 6px; font-size: 0.62rem; }
+    .lqe-badge { display: none; }
   }
 `;
 document.head.appendChild(styleTag);
