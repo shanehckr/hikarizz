@@ -22,7 +22,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import 'leaflet/dist/leaflet.css';
 
 const phCenter = [12.8797, 121.7740];
-const API_BASE = 'http://localhost:8000/api';
+const phBounds = [
+  [4.4, 116.0],
+  [21.3, 127.2],
+];
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
 
 const getRiskColor = (score) => {
   if (score >= 70) return '#ef4444';
@@ -63,10 +67,18 @@ function MapFitToRows({ rows }) {
   useEffect(() => {
     const points = rows
       .map((row) => [Number(row.latitude), Number(row.longitude)])
-      .filter(([lat, lng]) => Number.isFinite(lat) && Number.isFinite(lng));
+      .filter(
+        ([lat, lng]) =>
+          Number.isFinite(lat) &&
+          Number.isFinite(lng) &&
+          lat >= phBounds[0][0] &&
+          lat <= phBounds[1][0] &&
+          lng >= phBounds[0][1] &&
+          lng <= phBounds[1][1],
+      );
 
     if (!points.length) {
-      map.setView(phCenter, 6, { animate: true });
+      map.fitBounds(phBounds, { padding: [18, 18], animate: true });
       return;
     }
 
@@ -350,9 +362,36 @@ styleTag.textContent = `
   .workspace { flex: 1; min-height: 0; display: flex; flex-direction: column; }
   .workspace.map { grid-template-rows: 1fr; }
   .workspace.table { grid-template-rows: 1fr; }
-  .lqe-map-container { height: 42%; min-height: 220px; flex-shrink: 0; border-bottom: 1px solid var(--line); position: relative; z-index: 1; }
+  .lqe-map-container { height: 42%; min-height: 220px; flex-shrink: 0; border-bottom: 1px solid var(--line); position: relative; z-index: 1; overflow: hidden; }
   .workspace.map .lqe-map-container { height: 100%; border-bottom: 0; }
   .workspace.table .lqe-map-container { display: none; }
+  .table-resize-handle {
+    height: 10px;
+    flex-shrink: 0;
+    cursor: row-resize;
+    background: var(--panel);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .table-resize-handle::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 52px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--muted);
+    opacity: 0.45;
+    transform: translate(-50%, -50%);
+    transition: background 0.15s ease, opacity 0.15s ease;
+  }
+  .table-resize-handle:hover::before,
+  .table-resize-handle.active::before {
+    background: var(--accent);
+    opacity: 1;
+  }
   .lqe-table-container { flex: 1; min-height: 0; padding: 12px; background: var(--table-bg); }
   .workspace.map .lqe-table-container { display: none; }
   .workspace.table .lqe-table-container { flex: 1; }
@@ -454,6 +493,8 @@ export default function App() {
   const [isDraggingChat, setIsDraggingChat] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [viewMode, setViewMode] = useState('split');
+  const [mapHeight, setMapHeight] = useState(42);
+  const [isResizingTable, setIsResizingTable] = useState(false);
   const [themeMode, setThemeMode] = useState('dark');
   const [page, setPage] = useState('explorer');
   const [messages, setMessages] = useState([{ role: 'ai', text: 'Ask me anything about quarry permits or local risk scores.' }]);
@@ -480,9 +521,21 @@ export default function App() {
 
   useEffect(() => {
     fetch(`${API_BASE}/quarries`)
-      .then((r) => r.json())
-      .then((data) => setAllData(data.map((d, i) => ({ ...d, id: d.id ?? i }))))
-      .catch(console.error);
+      .then((r) => {
+        if (!r.ok) throw new Error(`Failed to load quarry data: ${r.status}`);
+        return r.json();
+      })
+      .then((data) => {
+        if (!Array.isArray(data)) throw new Error('Quarry API did not return a list');
+        setAllData(data.map((d, i) => ({ ...d, id: d.id ?? i })));
+      })
+      .catch((error) => {
+        console.error(error);
+        setMessages((prev) => [
+          ...prev,
+          { role: 'ai', text: 'I cannot load the quarry database yet. Please start the backend API, then refresh this page.' },
+        ]);
+      });
   }, []);
 
   useEffect(() => {
@@ -515,6 +568,28 @@ export default function App() {
       window.removeEventListener('pointerup', handlePointerUp);
     };
   }, [isDraggingChat]);
+
+  useEffect(() => {
+    if (!isResizingTable) return undefined;
+
+    const handlePointerMove = (event) => {
+      const workspace = document.querySelector('.workspace.split');
+      if (!workspace) return;
+
+      const rect = workspace.getBoundingClientRect();
+      const nextHeight = ((event.clientY - rect.top) / rect.height) * 100;
+      setMapHeight(Math.min(72, Math.max(28, nextHeight)));
+    };
+
+    const stopResize = () => setIsResizingTable(false);
+
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', stopResize);
+    return () => {
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', stopResize);
+    };
+  }, [isResizingTable]);
 
   const sourceData = aiRows || allData;
 
@@ -747,9 +822,16 @@ export default function App() {
           </div>
 
           <div className={`workspace ${viewMode}`}>
-            <div className="lqe-map-container">
-              <MapContainer center={phCenter} zoom={6} style={{ height: '100%', width: '100%' }}>
-                <MapResizeWatcher watch={`${viewMode}-${sidebarOpen}-${filteredData.length}`} />
+            <div className="lqe-map-container" style={viewMode === 'split' ? { height: `${mapHeight}%` } : undefined}>
+              <MapContainer
+                center={phCenter}
+                zoom={6}
+                minZoom={5}
+                maxBounds={phBounds}
+                maxBoundsViscosity={1}
+                style={{ height: '100%', width: '100%' }}
+              >
+                <MapResizeWatcher watch={`${viewMode}-${sidebarOpen}-${filteredData.length}-${mapHeight}`} />
                 <MapFitToRows rows={filteredData} />
                 <TileLayer url={mapTiles[themeMode]} />
                 {filteredData.filter((d) => d.latitude && d.longitude).map((d) => (
@@ -764,6 +846,21 @@ export default function App() {
                 ))}
               </MapContainer>
             </div>
+
+            {viewMode === 'split' && (
+              <div
+                className={`table-resize-handle ${isResizingTable ? 'active' : ''}`}
+                onPointerDown={(event) => {
+                  event.currentTarget.setPointerCapture(event.pointerId);
+                  setIsResizingTable(true);
+                  event.preventDefault();
+                }}
+                role="separator"
+                aria-orientation="horizontal"
+                aria-label="Resize map and table"
+                title="Drag to resize map and table"
+              />
+            )}
 
             <div className="lqe-table-container">
               <DataGrid

@@ -6,6 +6,7 @@ import sqlite3
 import math
 import os
 import traceback
+from pathlib import Path
 
 try:
     from dotenv import load_dotenv
@@ -27,10 +28,24 @@ if genai and api_key:
 else:
     if not genai: print("WARNING: google-generativeai is not installed. Using local dataset summaries for /api/analyze.")
     model = None
+BASE_DIR = Path(__file__).resolve().parent
+DB_PATH = BASE_DIR / "LandQuarry.db"
+
 app = FastAPI()
-app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:5174/"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5174",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 def get_db_connection():
-    conn = sqlite3.connect('LandQuarry.db')
+    conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 class ChatRequest(BaseModel): question: str
