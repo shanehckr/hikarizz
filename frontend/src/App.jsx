@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { MapContainer, TileLayer, CircleMarker, Tooltip as LeafletTooltip, useMap } from 'react-leaflet';
 import {
   Button,
@@ -157,7 +157,9 @@ const outOfScopePlaces = [
 
 const GREETING_PATTERNS = /^(hello|hi|hey|kumusta|kamusta|magandang|good morning|good afternoon|good evening|musta|sup|yo|helo|huy|oy)\b/i;
 
-const QUARRY_CONCEPTUAL_PATTERNS = /risk|how.*work|paano|bakit|why|what is|ano ang|explain|define|meaning|kahulugan|calculate|computed|score|formula|suspended|expired|producing|operation|permit|commodity|quarry|quarrying|mine|mineral|sand|gravel|limestone|basalt|environmental|danger|hazard/i;
+const DATA_LOOKUP_PATTERNS = /show|list|find|where|which|who|how many|count|records?|permit holders?|contractors?|operators?|province|municipalit|barangay|location|region|commodit|status|expired|expire|expiration|approved|date|risk|score|producing|suspended|operation|area|hectare|quarr|sand|gravel|limestone|basalt|shale|andesite|silica|gold|copper/i;
+
+const QUARRY_CONCEPTUAL_PATTERNS = /how.*work|paano|bakit|why|what is|ano ang|explain|define|meaning|kahulugan|calculate|computed|formula|environmental|danger|hazard|permit|quarry|quarrying|risk score/i;
 
 const OUT_OF_SCOPE_PATTERNS = /weather|sports|politics|cooking|recipe|movie|music|celebrity|stock|crypto|bitcoin|fashion|travel|hotel|flight|covid|vaccine|news|football|basketball|nba|nfl/i;
 
@@ -196,19 +198,13 @@ function classifyQuestion(question) {
   // Completely out of scope topics
   if (OUT_OF_SCOPE_PATTERNS.test(q) && !QUARRY_CONCEPTUAL_PATTERNS.test(q)) return 'out_of_scope';
 
-  // Quarry conceptual questions — about how things work, not data lookup
+  // Quarry conceptual questions - about how things work, not data lookup
   if (QUARRY_CONCEPTUAL_PATTERNS.test(q)) return 'quarry_related';
 
   // Data lookup questions
-  const hasDataSubject = /permit|record|contractor|operator|holder|province|municipalit|barangay|location|region|commodity|status|expired|expire|expiration|approved|date|risk|score|producing|suspended|operation|area|hectare|quarr|sand|gravel|limestone|basalt|shale|andesite|silica|gold|copper/.test(q);
-  if (hasDataSubject) return 'data_question';
+  if (DATA_LOOKUP_PATTERNS.test(q)) return 'data_question';
 
   return 'out_of_scope';
-}
-
-function isQuarryDataQuestion(question) {
-  const type = classifyQuestion(question);
-  return type === 'data_question' || type === 'quarry_related';
 }
 
 function getProvinceIntent(rows, question) {
@@ -298,7 +294,7 @@ function buildInteractiveRows(rows, question) {
   const uniqueById = (items) => [...new Map(items.map((item, index) => [item.id ?? index, item])).values()];
   const textSet = uniqueById(textMatches);
   const riskSet = uniqueById(riskMatches);
-  let scoped = [];
+  let scoped;
 
   if (textSet.length && riskSet.length) {
     const textIds = new Set(textSet.map((row) => row.id));

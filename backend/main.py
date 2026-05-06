@@ -8,13 +8,67 @@ import os
 import traceback
 from pathlib import Path
 
+DATA_SCOPE_MESSAGE = "\n".join([
+    "I'm the Quarry Land Assistant - I can only help with questions about Philippine land quarry permits and data.",
+    "",
+    "You can ask me about:",
+    "* Permit holders or contractors",
+    "* Provinces, municipalities, and locations",
+    "* Commodities such as sand, gravel, limestone, or basalt",
+    "* Operating status - producing, suspended, no operation",
+    "* Risk scores and how they are calculated",
+    "* Expiration dates and permit details",
+    "",
+    'Try asking: "What are the high risk quarries in Batangas?" or "Paano kinukwenta ang risk score?"',
+])
+
+GREETING_REPLY = "\n".join([
+    "Hi! I'm the Quarry Land Assistant.",
+    "",
+    "I can help you explore Philippine quarry permit data. Ask me about:",
+    "* Specific quarries, contractors, or locations",
+    "* Risk scores and what makes a quarry high risk",
+    "* Permit status - producing, suspended, or expired",
+    "* Commodities like sand, gravel, or limestone",
+])
+
+def log(message):
+    print(str(message).encode("ascii", errors="replace").decode("ascii"))
+
+def classify_question(question):
+    q = question.strip().lower()
+    if not q:
+        return "out_of_scope"
+    greeting_terms = ("hello", "hi", "hey", "kumusta", "kamusta", "magandang", "good morning", "good afternoon", "good evening", "musta")
+    if len(q.split()) <= 5 and q.startswith(greeting_terms):
+        return "greeting"
+
+    out_topics = (
+        "weather", "sports", "politics", "cooking", "recipe", "movie", "music", "celebrity",
+        "stock", "crypto", "bitcoin", "fashion", "travel", "hotel", "flight", "basketball",
+        "football", "nba", "nfl"
+    )
+    quarry_terms = (
+        "permit", "record", "contractor", "operator", "holder", "province", "municipality",
+        "barangay", "location", "region", "commodity", "status", "expired", "expire",
+        "expiration", "approved", "date", "risk", "score", "producing", "suspended",
+        "operation", "area", "hectare", "quarry", "quarrying", "mine", "mineral", "sand",
+        "gravel", "limestone", "basalt", "shale", "andesite", "silica", "gold", "copper",
+        "environmental", "hazard", "mgb"
+    )
+    if any(topic in q for topic in out_topics) and not any(term in q for term in quarry_terms):
+        return "out_of_scope"
+    if any(term in q for term in quarry_terms):
+        return "quarry_related"
+    return "out_of_scope"
+
 # ── dotenv ────────────────────────────────────────────────────────────────────
 try:
     from dotenv import load_dotenv
     load_dotenv()
-    print("✅ dotenv loaded")
+    log("[OK] dotenv loaded")
 except ImportError:
-    print("⚠️  WARNING: python-dotenv not installed. Install with: pip install python-dotenv")
+    log("[WARN] python-dotenv not installed. Install with: pip install python-dotenv")
 
 # ── Gemini import (catches ALL errors, not just ImportError) ──────────────────
 genai = None
@@ -24,40 +78,40 @@ try:
     from google.genai import types as _types
     genai = _genai
     types = _types
-    print("✅ google-genai imported successfully")
+    log("[OK] google-genai imported successfully")
 except ImportError:
-    print("❌ ERROR: google-genai is NOT installed.")
-    print("   Fix: pip install google-genai")
+    log("[ERROR] google-genai is NOT installed.")
+    log("   Fix: pip install google-genai")
 except Exception as e:
     # Catches AttributeError, etc. from namespace package collisions
-    print(f"❌ ERROR importing google-genai: {type(e).__name__}: {e}")
-    print("   This can happen if 'google-generativeai' (old SDK) conflicts with 'google-genai' (new SDK).")
-    print("   Fix: pip uninstall google-generativeai google-genai -y && pip install google-genai")
+    log(f"[ERROR] importing google-genai: {type(e).__name__}: {e}")
+    log("   This can happen if 'google-generativeai' (old SDK) conflicts with 'google-genai' (new SDK).")
+    log("   Fix: pip uninstall google-generativeai google-genai -y && pip install google-genai")
 
 # ── API key ───────────────────────────────────────────────────────────────────
 api_key = os.getenv("GEMINI_API_KEY")
 if api_key:
-    print(f"✅ GEMINI_API_KEY found (starts with: {api_key[:8]}...)")
+    log(f"[OK] GEMINI_API_KEY found (starts with: {api_key[:8]}...)")
 else:
-    print("❌ ERROR: GEMINI_API_KEY not found in environment.")
-    print("   Fix: Add GEMINI_API_KEY=your_key_here to your .env file")
-    print(f"   Current working directory: {Path.cwd()}")
-    print(f"   .env file exists: {Path('.env').exists()}")
+    log("[ERROR] GEMINI_API_KEY not found in environment.")
+    log("   Fix: Add GEMINI_API_KEY=your_key_here to your .env file")
+    log(f"   Current working directory: {Path.cwd()}")
+    log(f"   .env file exists: {Path('.env').exists()}")
 
 # ── Gemini client ─────────────────────────────────────────────────────────────
 client = None
 if genai and api_key:
     try:
         client = genai.Client(api_key=api_key)
-        print("✅ Gemini client initialized — AI mode ACTIVE")
+        log("[OK] Gemini client initialized - AI mode ACTIVE")
     except Exception as e:
-        print(f"❌ ERROR creating Gemini client: {e}")
-        print("   Falling back to local dataset summaries.")
+        log(f"[ERROR] creating Gemini client: {e}")
+        log("   Falling back to local dataset summaries.")
 else:
     reasons = []
     if not genai:   reasons.append("google-genai not installed")
     if not api_key: reasons.append("GEMINI_API_KEY missing")
-    print(f"⚠️  Gemini DISABLED ({'; '.join(reasons)}) — using local fallback")
+    log(f"[WARN] Gemini DISABLED ({'; '.join(reasons)}) - using local fallback")
 
 # ── App setup ─────────────────────────────────────────────────────────────────
 BASE_DIR = Path(__file__).resolve().parent
@@ -186,6 +240,20 @@ def pick_interactive_rows(df, question, limit=150):
     return scoped, label
 
 def local_dataset_answer(question, scoped_df, scope):
+    q = question.lower()
+    if any(term in q for term in ["paano", "how", "calculate", "computed", "formula", "kinukwenta", "risk score"]):
+        if "risk" in q or "score" in q:
+            return (
+                "The quarry risk score is an app-generated guide from the permit data, not an official government rating. "
+                "It looks at factors available in the database: permit area, commodity type, and status or remarks.\n\n"
+                "* Larger quarry areas can add risk points.\n"
+                "* Sand, gravel, and silt add risk because they commonly affect rivers and land movement.\n"
+                "* Metallic commodities such as gold, silver, or copper add more risk points.\n"
+                "* Expired, renewal, or suspended records can add risk points.\n\n"
+                "In short: mas mataas ang score kapag mas malaki ang area, mas sensitive ang commodity, or may permit/status concern. "
+                "Use it as a screening signal, then check the permit details in the table."
+            )
+
     if scoped_df.empty:
         return "I could not find matching quarry records for that question. Try asking about a province, commodity, permit status, or risk level."
 
@@ -268,6 +336,12 @@ def get_dashboard():
 @app.post("/api/analyze")
 def analyze_data(request: ChatRequest):
     try:
+        question_type = classify_question(request.question)
+        if question_type == "greeting":
+            return {"answer": GREETING_REPLY, "rows": [], "scope": "Greeting"}
+        if question_type == "out_of_scope":
+            return {"answer": DATA_SCOPE_MESSAGE, "rows": [], "scope": "Outside quarry data scope"}
+
         conn = get_db_connection()
         df   = pd.read_sql_query("SELECT * FROM quarries", conn)
         conn.close()
@@ -277,7 +351,7 @@ def analyze_data(request: ChatRequest):
 
         # ── Fallback if Gemini is not configured ──────────────────────────────
         if not client:
-            print("⚠️  /api/analyze: Gemini client not available — using local fallback")
+            log("[WARN] /api/analyze: Gemini client not available - using local fallback")
             answer = local_dataset_answer(request.question, interactive_df, scope)
             return {"answer": answer, "rows": clean_records(interactive_df), "scope": scope}
 
@@ -288,7 +362,7 @@ def analyze_data(request: ChatRequest):
         available_cols   = [c for c in cols if c in interactive_df.columns]
         interactive_json = interactive_df[available_cols].fillna("").to_json(orient="records")
 
-        prompt = f"""You are an expert data analyst for the Hikarizz project — a civic transparency platform for Philippine quarrying permits.
+        prompt = f"""You are an expert data analyst for the Hikarizz project - a civic transparency platform for Philippine quarrying permits.
 
 The following permits were selected from the database based on the user's question:
 {interactive_json}
@@ -298,19 +372,24 @@ User's Question: {request.question}
 Rules:
 1. Read EVERY record carefully. Do not skim.
 2. For "expired" / "suspended" / "producing" queries, check BOTH 'status' AND 'remarks' fields.
-3. For risk queries, use the 'riskScore' field (0–100).
+3. For risk queries, use the 'riskScore' field (0-100).
 4. Name the Contractor and Municipality in your examples.
-5. Base every fact strictly on the provided data. Be concise and helpful."""
+5. Base every fact strictly on the provided data.
+6. You may explain concepts such as quarry risk, permits, and status, but keep the explanation tied to the provided Philippine quarry permit data.
+7. Reply in friendly, citizen-facing English. You may include simple Tagalog phrasing when helpful."""
 
-        print(f"📤 Sending {len(interactive_df)} records to Gemini for: {request.question!r}")
+        log(f"[INFO] Sending {len(interactive_df)} records to Gemini for: {request.question!r}")
 
         response = client.models.generate_content(
             model="gemini-2.0-flash-lite",
             contents=prompt,
             config=types.GenerateContentConfig(
                 system_instruction=(
-                    "You are the Hikarizz AI Assistant. Answer questions about Philippine quarry permits "
-                    "using only the provided data. If the question is unrelated to quarries, politely redirect."
+                    "You are the Quarry Land Assistant for Hikarizz. Answer independently each time; do not assume chat memory. "
+                    "Only help with Philippine land quarry permits, quarry locations, commodities, permit holders, "
+                    "operating status, expiration dates, and risk scores from the provided app data. "
+                    "You may answer explanatory questions only when they stay aligned with quarry permits or the dataset. "
+                    "If a question is unrelated, use the assistant's data-scope message and redirect politely."
                 )
             ),
         )
@@ -319,11 +398,11 @@ Rules:
         if not answer:
             raise ValueError("Gemini returned an empty response")
 
-        print(f"✅ Gemini responded ({len(answer)} chars)")
+        log(f"[OK] Gemini responded ({len(answer)} chars)")
         return {"answer": answer, "rows": clean_records(interactive_df), "scope": scope}
 
     except Exception as e:
-        print(f"❌ /api/analyze error: {type(e).__name__}: {e}")
+        log(f"[ERROR] /api/analyze error: {type(e).__name__}: {e}")
         traceback.print_exc()
         # Graceful fallback — return local answer instead of crashing
         try:
