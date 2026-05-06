@@ -171,9 +171,25 @@ def calc_risk(row):
     if "suspended" in remarks: score += 25
     return min(100, round(score))
 
+def clean_json_value(value):
+    try:
+        if pd.isna(value):
+            return None
+    except (TypeError, ValueError):
+        pass
+
+    if isinstance(value, float):
+        if math.isnan(value) or math.isinf(value):
+            return None
+
+    return value
+
 def clean_records(df):
-    safe_df = df.replace([float("inf"), float("-inf")], None).where(pd.notnull(df), None)
-    return safe_df.to_dict(orient="records")
+    records = df.replace([float("inf"), float("-inf")], None).to_dict(orient="records")
+    return [
+        {key: clean_json_value(value) for key, value in record.items()}
+        for record in records
+    ]
 
 def pick_interactive_rows(df, question, limit=15):
     if df.empty:
