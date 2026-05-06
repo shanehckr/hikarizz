@@ -115,7 +115,7 @@ function MapFitToRows({ rows }) {
           lat <= phBounds[1][0] &&
           lng >= phBounds[0][1] &&
           lng <= phBounds[1][1]
-    );
+      );
 
     if (points.length === 0) {
       map.fitBounds(phBounds, { padding: [12, 12], animate: false });
@@ -528,8 +528,8 @@ styleTag.textContent = `
     left: 51px;
     right: auto;
     z-index: 1000;
-    width: fit-content;
-    max-width: calc(100vw - 28px);
+    width: 360px;
+    max-width: calc(1000vw - 28px);
   }
 
   .chat-fab {
@@ -539,8 +539,12 @@ styleTag.textContent = `
     height: 44px;
     padding: 0 16px;
     border-radius: 22px;
-    background: var(--accent);
-    color: var(--accent-text);
+    background: linear-gradient(135deg, #0f766e, #065f46);
+    color: #ffffff;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 5px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 32px rgba(6,95,70,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
     border: none;
     cursor: pointer;
     display: flex;
@@ -553,30 +557,37 @@ styleTag.textContent = `
     letter-spacing: 0;
     touch-action: none;
   }
-  .chat-widget.open .chat-fab {
-    border-radius: 0 0 22px 22px;
-    box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+ .chat-widget.open .chat-fab {
+    min-width: 56px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    padding: 0;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    align-self: flex-end;
+  }
+  .chat-fab {
+    align-self: flex-start;
   }
   .chat-fab svg { font-size: 1.05rem; }
   .chat-fab.dragging {
     user-select: none;
     filter: brightness(0.9);
   }
-
   .chat-window {
     position: absolute;
-    right: 0;
-    bottom: 43px;
-    z-index: 1;
-    width: min(380px, calc(100vw - 32px));
-    height: auto;
-    min-width: 300px;
-    min-height: 0;
-    max-width: calc(100vw - 32px);
-    max-height: calc(100vh - 110px);
+    bottom: calc(80% + 8px);
+    left: 0;
+    z-index: 999;
+    width: 340px; // initial width when opened
+    height: 250px;
+    min-height: 100px;
+    max-height: calc(100vh - 220px);
+    margin-bottom: 0;
     background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 14px 14px 0 14px;
+    border-radius: 14px;
     display: flex;
     flex-direction: column;
     box-shadow: 0 18px 48px rgba(0,0,0,0.36);
@@ -587,25 +598,27 @@ styleTag.textContent = `
     right: auto;
     border-radius: 14px 14px 14px 0;
   }
-  .chat-window.large { width: min(680px, calc(100vw - 32px)); height: min(720px, calc(100vh - 110px)); resize: both; }
+  .chat-window.large { width: min(440px, calc(100vw - 32px)); height: min(790px, calc(100vh - 110px)); resize: both; }
   .chat-window.dragging { user-select: none; }
-  .chat-header { padding: 12px 14px; background: var(--panel); border-bottom: 1px solid var(--line); display: flex; justify-content: flex-start; align-items: center; gap: 10px; cursor: move; touch-action: none; }
-  .chat-title { min-width: 0; flex: 1; display: flex; align-items: center; justify-content: flex-start; gap: 9px; font-weight: 700; font-size: 0.92rem; text-align: left; }
-  .chat-title-icon { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--accent); color: var(--accent-text); }
-  .chat-title-text { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; line-height: 1.15; }
-  .chat-title-sub { color: var(--muted); font-size: 0.68rem; font-weight: 500; margin-top: 2px; }
-  .chat-tools { display: flex; gap: 4px; cursor: default; }
-  .chat-tools .MuiIconButton-root { width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 8px; }
+  .chat-header { padding: 10px 12px; background: var(--panel); border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 8px; cursor: move; touch-action: none; }
+  .chat-title { min-width: 0; flex: 1; display: flex; align-items: center; justify-content: flex-start; gap: 8px; font-weight: 700; font-size: 0.85rem; text-align: left; white-space: nowrap; overflow: hidden; }
+  .chat-title-icon { width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--accent); color: var(--accent-text); }
+  .chat-title-text { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; line-height: 1.15; overflow: hidden; }
+  .chat-title-text > span:first-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .chat-title-sub { color: var(--muted); font-size: 0.65rem; font-weight: 500; margin-top: 1px; white-space: nowrap; }
+  .chat-tools { display: flex; gap: 2px; cursor: default; flex-shrink: 0; }
+  .chat-tools .MuiIconButton-root { width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 6px; }
   .chat-messages { flex: 0 1 auto; min-height: 112px; max-height: min(320px, calc(100vh - 240px)); overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; background: var(--bg); }
   .chat-window.large .chat-messages { flex: 1; max-height: none; }
-  .msg { width: fit-content; max-width: min(88%, 560px); padding: 10px 13px; font-size: 0.86rem; line-height: 1.45; word-wrap: break-word; text-align: left; white-space: pre-wrap; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+  .msg { width: 360px; max-width: min(88%, 560px); padding: 10px 13px; font-size: 0.86rem; line-height: 1.45; word-wrap: break-word; text-align: left; white-space: pre-wrap; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
   .msg.ai { align-self: flex-start; background: var(--panel); border: 1px solid var(--line); color: var(--text); border-radius: 14px 14px 14px 4px; }
   .msg.user { align-self: flex-end; background: var(--accent); color: var(--accent-text); font-weight: 500; border-radius: 14px 14px 4px 14px; }
-  .thinking { font-style: italic; color: var(--muted); display: flex; gap: 4px; align-items: center; }
-  .dot { animation: blink 1.4s infinite both; font-size: 1.4rem; line-height: 0; }
+  .thinking { font-style: normal; color: var(--muted); display: flex; align-items: center; gap: 8px; font-size: 0.82rem; }
+  .thinking-dots { display: flex; gap: 4px; align-items: center; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: blink 1.4s infinite both; }
   .dot:nth-child(2) { animation-delay: 0.2s; }
   .dot:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
+  @keyframes blink { 0% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.1); } 100% { opacity: 0.2; transform: scale(0.8); } }
   .chat-input-row { padding: 12px; display: flex; align-items: center; gap: 8px; border-top: 1px solid var(--line); background: var(--panel); }
   .chat-input { flex: 1; min-width: 0; height: 40px; background: var(--bg); border: 1px solid var(--line); color: var(--text); padding: 0 12px; border-radius: 20px; outline: none; }
   .chat-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 22%, transparent); }
@@ -717,7 +730,7 @@ export default function App() {
   const [municipalityFilter, setMunicipalityFilter] = useState('');
   const [commodityFilter, setCommodityFilter] = useState('');
   const [overviewFilter, setOverviewFilter] = useState('');
-  
+
   // Chat States
   const [chatOpen, setChatOpen] = useState(false);
   const [chatLarge, setChatLarge] = useState(false);
@@ -734,7 +747,7 @@ export default function App() {
   const [messages, setMessages] = useState([{ role: 'ai', text: 'Ask me anything about quarry permits or local risk scores.' }]);
   const [input, setInput] = useState('');
   const [openSources, setOpenSources] = useState(false);
-  
+
   const messagesRef = useRef(null);
   const dragRef = useRef(null);
   const defaultChatLeft = window.innerWidth <= 560
@@ -1135,127 +1148,127 @@ export default function App() {
 
             <div className="filter-stack">
               <FormControl size="small" fullWidth>
-              <InputLabel id="year-label" shrink>Year</InputLabel>
-              <Select
-                labelId="year-label"
-                value={yearFilter}
-                label="Year"
-                displayEmpty
-                onChange={(e) => {
-                  setYearFilter(e.target.value);
-                  setRegionFilter('');
-                  setProvinceFilter('');
-                  setMunicipalityFilter('');
-                  if (e.target.value === '') clearAiScope();
-                }}
-                MenuProps={selectMenuProps}
-                renderValue={(value) => (
-                  <span className="filter-value">
-                    {value === '' ? 'All Years' : value}
-                  </span>
-                )}
-              >
-                <MenuItem value="">All Years</MenuItem>
-                {yearOptions.map((year) => <MenuItem key={year} value={year}>{year}</MenuItem>)}
-              </Select>
-            </FormControl>
+                <InputLabel id="year-label" shrink>Year</InputLabel>
+                <Select
+                  labelId="year-label"
+                  value={yearFilter}
+                  label="Year"
+                  displayEmpty
+                  onChange={(e) => {
+                    setYearFilter(e.target.value);
+                    setRegionFilter('');
+                    setProvinceFilter('');
+                    setMunicipalityFilter('');
+                    if (e.target.value === '') clearAiScope();
+                  }}
+                  MenuProps={selectMenuProps}
+                  renderValue={(value) => (
+                    <span className="filter-value">
+                      {value === '' ? 'All Years' : value}
+                    </span>
+                  )}
+                >
+                  <MenuItem value="">All Years</MenuItem>
+                  {yearOptions.map((year) => <MenuItem key={year} value={year}>{year}</MenuItem>)}
+                </Select>
+              </FormControl>
 
-            <FormControl size="small" fullWidth>
-              <InputLabel id="region-label" shrink>Region</InputLabel>
-              <Select
-                labelId="region-label"
-                value={regionFilter}
-                label="Region"
-                displayEmpty
-                onChange={(e) => {
-                  setRegionFilter(e.target.value);
-                  setProvinceFilter('');
-                  setMunicipalityFilter('');
-                  if (e.target.value === '') clearAiScope();
-                }}
-                MenuProps={selectMenuProps}
-                renderValue={(value) => (
-                  <span className="filter-value">
-                    {value === '' ? 'All Regions' : value}
-                  </span>
-                )}
-              >
-                <MenuItem value="">All Regions</MenuItem>
-                {regionOptions.map((region) => <MenuItem key={region} value={region}>{region}</MenuItem>)}
-              </Select>
-            </FormControl>
+              <FormControl size="small" fullWidth>
+                <InputLabel id="region-label" shrink>Region</InputLabel>
+                <Select
+                  labelId="region-label"
+                  value={regionFilter}
+                  label="Region"
+                  displayEmpty
+                  onChange={(e) => {
+                    setRegionFilter(e.target.value);
+                    setProvinceFilter('');
+                    setMunicipalityFilter('');
+                    if (e.target.value === '') clearAiScope();
+                  }}
+                  MenuProps={selectMenuProps}
+                  renderValue={(value) => (
+                    <span className="filter-value">
+                      {value === '' ? 'All Regions' : value}
+                    </span>
+                  )}
+                >
+                  <MenuItem value="">All Regions</MenuItem>
+                  {regionOptions.map((region) => <MenuItem key={region} value={region}>{region}</MenuItem>)}
+                </Select>
+              </FormControl>
 
-            <FormControl size="small" fullWidth>
-              <InputLabel id="province-label" shrink>Province</InputLabel>
-              <Select
-                labelId="province-label"
-                value={provinceFilter}
-                label="Province"
-                displayEmpty
-                onChange={(e) => {
-                  setProvinceFilter(e.target.value);
-                  setMunicipalityFilter('');
-                  if (e.target.value === '') clearAiScope();
-                }}
-                MenuProps={selectMenuProps}
-                renderValue={(value) => (
-                  <span className="filter-value">
-                    {value === '' ? 'All Provinces' : value}
-                  </span>
-                )}
-              >
-                <MenuItem value="">All Provinces</MenuItem>
-                {provinceOptions.map((p) => <MenuItem key={p} value={p}>{p}</MenuItem>)}
-              </Select>
-            </FormControl>
+              <FormControl size="small" fullWidth>
+                <InputLabel id="province-label" shrink>Province</InputLabel>
+                <Select
+                  labelId="province-label"
+                  value={provinceFilter}
+                  label="Province"
+                  displayEmpty
+                  onChange={(e) => {
+                    setProvinceFilter(e.target.value);
+                    setMunicipalityFilter('');
+                    if (e.target.value === '') clearAiScope();
+                  }}
+                  MenuProps={selectMenuProps}
+                  renderValue={(value) => (
+                    <span className="filter-value">
+                      {value === '' ? 'All Provinces' : value}
+                    </span>
+                  )}
+                >
+                  <MenuItem value="">All Provinces</MenuItem>
+                  {provinceOptions.map((p) => <MenuItem key={p} value={p}>{p}</MenuItem>)}
+                </Select>
+              </FormControl>
 
-            <FormControl size="small" fullWidth>
-              <InputLabel id="municipality-label" shrink>Municipalities</InputLabel>
-              <Select
-                labelId="municipality-label"
-                value={municipalityFilter}
-                label="Municipalities"
-                displayEmpty
-                onChange={(e) => {
-                  setMunicipalityFilter(e.target.value);
-                  if (e.target.value === '') clearAiScope();
-                }}
-                MenuProps={selectMenuProps}
-                renderValue={(value) => (
-                  <span className="filter-value">
-                    {value === '' ? 'All Municipalities' : value}
-                  </span>
-                )}
-              >
-                <MenuItem value="">All Municipalities</MenuItem>
-                {municipalityOptions.map((municipality) => (
-                  <MenuItem key={municipality} value={municipality}>{municipality}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+              <FormControl size="small" fullWidth>
+                <InputLabel id="municipality-label" shrink>Municipalities</InputLabel>
+                <Select
+                  labelId="municipality-label"
+                  value={municipalityFilter}
+                  label="Municipalities"
+                  displayEmpty
+                  onChange={(e) => {
+                    setMunicipalityFilter(e.target.value);
+                    if (e.target.value === '') clearAiScope();
+                  }}
+                  MenuProps={selectMenuProps}
+                  renderValue={(value) => (
+                    <span className="filter-value">
+                      {value === '' ? 'All Municipalities' : value}
+                    </span>
+                  )}
+                >
+                  <MenuItem value="">All Municipalities</MenuItem>
+                  {municipalityOptions.map((municipality) => (
+                    <MenuItem key={municipality} value={municipality}>{municipality}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
 
-            <FormControl size="small" fullWidth>
-              <InputLabel id="commodity-label" shrink>Commodity</InputLabel>
-              <Select
-                labelId="commodity-label"
-                value={commodityFilter}
-                label="Commodity"
-                displayEmpty
-                onChange={(e) => { setCommodityFilter(e.target.value); if (e.target.value === '') clearAiScope(); }}
-                MenuProps={selectMenuProps}
-                renderValue={(value) => (
-                  <span className="filter-value">
-                    {value === '' ? 'All Commodities' : value}
-                  </span>
-                )}
-              >
-                <MenuItem value="">All Commodities</MenuItem>
-                {commodityOptions.map((c) => <MenuItem key={c} value={c}>{c}</MenuItem>)}
-              </Select>
-            </FormControl>
+              <FormControl size="small" fullWidth>
+                <InputLabel id="commodity-label" shrink>Commodity</InputLabel>
+                <Select
+                  labelId="commodity-label"
+                  value={commodityFilter}
+                  label="Commodity"
+                  displayEmpty
+                  onChange={(e) => { setCommodityFilter(e.target.value); if (e.target.value === '') clearAiScope(); }}
+                  MenuProps={selectMenuProps}
+                  renderValue={(value) => (
+                    <span className="filter-value">
+                      {value === '' ? 'All Commodities' : value}
+                    </span>
+                  )}
+                >
+                  <MenuItem value="">All Commodities</MenuItem>
+                  {commodityOptions.map((c) => <MenuItem key={c} value={c}>{c}</MenuItem>)}
+                </Select>
+              </FormControl>
 
-            <Button variant="contained" sx={{ fontWeight: 700, padding: '10px' }} onClick={handleDownloadCSV}>
-              Download CSV
+              <Button variant="contained" sx={{ fontWeight: 700, padding: '10px' }} onClick={handleDownloadCSV}>
+                Download CSV
               </Button>
             </div>
           </div>
@@ -1270,7 +1283,7 @@ export default function App() {
                 </Button>
               ))}
             </div>
-           
+
           </div>
 
           <div className={`workspace ${viewMode}`}>
@@ -1415,76 +1428,73 @@ export default function App() {
 
         {page === 'explorer' ? renderExplorer() : renderProjectPage()}
 
-        <div
+       <div
           className={`chat-widget ${chatOpen ? 'open' : ''} ${shouldOpenChatRight ? 'open-right' : 'open-left'}`}
-          style={chatPosition ? { left: chatPosition.left, top: chatPosition.top, right: 'auto', bottom: 'auto' } : undefined}
+          style={chatPosition ? { left: chatPosition.left, top: chatPosition.top, bottom: 'auto', right: 'auto', position: 'fixed' } : undefined}
         >
           {chatOpen && (
           <div
-            className={`chat-window ${chatLarge ? 'large' : ''} ${isDraggingChat ? 'dragging' : ''}`}
-          >
-            <div className="chat-header" onPointerDown={startChatDrag}>
-              <div className="chat-title">
-                <span className="chat-title-icon"><ChatBubbleOutlinedIcon fontSize="small" /></span>
-                <span className="chat-title-text">
-                  <span>Quarry Land Assistant</span>
-                  <span className="chat-title-sub">Ask about permits, locations, and risk</span>
-                </span>
-              </div>
-              <div className="chat-tools">
-                <Tooltip title={chatLarge ? 'Compact chat' : 'Expand chat'}>
-                  <IconButton size="small" color="primary" onClick={() => setChatLarge((value) => !value)} aria-label={chatLarge ? 'Compact chat' : 'Expand chat'}>
-                    {chatLarge ? <CloseFullscreenIcon fontSize="small" /> : <OpenInFullIcon fontSize="small" />}
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Close chat">
-                  <IconButton size="small" color="primary" onClick={() => setChatOpen(false)} aria-label="Close chat">
-                    <CloseIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </div>
-            <div className="chat-messages" ref={messagesRef}>
-              {messages.map((m, i) => <div key={`${m.role}-${i}`} className={`msg ${m.role}`}>{m.text}</div>)}
-              {isThinking && (
-                <div className="msg ai thinking">
-                  <span className="dot">.</span><span className="dot">.</span><span className="dot">.</span>
+              className={`chat-window ${chatLarge ? 'large' : ''} ${isDraggingChat ? 'dragging' : ''}`}
+            >
+              <div className="chat-header" onPointerDown={startChatDrag}>
+                <div className="chat-title">
+                  <span className="chat-title-icon"><ChatBubbleOutlinedIcon fontSize="small" /></span>
+                  <span className="chat-title-text">
+                    <span>Quarry Land Assistant</span>
+                    <span className="chat-title-sub">Ask about permits, locations, and risk</span>
+                  </span>
                 </div>
-              )}
+                <div className="chat-tools">
+                  <Tooltip title={chatLarge ? 'Compact chat' : 'Expand chat'}>
+                    <IconButton size="small" color="primary" onClick={() => setChatLarge((value) => !value)} aria-label={chatLarge ? 'Compact chat' : 'Expand chat'}>
+                      {chatLarge ? <CloseFullscreenIcon fontSize="small" /> : <OpenInFullIcon fontSize="small" />}
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Close chat">
+                    <IconButton size="small" color="primary" onClick={() => setChatOpen(false)} aria-label="Close chat">
+                      <CloseIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+              </div>
+             <div className="chat-messages" ref={messagesRef} onPointerDown={startChatDrag}>
+                {messages.map((m, i) => <div key={`${m.role}-${i}`} className={`msg ${m.role}`}>{m.text}</div>)}
+                {isThinking && (
+                  <div className="msg ai thinking">
+                    <span>Analyzing data</span>
+                    <span className="thinking-dots">
+                      <span className="dot" />
+                      <span className="dot" />
+                      <span className="dot" />
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="chat-input-row">
+                <input
+                  className="chat-input"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                  placeholder="Ask about quarry land..."
+                />
+                <Tooltip title="Send message">
+                  <span>
+                    <IconButton className="chat-send-button" onClick={handleSend} disabled={!input.trim() || isThinking} aria-label="Send message">
+                      <SendIcon fontSize="small" />
+                    </IconButton>
+                  </span>
+                </Tooltip>
+              </div>
             </div>
-            <div className="chat-input-row">
-              <input
-                className="chat-input"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Ask about quarry land..."
-              />
-              <Tooltip title="Send message">
-                <span>
-                  <IconButton className="chat-send-button" onClick={handleSend} disabled={!input.trim() || isThinking} aria-label="Send message">
-                    <SendIcon fontSize="small" />
-                  </IconButton>
-                </span>
-              </Tooltip>
-            </div>
-          </div>
           )}
 
-          <button 
-            className={`chat-fab ${isDraggingChat ? 'dragging' : ''}`} 
-            onPointerDown={startChatDrag}
-            onClick={handleFabClick}
-          >
-            {chatOpen ? (
-              <CloseIcon fontSize="small" />
-            ) : (
-              <>
-                <ChatBubbleOutlinedIcon fontSize="small" />
-                <span>Ask About Quarry Land</span>
-              </>
-            )}
-          </button>
+           {!chatOpen && (
+                <button className="chat-fab" onPointerDown={startChatDrag} onClick={handleFabClick}>
+                  <ChatBubbleOutlinedIcon fontSize="small" />
+                  <span>Ask About Quarry Land</span>
+                </button>
+              )}
         </div>
       </div>
 
