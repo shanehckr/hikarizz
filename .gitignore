@@ -24,3 +24,9 @@ dist-ssr
 *.sw?
 
 .env
+
+# Visual Studio files
+.vs/
+*.user
+*.userossc
+*.sln.docstates

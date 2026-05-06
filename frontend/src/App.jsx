@@ -372,6 +372,41 @@ function buildLocalAnswer(preview, question) {
     .join('\n')}`;
 }
 
+// ── Markdown-lite renderer for chat messages ──────────────────────────────────
+function renderMessageText(text) {
+  if (!text) return null;
+  const paragraphs = text.split(/\n\n+/);
+  return paragraphs.map((para, pi) => {
+    const lines = para.split('\n');
+    const isList = lines.every(l => l.trim() === '' || /^[*\-]/.test(l.trim()));
+    if (isList) {
+      const items = lines.filter(l => l.trim());
+      return (
+        <ul key={pi} style={{ margin: '4px 0 4px 0', paddingLeft: '18px' }}>
+          {items.map((item, ii) => (
+            <li key={ii} style={{ marginBottom: '3px' }}
+              dangerouslySetInnerHTML={{ __html: item.replace(/^[*\-]\s*/, '').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') }}
+            />
+          ))}
+        </ul>
+      );
+    }
+    return (
+      <p key={pi} style={{ margin: pi === 0 ? '0 0 6px' : '6px 0' }}
+        dangerouslySetInnerHTML={{ __html: para.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>') }}
+      />
+    );
+  });
+}
+
+const SAMPLE_QUESTIONS = [
+  'High-risk quarries in Batangas?',
+  'Suspended operations in Cebu?',
+  'Paano kinukwenta ang risk score?',
+  'Most expired permits by province?',
+  'Limestone quarries in La Union?',
+];
+
 const fontLink = document.createElement('link');
 fontLink.rel = 'stylesheet';
 fontLink.href =
@@ -736,6 +771,34 @@ styleTag.textContent = `
     .lqe-map-container { min-height: 300px; }
     .MuiDataGrid-root { font-size: 0.9rem !important; }
   }
+
+  .sample-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .sample-q {
+    font-family: inherit;
+    font-size: 0.72rem;
+    background: var(--panel-2);
+    color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    border-radius: 14px;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    text-align: left;
+    line-height: 1.3;
+  }
+  .sample-q:hover {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border-color: var(--accent);
+  }
+
+  .msg.ai strong { color: var(--text); }
+  .msg.ai ul { list-style: disc; }
+  .msg.ai p:last-child { margin-bottom: 0; }
 
   @media (max-width: 560px) {
     .lqe-actions { gap: 4px; }
@@ -1522,10 +1585,23 @@ export default function App() {
                 </div>
               </div>
               <div className="chat-messages" ref={messagesRef} onPointerDown={startChatDrag}>
-                {messages.map((m, i) => <div key={`${m.role}-${i}`} className={`msg ${m.role}`}>{m.text}</div>)}
+                {messages.map((m, i) => (
+                  <div key={`${m.role}-${i}`} className={`msg ${m.role}`}>
+                    {renderMessageText(m.text)}
+                    {m.role === 'ai' && i === 0 && (
+                      <div className="sample-questions">
+                        {SAMPLE_QUESTIONS.map((q) => (
+                          <button key={q} className="sample-q" onClick={() => { setInput(q); }}>
+                            {q}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
                 {isThinking && (
                   <div className="msg ai thinking">
-                    <span>Analyzing data</span>
+                    <span>Thinking</span>
                     <span className="thinking-dots">
                       <span className="dot" />
                       <span className="dot" />
