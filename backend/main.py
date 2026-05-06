@@ -97,7 +97,7 @@ except ImportError:
     logger.warning("python-dotenv not installed. Install with: pip install python-dotenv")
 
 DB_PATH = resolve_database_path()
-GEMINI_MODEL = os.getenv("GEMINI_MODEL") or "gemini-2.0-flash"
+GEMINI_MODEL = os.getenv("GEMINI_MODEL") or "gemini-2.5-flash"
 
 # ── Gemini import (catches ALL errors, not just ImportError) ──────────────────
 genai = None
@@ -165,7 +165,6 @@ def get_status():
     return {
         "gemini_package_installed": genai is not None,
         "api_key_found": api_key is not None,
-        "api_key_preview": (api_key[:8] + "...") if api_key else None,
         "client_ready": client is not None,
         "mode": "gemini" if client else "local_fallback",
         "gemini_model": GEMINI_MODEL,
