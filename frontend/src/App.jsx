@@ -13,7 +13,9 @@ import {
   Select,
   Tooltip,
 } from '@mui/material';
+import DOMPurify from 'dompurify';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -385,7 +387,13 @@ function renderMessageText(text) {
         <ul key={pi} style={{ margin: '4px 0 4px 0', paddingLeft: '18px' }}>
           {items.map((item, ii) => (
             <li key={ii} style={{ marginBottom: '3px' }}
-              dangerouslySetInnerHTML={{ __html: item.replace(/^[*\-]\s*/, '').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') }}
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(
+                  item
+                    .replace(/^[*\-]\s*/, '')
+                    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                )
+              }}
             />
           ))}
         </ul>
@@ -393,7 +401,14 @@ function renderMessageText(text) {
     }
     return (
       <p key={pi} style={{ margin: pi === 0 ? '0 0 6px' : '6px 0' }}
-        dangerouslySetInnerHTML={{ __html: para.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>') }}
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(
+            para
+              .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+              .replace(/\n/g, '<br/>')
+          )
+        }}
+
       />
     );
   });
@@ -1119,7 +1134,7 @@ export default function App() {
       return;
     }
 
-   // Handle conceptual quarry questions — send to Gemini but skip local data lookup
+    // Handle conceptual quarry questions — send to Gemini but skip local data lookup
     // Handle conceptual quarry questions — send to Gemini, fallback gracefully
     if (questionType === 'quarry_related') {
       try {
@@ -1135,7 +1150,7 @@ export default function App() {
         } else {
           setMessages((prev) => [...prev, { role: 'ai', text: 'I understand your question is about quarry operations. Please make sure the backend is running so I can give you a detailed answer, or try asking about specific data — like "show me suspended quarries in Batangas".' }]);
         }
-     } catch {
+      } catch {
         setMessages((prev) => [...prev, { role: 'ai', text: 'Sorry, I\'m having trouble answering that right now. Please try again in a moment.' }]);
       } finally {
         setIsThinking(false);
@@ -1182,7 +1197,7 @@ export default function App() {
           applyAiRows(rows, data.scope);
         }
       }
-   } catch {
+    } catch {
       if (!localAnswer) {
         setMessages((prev) => [...prev, { role: 'ai', text: 'Sorry, I\'m having trouble connecting right now. Please try again in a moment.' }]);
       }
