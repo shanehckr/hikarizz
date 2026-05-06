@@ -19,7 +19,8 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import ChatBubbleOutlinedIcon from '@mui/icons-material/ChatBubbleOutlined';
 import CloseIcon from '@mui/icons-material/Close';
-import OpenInFullIcon from '@mui/icons-material/CloseFullscreen';
+import OpenInFullIcon from '@mui/icons-material/OpenInFull';
+import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import SendIcon from '@mui/icons-material/Send';
 import { DataGrid } from '@mui/x-data-grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -168,8 +169,10 @@ const DATA_SCOPE_MESSAGE = [
 function isQuarryDataQuestion(question) {
   const q = question.toLowerCase();
   const hasDataSubject = /permit|record|contractor|operator|holder|province|municipalit|barangay|location|region|commodity|status|expired|expire|expiration|approved|date|risk|score|producing|suspended|operation|area|hectare|quarr|sand|gravel|limestone|basalt|shale|andesite|silica|gold|copper/.test(q);
-  const asksDefinition = /^(what|ano|define|meaning|explain)\b/.test(q) && !/permit|record|date|expired|expire|where|which|who|how many|list|show|status|risk|province|municipalit|contractor|operator/.test(q);
-  const asksGeneralKnowledge = /^(why|how to|can you explain|tell me about)\b/.test(q) && !/permit|record|date|expired|expire|where|which|who|how many|list|show|status|risk|province|municipalit|contractor|operator/.test(q);
+  // Only block as definition/general-knowledge when there is NO data subject in the question.
+  // This ensures "what quarries are near rizal?" is never wrongly rejected.
+  const asksDefinition = /^(what|ano|define|meaning|explain)\b/.test(q) && !hasDataSubject;
+  const asksGeneralKnowledge = /^(why|how to|can you explain|tell me about)\b/.test(q) && !hasDataSubject;
 
   return hasDataSubject && !asksDefinition && !asksGeneralKnowledge;
 }
@@ -578,7 +581,6 @@ styleTag.textContent = `
     flex-direction: column;
     box-shadow: 0 18px 48px rgba(0,0,0,0.36);
     overflow: hidden;
-    resize: none;
   }
   .chat-widget.open-right .chat-window {
     left: 0;
@@ -1019,13 +1021,21 @@ export default function App() {
       const backendAnswer = data.answer || '';
       const backendFailed = backendAnswer.toLowerCase().includes('could not build an answer');
       const backendAnswerAllowed = !['missing', 'outside'].includes(provinceIntent.type);
-      if (!localAnswer && backendAnswerAllowed && backendAnswer && !backendFailed) {
-        setMessages((prev) => [...prev, { role: 'ai', text: backendAnswer }]);
-      } else if (!localAnswer && backendFailed) {
-        setMessages((prev) => [...prev, { role: 'ai', text: 'I could not build an answer for that question.' }]);
+      // Replace local placeholder with Gemini response when available
+      if (backendAnswerAllowed && backendAnswer && !backendFailed) {
+        setMessages((prev) => {
+          const next = [...prev];
+          for (let i = next.length - 1; i >= 0; i--) {
+            if (next[i].role === 'ai') {
+              next[i] = { role: 'ai', text: backendAnswer };
+              break;
+            }
+          }
+          return next;
+        });
       }
 
-      if (!localAnswer && Array.isArray(data.rows)) {
+      if (Array.isArray(data.rows) && data.rows.length > 0) {
         const rows = data.rows.map((d, i) => ({ ...d, id: d.id ?? `ai-${i}` }));
         const backendRowsMatchProvince = provinceIntent.type === 'none' || (provinceIntent.type === 'matched' && rows.every((row) => row.province === provinceIntent.province));
         if (backendRowsMatchProvince) {
@@ -1279,7 +1289,7 @@ export default function App() {
                   background: themeMode === 'dark' ? '#0e1018' : '#f6f7f2'
                 }}
               >
-                <MapResizeWatcher watch={`${viewMode}-${sidebarOpen}-${filteredData.length}-${mapHeight}`} />
+                <MapResizeWatcher watch={`${viewMode}-${sidebarOpen}-${filteredData.length}-${mapHeight}-${chatLarge}`} />
                 <MapBoundsLimiter />
                 <MapFitToRows rows={filteredData} />
                 <TileLayer url={mapTiles[themeMode]} noWrap />
@@ -1466,8 +1476,14 @@ export default function App() {
             onPointerDown={startChatDrag}
             onClick={handleFabClick}
           >
-            {chatOpen ? <CloseIcon fontSize="small" /> : <ChatBubbleOutlinedIcon fontSize="small" />}
-            <span>{chatOpen ? 'Close Chat' : 'Ask About Quarry Land'}</span>
+            {chatOpen ? (
+              <CloseIcon fontSize="small" />
+            ) : (
+              <>
+                <ChatBubbleOutlinedIcon fontSize="small" />
+                <span>Ask About Quarry Land</span>
+              </>
+            )}
           </button>
         </div>
       </div>
