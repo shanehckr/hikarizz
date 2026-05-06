@@ -17,6 +17,11 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import ChatBubbleOutlinedIcon from '@mui/icons-material/ChatBubbleOutlined';
+import CloseIcon from '@mui/icons-material/Close';
+import OpenInFullIcon from '@mui/icons-material/OpenInFull';
+import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
+import SendIcon from '@mui/icons-material/Send';
 import { DataGrid } from '@mui/x-data-grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import 'leaflet/dist/leaflet.css';
@@ -54,9 +59,44 @@ function MapResizeWatcher({ watch }) {
   const map = useMap();
 
   useEffect(() => {
-    const timer = window.setTimeout(() => map.invalidateSize(), 120);
+    const timer = window.setTimeout(() => {
+      map.invalidateSize();
+      map.fire('resize');
+    }, 120);
     return () => window.clearTimeout(timer);
   }, [map, watch]);
+
+  return null;
+}
+
+function MapBoundsLimiter() {
+  const map = useMap();
+
+  useEffect(() => {
+    const applyBounds = () => {
+      const minZoom = map.getBoundsZoom(phBounds, true);
+      map.setMinZoom(minZoom);
+      map.setMaxBounds(phBounds);
+
+      if (map.getZoom() < minZoom) {
+        map.setZoom(minZoom, { animate: false });
+      }
+
+      map.panInsideBounds(phBounds, { animate: false });
+    };
+
+    const timer = window.setTimeout(() => {
+      map.invalidateSize();
+      applyBounds();
+    }, 0);
+
+    map.on('resize', applyBounds);
+
+    return () => {
+      window.clearTimeout(timer);
+      map.off('resize', applyBounds);
+    };
+  }, [map]);
 
   return null;
 }
@@ -74,20 +114,20 @@ function MapFitToRows({ rows }) {
           lat >= phBounds[0][0] &&
           lat <= phBounds[1][0] &&
           lng >= phBounds[0][1] &&
-          lng <= phBounds[1][1],
-      );
+          lng <= phBounds[1][1]
+    );
 
-    if (!points.length) {
-      map.fitBounds(phBounds, { padding: [18, 18], animate: true });
+    if (points.length === 0) {
+      map.fitBounds(phBounds, { padding: [12, 12], animate: false });
       return;
     }
 
     if (points.length === 1) {
-      map.setView(points[0], 11, { animate: true });
+      map.setView(points[0], 11, { animate: false });
       return;
     }
 
-    map.fitBounds(points, { padding: [36, 36], maxZoom: 11, animate: true });
+    map.fitBounds(points, { padding: [40, 40], animate: false, maxZoom: 11 });
   }, [map, rows]);
 
   return null;
@@ -115,6 +155,26 @@ const outOfScopePlaces = [
   'africa', 'india', 'indonesia', 'malaysia', 'thailand', 'vietnam', 'singapore',
 ];
 
+const DATA_SCOPE_MESSAGE = [
+  'I can only answer questions using this quarry permit dataset.',
+  '',
+  'You can ask about:',
+  '* permit holders or contractors',
+  '* provinces, municipalities, and locations',
+  '* commodities such as sand, gravel, limestone, or basalt',
+  '* operating status, expired permits, and expiration dates',
+  '* risk scores and high-risk quarry records',
+].join('\n');
+
+function isQuarryDataQuestion(question) {
+  const q = question.toLowerCase();
+  const hasDataSubject = /permit|record|contractor|operator|holder|province|municipalit|barangay|location|region|commodity|status|expired|expire|expiration|approved|date|risk|score|producing|suspended|operation|area|hectare|quarr|sand|gravel|limestone|basalt|shale|andesite|silica|gold|copper/.test(q);
+  const asksDefinition = /^(what|ano|define|meaning|explain)\b/.test(q) && !/permit|record|date|expired|expire|where|which|who|how many|list|show|status|risk|province|municipalit|contractor|operator/.test(q);
+  const asksGeneralKnowledge = /^(why|how to|can you explain|tell me about)\b/.test(q) && !/permit|record|date|expired|expire|where|which|who|how many|list|show|status|risk|province|municipalit|contractor|operator/.test(q);
+
+  return hasDataSubject && !asksDefinition && !asksGeneralKnowledge;
+}
+
 function getProvinceIntent(rows, question) {
   const q = question.toLowerCase();
   const datasetProvinces = [...new Set(rows.map((row) => row.province).filter(Boolean))];
@@ -140,6 +200,7 @@ function buildInteractiveRows(rows, question) {
       rows: [],
       scope: `AI preview: 0 matching permits for ${provinceIntent.province}`,
       requestedProvince: provinceIntent.province,
+      availableProvinces: [...new Set(rows.map((row) => row.province).filter(Boolean))].sort(),
     };
   }
 
@@ -148,6 +209,7 @@ function buildInteractiveRows(rows, question) {
       rows: [],
       scope: `AI preview: 0 matching permits for ${provinceIntent.province}`,
       requestedPlace: provinceIntent.province,
+      availableProvinces: [...new Set(rows.map((row) => row.province).filter(Boolean))].sort(),
     };
   }
 
@@ -170,7 +232,11 @@ function buildInteractiveRows(rows, question) {
 
   const statusTerms = `${q} `;
   if (/expired|renewal|expire/.test(statusTerms)) {
-    textMatches = textMatches.concat(baseRows.filter((row) => `${row.status || ''} ${row.remarks || ''}`.toLowerCase().match(/expired|renewal/)));
+    const today = new Date().toISOString().split('T')[0];
+    textMatches = textMatches.concat(baseRows.filter((row) => {
+      const statusText = `${row.status || ''} ${row.remarks || ''}`.toLowerCase();
+      return statusText.match(/expired|renewal/) || (row.date_expired && row.date_expired < today);
+    }));
     reasons.push('expired or renewal records');
   }
   if (/producing|active/.test(statusTerms)) {
@@ -224,11 +290,13 @@ function buildLocalAnswer(preview, question) {
   const q = question.toLowerCase();
 
   if (!rows.length) {
+    const provinceList = (preview.availableProvinces || []).slice(0, 12).join(', ');
+    const provinceSuffix = provinceList ? ` Available provinces include: ${provinceList}${(preview.availableProvinces || []).length > 12 ? ', and more' : ''}.` : '';
     if (preview.requestedProvince) {
-      return `I could not find quarry records for ${preview.requestedProvince} in the local dataset. The current dataset only has records for Bataan, Batangas, La Union, Rizal, Tarlac, and Zambales.`;
+      return `I could not find quarry records for ${preview.requestedProvince} in the local dataset.${provinceSuffix}`;
     }
     if (preview.requestedPlace) {
-      return `I could not find quarry records for ${preview.requestedPlace}. This project currently contains Philippine quarry records only, with data for Bataan, Batangas, La Union, Rizal, Tarlac, and Zambales.`;
+      return `I could not find quarry records for ${preview.requestedPlace}. This assistant only uses the Philippine quarry permit dataset loaded in this app.${provinceSuffix}`;
     }
     return 'I could not find matching quarry records in the local dataset for that question.';
   }
@@ -238,6 +306,22 @@ function buildLocalAnswer(preview, question) {
   const provinces = uniqueValues('province');
   const commodities = uniqueValues('commodity');
   const highRisk = rows.filter((row) => Number(row.riskScore || 0) >= 70).length;
+  const wantsExpiredDates = /expired|expire|expiration/.test(q) && /date|when|list|show/.test(q);
+
+  if (wantsExpiredDates) {
+    const withDates = rows
+      .filter((row) => row.date_expired)
+      .sort((a, b) => String(a.date_expired).localeCompare(String(b.date_expired)))
+      .slice(0, 20);
+
+    if (!withDates.length) {
+      return `${preview.scope}.\n\nI found matching quarry records, but they do not include expiration dates in the local dataset.`;
+    }
+
+    return `${preview.scope}.\n\nExpiration dates:\n${withDates
+      .map((row) => `* ${row.date_expired} - ${row.contractor || row.operator || 'Unknown permit holder'} (${row.municipality || 'Unknown municipality'}, ${row.province || 'Unknown province'}; ${row.status || 'Unknown status'})`)
+      .join('\n')}`;
+  }
 
   if (q.includes('municipalit')) {
     return `${preview.scope}.\n\nMunicipalities:\n${municipalities.map((value) => `* ${value}`).join('\n')}`;
@@ -266,7 +350,7 @@ const styleTag = document.createElement('style');
 styleTag.textContent = `
   *, *::before, *::after { box-sizing: border-box; }
   html, body, #root { height: 100vh; width: 100vw; margin: 0; overflow: hidden; font-family: 'Google Sans', system-ui, sans-serif; }
-  body { background: #0e1018; }
+  body { background: #f4f7f1; }
   button, input, textarea { font: inherit; }
 
   .lqe-root {
@@ -279,6 +363,7 @@ styleTag.textContent = `
     --accent: #d4a855;
     --accent-text: #0e1018;
     --table-bg: #0e1018;
+    font-size: clamp(14px, 0.85vw, 16px);
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -300,41 +385,51 @@ styleTag.textContent = `
   }
 
   .lqe-header {
-    height: 60px;
+    height: 56px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
-    padding: 0 20px;
+    gap: 12px;
+    padding: 0 18px;
     background: var(--panel);
     border-bottom: 1px solid var(--line);
   }
 
-  .lqe-logo { font-family: 'Google Sans Display', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text); white-space: nowrap; }
+  .lqe-logo { font-family: 'Google Sans Display', sans-serif; font-size: 1.28rem; font-weight: 700; color: var(--text); white-space: nowrap; }
   .lqe-badge { font-size: 0.62rem; background: var(--accent); color: var(--accent-text); padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
-  .lqe-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+  .lqe-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+  .lqe-actions .MuiButton-root { min-height: 34px; padding: 5px 12px; font-size: 0.84rem; }
 
   .lqe-stats { flex-shrink: 0; display: grid; grid-template-columns: repeat(4, 1fr); background: var(--panel); border-bottom: 1px solid var(--line); }
-  .lqe-stat-card { min-width: 0; padding: 12px 20px; border-right: 1px solid var(--line); }
+  .lqe-stat-card { min-width: 0; padding: 10px 16px; border-right: 1px solid var(--line); text-align: center; }
   .lqe-stat-card:last-child { border-right: 0; }
-  .lqe-stat-label { font-size: 0.65rem; color: var(--muted); font-weight: 700; text-transform: uppercase; }
-  .lqe-stat-value { font-family: 'Google Sans Display', sans-serif; font-size: 1.55rem; font-weight: 700; color: var(--accent); line-height: 1.15; }
+  .lqe-stat-label { font-size: 0.62rem; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+  .lqe-stat-value { font-family: 'Google Sans Display', sans-serif; font-size: 1.38rem; font-weight: 700; color: var(--accent); line-height: 1.12; }
 
   .lqe-body { flex: 1; display: flex; min-height: 0; min-width: 0; }
   .lqe-sidebar {
-    width: 300px;
+    width: 280px;
     flex-shrink: 0;
     background: var(--panel);
     border-right: 1px solid var(--line);
-    padding: 18px;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    overflow-y: auto;
+    overflow: hidden;
     transition: width 0.2s ease, padding 0.2s ease, border-color 0.2s ease;
   }
   .lqe-sidebar.hidden { width: 0; padding: 0; border-right-color: transparent; overflow: hidden; }
+  .sidebar-panel {
+    flex: 1 1 auto;
+    max-height: 100%;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    overflow-y: auto;
+    background: var(--panel);
+  }
   .sidebar-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .sidebar-title { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
   .sidebar-toggle-rail {
@@ -347,26 +442,55 @@ styleTag.textContent = `
     border-right: 1px solid var(--line);
   }
 
-  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .overview-box { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 13px 8px; text-align: center; }
-  .overview-label { font-size: 0.58rem; color: var(--muted); text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
-  .overview-val { font-family: 'Google Sans Display', sans-serif; font-size: 1.35rem; font-weight: 700; }
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .overview-box { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 8px; text-align: center; color: inherit; cursor: pointer; }
+  .overview-box:hover,
+  .overview-box.active { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .overview-label { font-size: 0.58rem; color: var(--muted); text-transform: uppercase; font-weight: 700; margin-bottom: 3px; }
+  .overview-val { font-family: 'Google Sans Display', sans-serif; font-size: 1.22rem; font-weight: 700; }
   .filter-label { font-size: 0.68rem; color: var(--muted); font-weight: 700; text-transform: uppercase; }
-  .filter-stack { display: flex; flex-direction: column; gap: 14px; }
+  .filter-stack { display: flex; flex-direction: column; gap: 11px; }
+  .filter-stack .MuiButton-root { min-height: 36px; padding: 7px 10px; font-size: 0.8rem; }
+  .filter-stack .MuiFormControl-root { min-width: 0; }
+  .filter-stack .MuiInputLabel-root {
+    max-width: calc(100% - 24px);
+    padding: 0 4px;
+    background: var(--panel);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .filter-stack .MuiSelect-select {
+    min-width: 0;
+    min-height: 22px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .filter-value {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .ai-scope { border: 1px solid var(--line); border-radius: 8px; padding: 12px; background: var(--bg); font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
 
   .lqe-main { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--bg); }
-  .view-toolbar { height: 44px; flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 12px; background: var(--panel); border-bottom: 1px solid var(--line); }
+  .view-toolbar { height: 40px; flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 6px 10px; background: var(--panel); border-bottom: 1px solid var(--line); }
   .view-tabs { display: flex; gap: 6px; }
+  .view-tabs .MuiButton-root { min-height: 30px; padding: 4px 12px; font-size: 0.78rem; }
   .view-label { color: var(--muted); font-size: 0.78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .workspace { flex: 1; min-height: 0; display: flex; flex-direction: column; }
   .workspace.map { grid-template-rows: 1fr; }
   .workspace.table { grid-template-rows: 1fr; }
-  .lqe-map-container { height: 42%; min-height: 220px; flex-shrink: 0; border-bottom: 1px solid var(--line); position: relative; z-index: 1; overflow: hidden; }
+  .lqe-map-container { height: 34%; min-height: 210px; flex-shrink: 0; border-bottom: 1px solid var(--line); position: relative; z-index: 1; overflow: hidden; }
   .workspace.map .lqe-map-container { height: 100%; border-bottom: 0; }
   .workspace.table .lqe-map-container { display: none; }
   .table-resize-handle {
-    height: 10px;
+    height: 8px;
     flex-shrink: 0;
     cursor: row-resize;
     background: var(--panel);
@@ -392,66 +516,79 @@ styleTag.textContent = `
     background: var(--accent);
     opacity: 1;
   }
-  .lqe-table-container { flex: 1; min-height: 0; padding: 12px; background: var(--table-bg); }
+  .lqe-table-container { flex: 1; min-height: 0; padding: 8px 10px; background: var(--table-bg); }
   .workspace.map .lqe-table-container { display: none; }
   .workspace.table .lqe-table-container { flex: 1; }
 
   .chat-fab {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
+    bottom: 14px;
+    right: 14px;
     z-index: 1000;
-    min-width: 54px;
-    height: 50px;
-    padding: 0 18px;
-    border-radius: 25px;
+    min-width: 178px;
+    height: 44px;
+    padding: 0 16px;
+    border-radius: 22px;
     background: var(--accent);
     color: var(--accent-text);
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 10px;
-    box-shadow: 0 8px 26px rgba(0,0,0,0.28);
+    gap: 9px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.22);
     font-weight: 700;
+    font-size: 0.82rem;
+    text-transform: none;
+    letter-spacing: 0;
   }
+  .chat-fab svg { font-size: 1.05rem; }
 
   .chat-window {
     position: fixed;
     right: 24px;
     bottom: 84px;
     z-index: 1001;
-    width: min(420px, calc(100vw - 32px));
-    height: min(520px, calc(100vh - 130px));
+    width: min(380px, calc(100vw - 32px));
+    height: auto;
     min-width: 300px;
-    min-height: 310px;
+    min-height: 0;
     max-width: calc(100vw - 32px);
     max-height: calc(100vh - 110px);
     background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: 14px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 14px 42px rgba(0,0,0,0.45);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.36);
     overflow: hidden;
-    resize: both;
+    resize: none;
   }
-  .chat-window.large { width: min(680px, calc(100vw - 32px)); height: min(720px, calc(100vh - 110px)); }
+  .chat-window.large { width: min(680px, calc(100vw - 32px)); height: min(720px, calc(100vh - 110px)); resize: both; }
   .chat-window.dragging { user-select: none; }
-  .chat-header { padding: 12px 14px; background: var(--panel-2); border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 10px; cursor: move; touch-action: none; }
-  .chat-title { font-weight: 700; font-size: 0.9rem; }
-  .chat-tools { display: flex; gap: 6px; cursor: default; }
-  .chat-messages { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 12px; background: var(--bg); }
-  .msg { width: fit-content; max-width: 88%; padding: 10px 13px; font-size: 0.86rem; line-height: 1.45; word-wrap: break-word; text-align: left; white-space: pre-wrap; }
-  .msg.ai { align-self: flex-start; background: var(--panel-2); border: 1px solid var(--line); color: var(--text); border-radius: 14px 14px 14px 3px; }
-  .msg.user { align-self: flex-end; background: var(--accent); color: var(--accent-text); font-weight: 500; border-radius: 14px 14px 3px 14px; }
+  .chat-header { padding: 12px 14px; background: var(--panel); border-bottom: 1px solid var(--line); display: flex; justify-content: flex-start; align-items: center; gap: 10px; cursor: move; touch-action: none; }
+  .chat-title { min-width: 0; flex: 1; display: flex; align-items: center; justify-content: flex-start; gap: 9px; font-weight: 700; font-size: 0.92rem; text-align: left; }
+  .chat-title-icon { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--accent); color: var(--accent-text); }
+  .chat-title-text { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; line-height: 1.15; }
+  .chat-title-sub { color: var(--muted); font-size: 0.68rem; font-weight: 500; margin-top: 2px; }
+  .chat-tools { display: flex; gap: 4px; cursor: default; }
+  .chat-tools .MuiIconButton-root { width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 8px; }
+  .chat-messages { flex: 0 1 auto; min-height: 112px; max-height: min(320px, calc(100vh - 240px)); overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; background: var(--bg); }
+  .chat-window.large .chat-messages { flex: 1; max-height: none; }
+  .msg { width: fit-content; max-width: min(88%, 560px); padding: 10px 13px; font-size: 0.86rem; line-height: 1.45; word-wrap: break-word; text-align: left; white-space: pre-wrap; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+  .msg.ai { align-self: flex-start; background: var(--panel); border: 1px solid var(--line); color: var(--text); border-radius: 14px 14px 14px 4px; }
+  .msg.user { align-self: flex-end; background: var(--accent); color: var(--accent-text); font-weight: 500; border-radius: 14px 14px 4px 14px; }
   .thinking { font-style: italic; color: var(--muted); display: flex; gap: 4px; align-items: center; }
   .dot { animation: blink 1.4s infinite both; font-size: 1.4rem; line-height: 0; }
   .dot:nth-child(2) { animation-delay: 0.2s; }
   .dot:nth-child(3) { animation-delay: 0.4s; }
   @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
-  .chat-input-row { padding: 12px; display: flex; gap: 8px; border-top: 1px solid var(--line); background: var(--panel); }
-  .chat-input { flex: 1; min-width: 0; background: var(--bg); border: 1px solid var(--line); color: var(--text); padding: 9px 10px; border-radius: 6px; }
+  .chat-input-row { padding: 12px; display: flex; align-items: center; gap: 8px; border-top: 1px solid var(--line); background: var(--panel); }
+  .chat-input { flex: 1; min-width: 0; height: 40px; background: var(--bg); border: 1px solid var(--line); color: var(--text); padding: 0 12px; border-radius: 20px; outline: none; }
+  .chat-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 22%, transparent); }
+  .chat-send-button.MuiIconButton-root { width: 40px; height: 40px; flex-shrink: 0; background: var(--accent); color: var(--accent-text); }
+  .chat-send-button.MuiIconButton-root:hover { background: var(--accent); filter: brightness(0.96); }
+  .chat-send-button.Mui-disabled { opacity: 0.45; }
 
   .project-page { flex: 1; min-height: 0; overflow: auto; background: var(--bg); padding: 28px; }
   .project-shell { max-width: 980px; margin: 0 auto; display: grid; gap: 22px; }
@@ -476,7 +613,33 @@ styleTag.textContent = `
   .project-card h2 { margin: 0 0 8px; font-size: 1rem; color: var(--accent); letter-spacing: 0; line-height: 1.25; }
   .project-card p { margin: 0; color: var(--muted); line-height: 1.5; font-size: 0.92rem; }
 
-  .MuiDataGrid-root { width: 100% !important; border: 1px solid var(--line) !important; border-radius: 8px !important; overflow: hidden; }
+  .MuiDataGrid-root { width: 100% !important; border: 1px solid var(--line) !important; border-radius: 8px !important; overflow: hidden; font-size: 0.8rem !important; }
+  .MuiDataGrid-columnHeader,
+  .MuiDataGrid-cell { padding-left: 8px !important; padding-right: 8px !important; }
+  .MuiDataGrid-columnHeaderTitle { font-weight: 700 !important; }
+  .MuiDataGrid-footerContainer {
+    min-height: 34px !important;
+    height: 34px !important;
+    overflow: hidden !important;
+  }
+  .MuiTablePagination-root,
+  .MuiTablePagination-toolbar {
+    min-height: 34px !important;
+    height: 34px !important;
+  }
+  .MuiTablePagination-toolbar {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+  .MuiTablePagination-selectLabel,
+  .MuiTablePagination-displayedRows {
+    margin: 0 !important;
+    font-size: 0.72rem !important;
+  }
+  .MuiTablePagination-input {
+    margin-right: 12px !important;
+    font-size: 0.72rem !important;
+  }
   .lqe-root.dark .MuiDataGrid-root { color: #e8e2d4 !important; background: #13161f !important; }
   .lqe-root.light .MuiDataGrid-root { color: #182018 !important; background: #ffffff !important; }
   .lqe-root.dark .MuiDataGrid-columnHeaders, .lqe-root.dark .MuiDataGrid-footerContainer { background: #1a1d26 !important; color: #e8e2d4 !important; }
@@ -490,15 +653,30 @@ styleTag.textContent = `
     .lqe-actions .MuiButton-root { min-width: 0; padding: 5px 8px; font-size: 0.68rem; }
     .lqe-actions .MuiIconButton-root { padding: 5px; }
     .lqe-stats { grid-template-columns: repeat(2, 1fr); }
-    .lqe-sidebar { position: absolute; top: 121px; bottom: 0; z-index: 800; box-shadow: 8px 0 24px rgba(0,0,0,0.25); }
+    .lqe-body { position: relative; }
+    .lqe-sidebar { position: absolute; top: 0; bottom: 0; width: min(300px, calc(100vw - 44px)); max-width: calc(100vw - 44px); z-index: 800; box-shadow: 8px 0 24px rgba(0,0,0,0.25); }
+    .sidebar-toggle-rail { width: 38px; }
     .project-grid { grid-template-columns: 1fr; }
     .view-toolbar { height: auto; align-items: flex-start; flex-direction: column; }
+  }
+
+  @media (min-width: 1800px) {
+    .lqe-root { font-size: 18px; }
+    .lqe-header { height: 70px; }
+    .lqe-logo { font-size: 1.55rem; }
+    .lqe-sidebar { width: 340px; }
+    .sidebar-panel { padding: 22px; }
+    .lqe-map-container { min-height: 300px; }
+    .MuiDataGrid-root { font-size: 0.9rem !important; }
   }
 
   @media (max-width: 560px) {
     .lqe-actions { gap: 4px; }
     .lqe-actions .MuiButton-root { padding: 5px 6px; font-size: 0.62rem; }
     .lqe-badge { display: none; }
+    .lqe-sidebar { width: calc(100vw - 38px); max-width: calc(100vw - 38px); }
+    .sidebar-panel { padding: 14px; }
+    .filter-stack { gap: 12px; }
   }
 `;
 document.head.appendChild(styleTag);
@@ -508,17 +686,21 @@ export default function App() {
   const [allData, setAllData] = useState([]);
   const [aiRows, setAiRows] = useState(null);
   const [aiScopeLabel, setAiScopeLabel] = useState('');
+  const [yearFilter, setYearFilter] = useState('');
+  const [regionFilter, setRegionFilter] = useState('');
   const [provinceFilter, setProvinceFilter] = useState('');
+  const [municipalityFilter, setMunicipalityFilter] = useState('');
   const [commodityFilter, setCommodityFilter] = useState('');
+  const [overviewFilter, setOverviewFilter] = useState('');
   const [chatOpen, setChatOpen] = useState(false);
   const [chatLarge, setChatLarge] = useState(false);
   const [chatPosition, setChatPosition] = useState(null);
   const [isDraggingChat, setIsDraggingChat] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [viewMode, setViewMode] = useState('split');
-  const [mapHeight, setMapHeight] = useState(42);
+  const [mapHeight, setMapHeight] = useState(34);
   const [isResizingTable, setIsResizingTable] = useState(false);
-  const [themeMode, setThemeMode] = useState('dark');
+  const [themeMode, setThemeMode] = useState('light');
   const [page, setPage] = useState('explorer');
   const [messages, setMessages] = useState([{ role: 'ai', text: 'Ask me anything about quarry permits or local risk scores.' }]);
   const [input, setInput] = useState('');
@@ -601,7 +783,7 @@ export default function App() {
 
       const rect = workspace.getBoundingClientRect();
       const nextHeight = ((event.clientY - rect.top) / rect.height) * 100;
-      setMapHeight(Math.min(72, Math.max(28, nextHeight)));
+      setMapHeight(Math.min(64, Math.max(24, nextHeight)));
     };
 
     const stopResize = () => setIsResizingTable(false);
@@ -615,50 +797,116 @@ export default function App() {
   }, [isResizingTable]);
 
   const sourceData = aiRows || allData;
+  const sortedUniqueValues = (rows, field) => [...new Set(rows.map((row) => row[field]).filter(Boolean))].sort((a, b) =>
+    String(a).localeCompare(String(b), undefined, { numeric: true }),
+  );
 
-  const filteredData = useMemo(() => {
-    return sourceData.filter(
-      (d) =>
-        (!provinceFilter || d.province === provinceFilter) &&
-        (!commodityFilter || d.commodity === commodityFilter),
-    );
-  }, [sourceData, provinceFilter, commodityFilter]);
+  const yearOptions = useMemo(
+    () => sortedUniqueValues(sourceData, 'year'),
+    [sourceData],
+  );
+
+  const regionOptions = useMemo(
+    () => sortedUniqueValues(
+      sourceData.filter((d) => !yearFilter || String(d.year) === String(yearFilter)),
+      'region',
+    ),
+    [sourceData, yearFilter],
+  );
 
   const provinceOptions = useMemo(
-    () => [...new Set(allData.map((d) => d.province))].filter(Boolean).sort(),
-    [allData],
+    () => sortedUniqueValues(
+      sourceData.filter(
+        (d) =>
+          (!yearFilter || String(d.year) === String(yearFilter)) &&
+          (!regionFilter || d.region === regionFilter),
+      ),
+      'province',
+    ),
+    [sourceData, yearFilter, regionFilter],
+  );
+
+  const municipalityOptions = useMemo(
+    () => sortedUniqueValues(
+      sourceData.filter(
+        (d) =>
+          (!yearFilter || String(d.year) === String(yearFilter)) &&
+          (!regionFilter || d.region === regionFilter) &&
+          (!provinceFilter || d.province === provinceFilter),
+      ),
+      'municipality',
+    ),
+    [sourceData, yearFilter, regionFilter, provinceFilter],
   );
 
   const commodityOptions = useMemo(
-    () => [...new Set(allData.map((d) => d.commodity))].filter(Boolean).sort(),
-    [allData],
+    () => sortedUniqueValues(sourceData, 'commodity'),
+    [sourceData],
   );
 
+  const baseFilteredData = useMemo(() => {
+    return sourceData.filter(
+      (d) =>
+        (!yearFilter || String(d.year) === String(yearFilter)) &&
+        (!regionFilter || d.region === regionFilter) &&
+        (!provinceFilter || d.province === provinceFilter) &&
+        (!municipalityFilter || d.municipality === municipalityFilter) &&
+        (!commodityFilter || d.commodity === commodityFilter),
+    );
+  }, [sourceData, yearFilter, regionFilter, provinceFilter, municipalityFilter, commodityFilter]);
+
+  const filteredData = useMemo(() => {
+    const today = new Date().toISOString().split('T')[0];
+
+    if (overviewFilter === 'producing') {
+      return baseFilteredData.filter((d) => (d.status || '').toLowerCase() === 'producing');
+    }
+    if (overviewFilter === 'expired') {
+      return baseFilteredData.filter((d) => d.date_expired && d.date_expired < today);
+    }
+    if (overviewFilter === 'noOperation') {
+      return baseFilteredData.filter((d) => (d.remarks || '').toLowerCase() === 'no operation');
+    }
+    if (overviewFilter === 'suspended') {
+      return baseFilteredData.filter((d) => (d.remarks || '').toLowerCase() === 'suspended');
+    }
+
+    return baseFilteredData;
+  }, [baseFilteredData, overviewFilter]);
+
   const stats = useMemo(() => {
-    const areaSum = filteredData.reduce((acc, d) => acc + (parseFloat(d.area_hectares) || 0), 0);
+    const areaSum = baseFilteredData.reduce((acc, d) => acc + (parseFloat(d.area_hectares) || 0), 0);
     const today = new Date().toISOString().split('T')[0];
     return {
-      permits: filteredData.length,
-      provinces: [...new Set(filteredData.map((d) => d.province).filter(Boolean))].length,
-      commodities: [...new Set(filteredData.map((d) => d.commodity).filter(Boolean))].length,
+      permits: baseFilteredData.length,
+      provinces: [...new Set(baseFilteredData.map((d) => d.province).filter(Boolean))].length,
+      commodities: [...new Set(baseFilteredData.map((d) => d.commodity).filter(Boolean))].length,
       area: areaSum.toLocaleString(undefined, { maximumFractionDigits: 0 }),
-      producing: filteredData.filter((d) => (d.status || '').toLowerCase() === 'producing').length,
-      expired: filteredData.filter((d) => d.date_expired && d.date_expired < today).length,
-      noOperation: filteredData.filter((d) => (d.remarks || '').toLowerCase() === 'no operation').length,
-      suspended: filteredData.filter((d) => (d.remarks || '').toLowerCase() === 'suspended').length,
+      producing: baseFilteredData.filter((d) => (d.status || '').toLowerCase() === 'producing').length,
+      expired: baseFilteredData.filter((d) => d.date_expired && d.date_expired < today).length,
+      noOperation: baseFilteredData.filter((d) => (d.remarks || '').toLowerCase() === 'no operation').length,
+      suspended: baseFilteredData.filter((d) => (d.remarks || '').toLowerCase() === 'suspended').length,
     };
-  }, [filteredData]);
+  }, [baseFilteredData]);
 
   const clearAiScope = () => {
     setAiRows(null);
     setAiScopeLabel('');
   };
 
+  const toggleOverviewFilter = (value) => {
+    setOverviewFilter((current) => (current === value ? '' : value));
+  };
+
   const applyAiRows = (rows, scope) => {
     setAiRows(rows);
     setAiScopeLabel(scope || `AI result set: ${rows.length} matching permits`);
+    setYearFilter('');
+    setRegionFilter('');
     setProvinceFilter('');
+    setMunicipalityFilter('');
     setCommodityFilter('');
+    setOverviewFilter('');
     setPage('explorer');
     if (viewMode === 'table') setViewMode('split');
   };
@@ -691,6 +939,12 @@ export default function App() {
     let localAnswer = '';
     let provinceIntent = { type: 'none', province: '' };
 
+    if (!isQuarryDataQuestion(userMsg)) {
+      setMessages((prev) => [...prev, { role: 'ai', text: DATA_SCOPE_MESSAGE }]);
+      setIsThinking(false);
+      return;
+    }
+
     if (allData.length) {
       provinceIntent = getProvinceIntent(allData, userMsg);
       const preview = buildInteractiveRows(allData, userMsg);
@@ -709,13 +963,13 @@ export default function App() {
       const backendAnswer = data.answer || '';
       const backendFailed = backendAnswer.toLowerCase().includes('could not build an answer');
       const backendAnswerAllowed = !['missing', 'outside'].includes(provinceIntent.type);
-      if (backendAnswerAllowed && backendAnswer && !backendFailed && backendAnswer !== localAnswer) {
+      if (!localAnswer && backendAnswerAllowed && backendAnswer && !backendFailed) {
         setMessages((prev) => [...prev, { role: 'ai', text: backendAnswer }]);
       } else if (!localAnswer && backendFailed) {
         setMessages((prev) => [...prev, { role: 'ai', text: 'I could not build an answer for that question.' }]);
       }
 
-      if (Array.isArray(data.rows)) {
+      if (!localAnswer && Array.isArray(data.rows)) {
         const rows = data.rows.map((d, i) => ({ ...d, id: d.id ?? `ai-${i}` }));
         const backendRowsMatchProvince = provinceIntent.type === 'none' || (provinceIntent.type === 'matched' && rows.every((row) => row.province === provinceIntent.province));
         if (backendRowsMatchProvince) {
@@ -768,36 +1022,103 @@ export default function App() {
         )}
 
         <aside className={`lqe-sidebar ${sidebarOpen ? '' : 'hidden'}`} aria-hidden={!sidebarOpen}>
-          <div className="sidebar-head">
-            <div className="sidebar-title">
-              <div className="filter-label">Filters & Overview</div>
+          <div className="sidebar-panel">
+            <div className="sidebar-head">
+              <div className="sidebar-title">
+                <div className="filter-label">Filters & Overview</div>
+              </div>
+              <Tooltip title="Hide sidebar">
+                <IconButton size="small" color="primary" onClick={() => setSidebarOpen(false)} aria-label="Hide sidebar">
+                  <ChevronLeftIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
             </div>
-            <Tooltip title="Hide sidebar">
-              <IconButton size="small" color="primary" onClick={() => setSidebarOpen(false)} aria-label="Hide sidebar">
-                <ChevronLeftIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
-          </div>
 
-          <div>
-            <div className="filter-label" style={{ marginBottom: '8px' }}>Overview</div>
-            <div className="overview-grid">
-              <div className="overview-box"><div className="overview-label">Producing</div><div className="overview-val" style={{ color: '#22c55e' }}>{stats.producing}</div></div>
-              <div className="overview-box"><div className="overview-label">Expired</div><div className="overview-val" style={{ color: '#f59e0b' }}>{stats.expired}</div></div>
-              <div className="overview-box"><div className="overview-label">No Operation</div><div className="overview-val" style={{ color: '#94a3b8' }}>{stats.noOperation}</div></div>
-              <div className="overview-box"><div className="overview-label">Suspended</div><div className="overview-val" style={{ color: '#ef4444' }}>{stats.suspended}</div></div>
+            <div>
+              <div className="filter-label" style={{ marginBottom: '8px' }}>Overview</div>
+              <div className="overview-grid">
+                <button className={`overview-box ${overviewFilter === 'producing' ? 'active' : ''}`} type="button" onClick={() => toggleOverviewFilter('producing')} title="Show records where Status is Producing">
+                  <div className="overview-label">Producing</div>
+                  <div className="overview-val" style={{ color: '#22c55e' }}>{stats.producing}</div>
+                </button>
+                <button className={`overview-box ${overviewFilter === 'expired' ? 'active' : ''}`} type="button" onClick={() => toggleOverviewFilter('expired')} title="Show records where Date Expired is before today">
+                  <div className="overview-label">Expired by Date</div>
+                  <div className="overview-val" style={{ color: '#f59e0b' }}>{stats.expired}</div>
+                </button>
+                <button className={`overview-box ${overviewFilter === 'noOperation' ? 'active' : ''}`} type="button" onClick={() => toggleOverviewFilter('noOperation')} title="Show records where Remarks is No Operation">
+                  <div className="overview-label">No Operation</div>
+                  <div className="overview-val" style={{ color: '#94a3b8' }}>{stats.noOperation}</div>
+                </button>
+                <button className={`overview-box ${overviewFilter === 'suspended' ? 'active' : ''}`} type="button" onClick={() => toggleOverviewFilter('suspended')} title="Show records where Remarks is Suspended">
+                  <div className="overview-label">Suspended</div>
+                  <div className="overview-val" style={{ color: '#ef4444' }}>{stats.suspended}</div>
+                </button>
+              </div>
+              {overviewFilter && (
+                <Button size="small" sx={{ mt: 1 }} onClick={() => setOverviewFilter('')}>Clear overview filter</Button>
+              )}
             </div>
-          </div>
 
-          {aiRows && (
-            <div className="ai-scope">
-              <strong style={{ color: 'var(--text)' }}>AI filtered view</strong>
-              <div>{aiScopeLabel}</div>
-              <Button size="small" sx={{ mt: 1 }} onClick={clearAiScope}>Show all data</Button>
-            </div>
-          )}
+            {aiRows && (
+              <div className="ai-scope">
+                <strong style={{ color: 'var(--text)' }}>AI filtered view</strong>
+                <div>{aiScopeLabel}</div>
+                <Button size="small" sx={{ mt: 1 }} onClick={clearAiScope}>Show all data</Button>
+              </div>
+            )}
 
-          <div className="filter-stack">
+            <div className="filter-stack">
+              <FormControl size="small" fullWidth>
+              <InputLabel id="year-label" shrink>Year</InputLabel>
+              <Select
+                labelId="year-label"
+                value={yearFilter}
+                label="Year"
+                displayEmpty
+                onChange={(e) => {
+                  setYearFilter(e.target.value);
+                  setRegionFilter('');
+                  setProvinceFilter('');
+                  setMunicipalityFilter('');
+                  if (e.target.value === '') clearAiScope();
+                }}
+                MenuProps={selectMenuProps}
+                renderValue={(value) => (
+                  <span className="filter-value">
+                    {value === '' ? 'All Years' : value}
+                  </span>
+                )}
+              >
+                <MenuItem value="">All Years</MenuItem>
+                {yearOptions.map((year) => <MenuItem key={year} value={year}>{year}</MenuItem>)}
+              </Select>
+            </FormControl>
+
+            <FormControl size="small" fullWidth>
+              <InputLabel id="region-label" shrink>Region</InputLabel>
+              <Select
+                labelId="region-label"
+                value={regionFilter}
+                label="Region"
+                displayEmpty
+                onChange={(e) => {
+                  setRegionFilter(e.target.value);
+                  setProvinceFilter('');
+                  setMunicipalityFilter('');
+                  if (e.target.value === '') clearAiScope();
+                }}
+                MenuProps={selectMenuProps}
+                renderValue={(value) => (
+                  <span className="filter-value">
+                    {value === '' ? 'All Regions' : value}
+                  </span>
+                )}
+              >
+                <MenuItem value="">All Regions</MenuItem>
+                {regionOptions.map((region) => <MenuItem key={region} value={region}>{region}</MenuItem>)}
+              </Select>
+            </FormControl>
+
             <FormControl size="small" fullWidth>
               <InputLabel id="province-label" shrink>Province</InputLabel>
               <Select
@@ -805,11 +1126,14 @@ export default function App() {
                 value={provinceFilter}
                 label="Province"
                 displayEmpty
-                onChange={(e) => { setProvinceFilter(e.target.value); if (e.target.value === '') { setAiRows(null); setAiScopeLabel(''); } }}
+                onChange={(e) => {
+                  setProvinceFilter(e.target.value);
+                  setMunicipalityFilter('');
+                  if (e.target.value === '') clearAiScope();
+                }}
                 MenuProps={selectMenuProps}
-                inputProps={{ sx: { textAlign: 'left' } }}
                 renderValue={(value) => (
-                  <span style={{ textAlign: 'left', display: 'block' }}>
+                  <span className="filter-value">
                     {value === '' ? 'All Provinces' : value}
                   </span>
                 )}
@@ -820,17 +1144,41 @@ export default function App() {
             </FormControl>
 
             <FormControl size="small" fullWidth>
+              <InputLabel id="municipality-label" shrink>Municipalities</InputLabel>
+              <Select
+                labelId="municipality-label"
+                value={municipalityFilter}
+                label="Municipalities"
+                displayEmpty
+                onChange={(e) => {
+                  setMunicipalityFilter(e.target.value);
+                  if (e.target.value === '') clearAiScope();
+                }}
+                MenuProps={selectMenuProps}
+                renderValue={(value) => (
+                  <span className="filter-value">
+                    {value === '' ? 'All Municipalities' : value}
+                  </span>
+                )}
+              >
+                <MenuItem value="">All Municipalities</MenuItem>
+                {municipalityOptions.map((municipality) => (
+                  <MenuItem key={municipality} value={municipality}>{municipality}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl size="small" fullWidth>
               <InputLabel id="commodity-label" shrink>Commodity</InputLabel>
               <Select
                 labelId="commodity-label"
                 value={commodityFilter}
                 label="Commodity"
                 displayEmpty
-                onChange={(e) => { setCommodityFilter(e.target.value); if (e.target.value === '') { setAiRows(null); setAiScopeLabel(''); } }}
+                onChange={(e) => { setCommodityFilter(e.target.value); if (e.target.value === '') clearAiScope(); }}
                 MenuProps={selectMenuProps}
-                inputProps={{ sx: { textAlign: 'left' } }}
                 renderValue={(value) => (
-                  <span style={{ textAlign: 'left', display: 'block' }}>
+                  <span className="filter-value">
                     {value === '' ? 'All Commodities' : value}
                   </span>
                 )}
@@ -842,7 +1190,8 @@ export default function App() {
 
             <Button variant="contained" sx={{ fontWeight: 700, padding: '10px' }} onClick={handleDownloadCSV}>
               Download CSV
-            </Button>
+              </Button>
+            </div>
           </div>
         </aside>
 
@@ -855,7 +1204,7 @@ export default function App() {
                 </Button>
               ))}
             </div>
-            <div className="view-label">{aiRows ? aiScopeLabel : 'Showing current filters across the full quarry dataset'}</div>
+           
           </div>
 
           <div className={`workspace ${viewMode}`}>
@@ -863,14 +1212,21 @@ export default function App() {
               <MapContainer
                 center={phCenter}
                 zoom={6}
-                minZoom={5}
+                maxZoom={16}
                 maxBounds={phBounds}
                 maxBoundsViscosity={1}
-                style={{ height: '100%', width: '100%' }}
+                preferCanvas
+                worldCopyJump={false}
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  background: themeMode === 'dark' ? '#0e1018' : '#f6f7f2'
+                }}
               >
                 <MapResizeWatcher watch={`${viewMode}-${sidebarOpen}-${filteredData.length}-${mapHeight}`} />
+                <MapBoundsLimiter />
                 <MapFitToRows rows={filteredData} />
-                <TileLayer url={mapTiles[themeMode]} />
+                <TileLayer url={mapTiles[themeMode]} noWrap />
                 {filteredData.filter((d) => d.latitude && d.longitude).map((d) => (
                   <CircleMarker
                     key={d.id}
@@ -906,32 +1262,37 @@ export default function App() {
                   {
                     field: 'region',
                     headerName: 'Region',
-                    minWidth: 90,
-                    flex: 0.5,
+                    minWidth: 96,
+                    flex: 0.55,
                     sortComparator: (a, b) => {
                       const parse = (v) => parseFloat(String(v)) || 0;
                       return parse(a) - parse(b);
                     },
                   },
-                  { field: 'province', headerName: 'Province', minWidth: 150, flex: 1 },
-                  { field: 'municipality', headerName: 'Municipality', minWidth: 150, flex: 1 },
-                  { field: 'contractor', headerName: 'Company / Contractor', minWidth: 250, flex: 2 },
-                  { field: 'commodity', headerName: 'Commodity', minWidth: 220, flex: 2 },
-                  { field: 'status', headerName: 'Status', minWidth: 170, flex: 1.5 },
-                  { field: 'riskScore', headerName: 'Risk', minWidth: 90, flex: 0.6 },
-                  { field: 'area_hectares', headerName: 'Area (ha)', minWidth: 110, flex: 0.8 },
-                  { field: 'year', headerName: 'Year', minWidth: 90, flex: 0.5 },
-                  { field: 'date_approved', headerName: 'Approved', minWidth: 130, flex: 1 },
+                  { field: 'province', headerName: 'Province', minWidth: 110, flex: 0.95 },
+                  { field: 'municipality', headerName: 'Municipality', minWidth: 120, flex: 0.95 },
+                  { field: 'contractor', headerName: 'Company / Contractor', minWidth: 195, flex: 1.6 },
+                  { field: 'commodity', headerName: 'Commodity', minWidth: 150, flex: 1.25 },
+                  { field: 'status', headerName: 'Status', minWidth: 105, flex: 0.8 },
+                  { field: 'riskScore', headerName: 'Risk', minWidth: 62, flex: 0.45 },
+                  { field: 'area_hectares', headerName: 'Area (ha)', minWidth: 78, flex: 0.6 },
+                  { field: 'year', headerName: 'Year', minWidth: 62, flex: 0.45 },
+                  { field: 'date_approved', headerName: 'Approved', minWidth: 92, flex: 0.7 },
+                  { field: 'date_expired', headerName: 'Date Expired', minWidth: 112, flex: 0.85 },
+                  { field: 'remarks', headerName: 'Remarks', minWidth: 150, flex: 1.1 },
                 ]}
-                rowHeight={52}
-                density="standard"
+                columnHeaderHeight={38}
+                rowHeight={34}
+                density="compact"
                 disableRowSelectionOnClick
-                sortModel={[{ field: 'region', sort: 'asc' }]}
-                sortingOrder={['asc', 'desc']}
                 getRowId={(row) => row.id}
+                pageSizeOptions={[25, 50, 100, { value: -1, label: 'All' }]}
                 initialState={{
                   sorting: {
                     sortModel: [{ field: 'region', sort: 'asc' }],
+                  },
+                  pagination: {
+                    paginationModel: { pageSize: 25, page: 0 },
                   },
                 }}
               />
@@ -989,8 +1350,8 @@ export default function App() {
         {page === 'explorer' ? renderExplorer() : renderProjectPage()}
 
         <button className="chat-fab" onClick={() => setChatOpen(!chatOpen)}>
-          <span>{chatOpen ? 'X' : 'AI'}</span>
-          {!chatOpen && <span>Ask Hikarizz AI</span>}
+          {chatOpen ? <CloseIcon fontSize="small" /> : <ChatBubbleOutlinedIcon fontSize="small" />}
+          <span>{chatOpen ? 'Close Chat' : 'Ask About Quarry Land'}</span>
         </button>
 
         {chatOpen && (
@@ -999,12 +1360,24 @@ export default function App() {
             style={chatPosition ? { left: chatPosition.left, top: chatPosition.top, right: 'auto', bottom: 'auto' } : undefined}
           >
             <div className="chat-header" onPointerDown={startChatDrag}>
-              <div className="chat-title">Hikarizz AI Assistant</div>
+              <div className="chat-title">
+                <span className="chat-title-icon"><ChatBubbleOutlinedIcon fontSize="small" /></span>
+                <span className="chat-title-text">
+                  <span>Quarry Land Assistant</span>
+                  <span className="chat-title-sub">Ask about permits, locations, and risk</span>
+                </span>
+              </div>
               <div className="chat-tools">
-                <Button size="small" variant="outlined" onClick={() => setChatLarge((value) => !value)}>
-                  {chatLarge ? 'Compact' : 'Expand'}
-                </Button>
-                <Button size="small" variant="outlined" onClick={() => setChatOpen(false)}>Close</Button>
+                <Tooltip title={chatLarge ? 'Compact chat' : 'Expand chat'}>
+                  <IconButton size="small" color="primary" onClick={() => setChatLarge((value) => !value)} aria-label={chatLarge ? 'Compact chat' : 'Expand chat'}>
+                    {chatLarge ? <CloseFullscreenIcon fontSize="small" /> : <OpenInFullIcon fontSize="small" />}
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Close chat">
+                  <IconButton size="small" color="primary" onClick={() => setChatOpen(false)} aria-label="Close chat">
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
               </div>
             </div>
             <div className="chat-messages" ref={messagesRef}>
@@ -1021,9 +1394,15 @@ export default function App() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Message AI..."
+                placeholder="Ask about quarry land..."
               />
-              <Button variant="contained" size="small" onClick={handleSend}>Send</Button>
+              <Tooltip title="Send message">
+                <span>
+                  <IconButton className="chat-send-button" onClick={handleSend} disabled={!input.trim() || isThinking} aria-label="Send message">
+                    <SendIcon fontSize="small" />
+                  </IconButton>
+                </span>
+              </Tooltip>
             </div>
           </div>
         )}
