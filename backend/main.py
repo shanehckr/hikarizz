@@ -321,9 +321,12 @@ def read_quarries():
                     r[k] = None
             result.append(r)
         return result
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(
+            status_code=500,
+            detail="Internal server error. Please try again later.",
+        )
 
 @app.get("/api/dashboard")
 def get_dashboard():
@@ -351,9 +354,12 @@ def get_dashboard():
             "high_risk": int(len(df[df["riskScore"] >= 70])),
             "top_risk":  top_risk,
         }
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(
+            status_code=500,
+            detail="Internal server error. Please try again later.",
+        )
 
 @app.post("/api/analyze")
 def analyze_data(request: ChatRequest):
