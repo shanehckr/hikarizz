@@ -15,19 +15,21 @@ except ImportError:
         print("WARNING: python-dotenv is not installed. Skipping .env loading.")
 
 try:
-    import google.generativeai as genai
+    from google import genai
+    from google.genai import types
 except ImportError:
     genai = None
 
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 if not api_key: print("WARNING: GEMINI_API_KEY not found in environment variables.")
+
 if genai and api_key:
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(model_name='gemini-2.5-flash', system_instruction=("You are the Hikarizz AI Assistant for Hikarizz Project. Use the provided quarry data from the Philippines to answer questions. If the question is not about quarries, environmental risks, or the dataset, politely decline and steer the user back to land quarrying topics."))
+    client = genai.Client(api_key=api_key)
 else:
-    if not genai: print("WARNING: google-generativeai is not installed. Using local dataset summaries for /api/analyze.")
-    model = None
+    if not genai: print("WARNING: google-genai is not installed. Using local dataset summaries for /api/analyze.")
+    client = None
+
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "LandQuarry.db"
 
@@ -44,11 +46,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
+
 class ChatRequest(BaseModel): question: str
+
 def calc_risk(row):
     score = 0
     try:
@@ -178,6 +183,7 @@ def read_quarries():
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
+
 @app.get("/api/dashboard")
 def get_dashboard():
     try:
@@ -200,6 +206,7 @@ def get_dashboard():
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
+
 @app.post("/api/analyze")
 def analyze_data(request: ChatRequest):
     try:
@@ -233,22 +240,19 @@ def analyze_data(request: ChatRequest):
         5. Answer naturally, but base every fact strictly on the provided JSON data.
         """
 
-        if not model:
+        if not client:
             answer = local_dataset_answer(request.question, interactive_df, scope)
             return {"answer": answer, "rows": clean_records(interactive_df), "scope": scope}
 
-        response = model.generate_content(prompt)
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                system_instruction="You are the Hikarizz AI Assistant for Hikarizz Project. Use the provided quarry data from the Philippines to answer questions. If the question is not about quarries, environmental risks, or the dataset, politely decline and steer the user back to land quarrying topics."
+            )
+        )
 
-        # Safely extract text
-        answer = None
-        if response and response.candidates:
-            for c in response.candidates:
-                for p in c.content.parts:
-                    if hasattr(p, "text"):
-                        answer = p.text
-                        break
-        if not answer and hasattr(response, "text"):
-            answer = response.text
+        answer = response.text
 
         if not answer:
             raise Exception("No valid text in Gemini response")

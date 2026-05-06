@@ -19,8 +19,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import ChatBubbleOutlinedIcon from '@mui/icons-material/ChatBubbleOutlined';
 import CloseIcon from '@mui/icons-material/Close';
-import OpenInFullIcon from '@mui/icons-material/OpenInFull';
-import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
+import OpenInFullIcon from '@mui/icons-material/CloseFullscreen';
 import SendIcon from '@mui/icons-material/Send';
 import { DataGrid } from '@mui/x-data-grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -541,8 +540,13 @@ styleTag.textContent = `
     font-size: 0.82rem;
     text-transform: none;
     letter-spacing: 0;
+    touch-action: none;
   }
   .chat-fab svg { font-size: 1.05rem; }
+  .chat-fab.dragging {
+    user-select: none;
+    filter: brightness(0.9);
+  }
 
   .chat-window {
     position: fixed;
@@ -692,10 +696,19 @@ export default function App() {
   const [municipalityFilter, setMunicipalityFilter] = useState('');
   const [commodityFilter, setCommodityFilter] = useState('');
   const [overviewFilter, setOverviewFilter] = useState('');
+  
+  // Chat States
   const [chatOpen, setChatOpen] = useState(false);
   const [chatLarge, setChatLarge] = useState(false);
   const [chatPosition, setChatPosition] = useState(null);
   const [isDraggingChat, setIsDraggingChat] = useState(false);
+  
+  // FAB Drag States
+  const [fabPosition, setFabPosition] = useState(null);
+  const [isDraggingFab, setIsDraggingFab] = useState(false);
+  const fabDragRef = useRef(null);
+  const fabClickPreventRef = useRef(false);
+
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [viewMode, setViewMode] = useState('split');
   const [mapHeight, setMapHeight] = useState(34);
@@ -705,6 +718,7 @@ export default function App() {
   const [messages, setMessages] = useState([{ role: 'ai', text: 'Ask me anything about quarry permits or local risk scores.' }]);
   const [input, setInput] = useState('');
   const [openSources, setOpenSources] = useState(false);
+  
   const messagesRef = useRef(null);
   const dragRef = useRef(null);
 
@@ -747,6 +761,7 @@ export default function App() {
     messagesRef.current?.scrollTo({ top: messagesRef.current.scrollHeight, behavior: 'smooth' });
   }, [messages, isThinking]);
 
+  // Handle Chat Window Dragging
   useEffect(() => {
     if (!isDraggingChat) return undefined;
 
@@ -773,6 +788,40 @@ export default function App() {
       window.removeEventListener('pointerup', handlePointerUp);
     };
   }, [isDraggingChat]);
+
+  // Handle FAB Dragging
+  useEffect(() => {
+    if (!isDraggingFab) return undefined;
+
+    const handlePointerMove = (event) => {
+      const drag = fabDragRef.current;
+      if (!drag) return;
+
+      // Determine if a meaningful drag occurred to prevent triggering the click handler
+      if (Math.abs(event.clientX - drag.startX) > 3 || Math.abs(event.clientY - drag.startY) > 3) {
+        fabClickPreventRef.current = true;
+      }
+
+      const maxLeft = Math.max(8, window.innerWidth - drag.width - 8);
+      const maxTop = Math.max(8, window.innerHeight - drag.height - 8);
+      const nextLeft = Math.min(Math.max(8, event.clientX - drag.offsetX), maxLeft);
+      const nextTop = Math.min(Math.max(8, event.clientY - drag.offsetY), maxTop);
+      
+      setFabPosition({ left: nextLeft, top: nextTop });
+    };
+
+    const handlePointerUp = () => {
+      fabDragRef.current = null;
+      setIsDraggingFab(false);
+    };
+
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
+    return () => {
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
+    };
+  }, [isDraggingFab]);
 
   useEffect(() => {
     if (!isResizingTable) return undefined;
@@ -928,6 +977,36 @@ export default function App() {
     setChatPosition({ left: rect.left, top: rect.top });
     setIsDraggingChat(true);
     event.preventDefault();
+  };
+
+  const startFabDrag = (event) => {
+    if (event.button !== 0) return; // Only trigger for main button
+    
+    const fab = event.currentTarget;
+    const rect = fab.getBoundingClientRect();
+
+    fabDragRef.current = {
+      offsetX: event.clientX - rect.left,
+      offsetY: event.clientY - rect.top,
+      width: rect.width,
+      height: rect.height,
+      startX: event.clientX,
+      startY: event.clientY,
+    };
+    
+    setFabPosition({ left: rect.left, top: rect.top });
+    setIsDraggingFab(true);
+    fabClickPreventRef.current = false;
+    event.preventDefault();
+  };
+
+  const handleFabClick = () => {
+    // Prevent opening chat if the user was just dragging the FAB
+    if (fabClickPreventRef.current) {
+      fabClickPreventRef.current = false;
+      return;
+    }
+    setChatOpen(!chatOpen);
   };
 
   const handleSend = async () => {
@@ -1349,7 +1428,12 @@ export default function App() {
 
         {page === 'explorer' ? renderExplorer() : renderProjectPage()}
 
-        <button className="chat-fab" onClick={() => setChatOpen(!chatOpen)}>
+        <button 
+          className={`chat-fab ${isDraggingFab ? 'dragging' : ''}`} 
+          style={fabPosition ? { left: fabPosition.left, top: fabPosition.top, right: 'auto', bottom: 'auto' } : undefined}
+          onPointerDown={startFabDrag}
+          onClick={handleFabClick}
+        >
           {chatOpen ? <CloseIcon fontSize="small" /> : <ChatBubbleOutlinedIcon fontSize="small" />}
           <span>{chatOpen ? 'Close Chat' : 'Ask About Quarry Land'}</span>
         </button>
