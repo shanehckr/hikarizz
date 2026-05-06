@@ -522,7 +522,8 @@ styleTag.textContent = `
   .chat-widget {
     position: fixed;
     bottom: 14px;
-    right: 14px;
+    left: 51px;
+    right: auto;
     z-index: 1000;
     width: fit-content;
     max-width: calc(100vw - 28px);
@@ -678,6 +679,7 @@ styleTag.textContent = `
     .sidebar-toggle-rail { width: 38px; }
     .project-grid { grid-template-columns: 1fr; }
     .view-toolbar { height: auto; align-items: flex-start; flex-direction: column; }
+    .chat-widget { left: max(8px, calc((min(300px, calc(100vw - 44px)) - 178px) / 2)); }
   }
 
   @media (min-width: 1800px) {
@@ -697,6 +699,7 @@ styleTag.textContent = `
     .lqe-sidebar { width: calc(100vw - 38px); max-width: calc(100vw - 38px); }
     .sidebar-panel { padding: 14px; }
     .filter-stack { gap: 12px; }
+    .chat-widget { left: max(8px, calc((100vw - 216px) / 2)); }
   }
 `;
 document.head.appendChild(styleTag);
@@ -732,10 +735,15 @@ export default function App() {
   
   const messagesRef = useRef(null);
   const dragRef = useRef(null);
+  const defaultChatLeft = window.innerWidth <= 560
+    ? Math.max(8, (window.innerWidth - 216) / 2)
+    : window.innerWidth <= 900
+      ? Math.max(8, (Math.min(300, window.innerWidth - 44) - 178) / 2)
+      : 51;
   const chatPopupWidth = chatLarge
     ? Math.min(680, window.innerWidth - 32)
     : Math.min(380, window.innerWidth - 32);
-  const chatWidgetLeft = chatPosition?.left ?? window.innerWidth - 192;
+  const chatWidgetLeft = chatPosition?.left ?? defaultChatLeft;
   const chatWidgetWidth = 178;
   const shouldOpenChatRight = chatWidgetLeft + chatWidgetWidth - chatPopupWidth < 8;
 
