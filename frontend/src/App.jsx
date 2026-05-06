@@ -155,26 +155,60 @@ const outOfScopePlaces = [
   'africa', 'india', 'indonesia', 'malaysia', 'thailand', 'vietnam', 'singapore',
 ];
 
+const GREETING_PATTERNS = /^(hello|hi|hey|kumusta|kamusta|magandang|good morning|good afternoon|good evening|musta|sup|yo|helo|huy|oy)\b/i;
+
+const QUARRY_CONCEPTUAL_PATTERNS = /risk|how.*work|paano|bakit|why|what is|ano ang|explain|define|meaning|kahulugan|calculate|computed|score|formula|suspended|expired|producing|operation|permit|commodity|quarry|quarrying|mine|mineral|sand|gravel|limestone|basalt|environmental|danger|hazard/i;
+
+const OUT_OF_SCOPE_PATTERNS = /weather|sports|politics|cooking|recipe|movie|music|celebrity|stock|crypto|bitcoin|fashion|travel|hotel|flight|covid|vaccine|news|football|basketball|nba|nfl/i;
+
 const DATA_SCOPE_MESSAGE = [
-  'I can only answer questions using this quarry permit dataset.',
+  'I\'m the Quarry Land Assistant — I can only help with questions about Philippine land quarry permits and data.',
   '',
-  'You can ask about:',
-  '* permit holders or contractors',
-  '* provinces, municipalities, and locations',
-  '* commodities such as sand, gravel, limestone, or basalt',
-  '* operating status, expired permits, and expiration dates',
-  '* risk scores and high-risk quarry records',
+  'You can ask me about:',
+  '* Permit holders or contractors',
+  '* Provinces, municipalities, and locations',
+  '* Commodities such as sand, gravel, limestone, or basalt',
+  '* Operating status — producing, suspended, no operation',
+  '* Risk scores and how they are calculated',
+  '* Expiration dates and permit details',
+  '',
+  'Try asking: "What are the high risk quarries in Batangas?" or "Paano kinukwenta ang risk score?"',
 ].join('\n');
 
-function isQuarryDataQuestion(question) {
-  const q = question.toLowerCase();
-  const hasDataSubject = /permit|record|contractor|operator|holder|province|municipalit|barangay|location|region|commodity|status|expired|expire|expiration|approved|date|risk|score|producing|suspended|operation|area|hectare|quarr|sand|gravel|limestone|basalt|shale|andesite|silica|gold|copper/.test(q);
-  // Only block as definition/general-knowledge when there is NO data subject in the question.
-  // This ensures "what quarries are near rizal?" is never wrongly rejected.
-  const asksDefinition = /^(what|ano|define|meaning|explain)\b/.test(q) && !hasDataSubject;
-  const asksGeneralKnowledge = /^(why|how to|can you explain|tell me about)\b/.test(q) && !hasDataSubject;
+const GREETING_REPLY = [
+  'Hi! I\'m the Quarry Land Assistant 👋',
+  '',
+  'I can help you explore Philippine quarry permit data. Ask me about:',
+  '* Specific quarries, contractors, or locations',
+  '* Risk scores and what makes a quarry high risk',
+  '* Permit status — producing, suspended, or expired',
+  '* Commodities like sand, gravel, or limestone',
+  '',
+  'What would you like to know?',
+].join('\n');
 
-  return hasDataSubject && !asksDefinition && !asksGeneralKnowledge;
+function classifyQuestion(question) {
+  const q = question.trim().toLowerCase();
+
+  // Greetings
+  if (GREETING_PATTERNS.test(q) && q.split(' ').length <= 5) return 'greeting';
+
+  // Completely out of scope topics
+  if (OUT_OF_SCOPE_PATTERNS.test(q) && !QUARRY_CONCEPTUAL_PATTERNS.test(q)) return 'out_of_scope';
+
+  // Quarry conceptual questions — about how things work, not data lookup
+  if (QUARRY_CONCEPTUAL_PATTERNS.test(q)) return 'quarry_related';
+
+  // Data lookup questions
+  const hasDataSubject = /permit|record|contractor|operator|holder|province|municipalit|barangay|location|region|commodity|status|expired|expire|expiration|approved|date|risk|score|producing|suspended|operation|area|hectare|quarr|sand|gravel|limestone|basalt|shale|andesite|silica|gold|copper/.test(q);
+  if (hasDataSubject) return 'data_question';
+
+  return 'out_of_scope';
+}
+
+function isQuarryDataQuestion(question) {
+  const type = classifyQuestion(question);
+  return type === 'data_question' || type === 'quarry_related';
 }
 
 function getProvinceIntent(rows, question) {
@@ -1010,9 +1044,43 @@ export default function App() {
     let localAnswer = '';
     let provinceIntent = { type: 'none', province: '' };
 
-    if (!isQuarryDataQuestion(userMsg)) {
+    const questionType = classifyQuestion(userMsg);
+
+    // Handle greetings
+    if (questionType === 'greeting') {
+      setMessages((prev) => [...prev, { role: 'ai', text: GREETING_REPLY }]);
+      setIsThinking(false);
+      return;
+    }
+
+    // Handle fully out of scope
+    if (questionType === 'out_of_scope') {
       setMessages((prev) => [...prev, { role: 'ai', text: DATA_SCOPE_MESSAGE }]);
       setIsThinking(false);
+      return;
+    }
+
+   // Handle conceptual quarry questions — send to Gemini but skip local data lookup
+    // Handle conceptual quarry questions — send to Gemini, fallback gracefully
+    if (questionType === 'quarry_related') {
+      try {
+        const res = await fetch(`${API_BASE}/analyze`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: userMsg }),
+        });
+        const data = await res.json();
+        const answer = data.answer || '';
+        if (answer) {
+          setMessages((prev) => [...prev, { role: 'ai', text: answer }]);
+        } else {
+          setMessages((prev) => [...prev, { role: 'ai', text: 'I understand your question is about quarry operations. Please make sure the backend is running so I can give you a detailed answer, or try asking about specific data — like "show me suspended quarries in Batangas".' }]);
+        }
+     } catch {
+        setMessages((prev) => [...prev, { role: 'ai', text: 'Sorry, I\'m having trouble answering that right now. Please try again in a moment.' }]);
+      } finally {
+        setIsThinking(false);
+      }
       return;
     }
 
@@ -1055,9 +1123,9 @@ export default function App() {
           applyAiRows(rows, data.scope);
         }
       }
-    } catch {
+   } catch {
       if (!localAnswer) {
-        setMessages((prev) => [...prev, { role: 'ai', text: 'Hikarizz AI connection lost.' }]);
+        setMessages((prev) => [...prev, { role: 'ai', text: 'Sorry, I\'m having trouble connecting right now. Please try again in a moment.' }]);
       }
     } finally {
       setIsThinking(false);
@@ -1388,7 +1456,7 @@ export default function App() {
         <div className="project-hero">
           <h1>Why We Are Making This Project</h1>
           <p>
-            Hikarizz turns quarry permit records into a practical decision-support tool. The goal is to help students,
+            Quarry Land AI turns quarry permit records into a practical decision-support tool. The goal is to help students,
             researchers, local offices, and communities quickly see where quarry activity is happening, what permits may
             need attention, and how environmental risk patterns appear across provinces and commodities.
           </p>
@@ -1428,12 +1496,12 @@ export default function App() {
 
         {page === 'explorer' ? renderExplorer() : renderProjectPage()}
 
-       <div
+        <div
           className={`chat-widget ${chatOpen ? 'open' : ''} ${shouldOpenChatRight ? 'open-right' : 'open-left'}`}
           style={chatPosition ? { left: chatPosition.left, top: chatPosition.top, bottom: 'auto', right: 'auto', position: 'fixed' } : undefined}
         >
           {chatOpen && (
-          <div
+            <div
               className={`chat-window ${chatLarge ? 'large' : ''} ${isDraggingChat ? 'dragging' : ''}`}
             >
               <div className="chat-header" onPointerDown={startChatDrag}>
@@ -1457,7 +1525,7 @@ export default function App() {
                   </Tooltip>
                 </div>
               </div>
-             <div className="chat-messages" ref={messagesRef} onPointerDown={startChatDrag}>
+              <div className="chat-messages" ref={messagesRef} onPointerDown={startChatDrag}>
                 {messages.map((m, i) => <div key={`${m.role}-${i}`} className={`msg ${m.role}`}>{m.text}</div>)}
                 {isThinking && (
                   <div className="msg ai thinking">
@@ -1489,12 +1557,12 @@ export default function App() {
             </div>
           )}
 
-           {!chatOpen && (
-                <button className="chat-fab" onPointerDown={startChatDrag} onClick={handleFabClick}>
-                  <ChatBubbleOutlinedIcon fontSize="small" />
-                  <span>Ask About Quarry Land</span>
-                </button>
-              )}
+          {!chatOpen && (
+            <button className="chat-fab" onPointerDown={startChatDrag} onClick={handleFabClick}>
+              <ChatBubbleOutlinedIcon fontSize="small" />
+              <span>Ask About Quarry Land</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -1531,16 +1599,25 @@ export default function App() {
               The data used in this system is sourced from the official records of the:
             </p>
 
-            <p style={{
-              fontWeight: 700,
-              fontSize: '0.88rem',
-              letterSpacing: '0.06em',
-              marginBottom: '1.5rem',
-              color: themeMode === 'dark' ? '#d4a855' : '#2f7d58',
-            }}>
-              MINES AND GEOSCIENCES BUREAU (MGB) DIRECTORY OF<br />
-              OPERATING MINES AND QUARRIES
-            </p>
+            <a
+              href="https://www.mgb.gov.ph"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'block',
+                fontWeight: 700,
+                fontSize: '0.88rem',
+                letterSpacing: '0.06em',
+                marginBottom: '1.5rem',
+                color: themeMode === 'dark' ? '#d4a855' : '#2f7d58',
+                textDecoration: 'underline',
+                textUnderlineOffset: '3px',
+                cursor: 'pointer',
+              }}
+            >
+              MINES AND GEOSCIENCES BUREAU (MGB)<br />
+              DIRECTORY OF OPERATING MINES AND QUARRIES ↗
+            </a>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', borderTop: themeMode === 'dark' ? '1px solid #2a2d3a' : '1px solid #d8ded3', paddingTop: '1.25rem' }}>
 

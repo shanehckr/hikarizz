@@ -305,7 +305,7 @@ Rules:
         print(f"📤 Sending {len(interactive_df)} records to Gemini for: {request.question!r}")
 
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-2.0-flash-lite",
             contents=prompt,
             config=types.GenerateContentConfig(
                 system_instruction=(
@@ -325,4 +325,14 @@ Rules:
     except Exception as e:
         print(f"❌ /api/analyze error: {type(e).__name__}: {e}")
         traceback.print_exc()
-        raise HTTPException(status_code=500, detail=str(e))
+        # Graceful fallback — return local answer instead of crashing
+        try:
+            conn = get_db_connection()
+            df = pd.read_sql_query("SELECT * FROM quarries", conn)
+            conn.close()
+            df["riskScore"] = df.apply(lambda r: calc_risk(r), axis=1)
+            interactive_df, scope = pick_interactive_rows(df, request.question)
+            answer = local_dataset_answer(request.question, interactive_df, scope)
+            return {"answer": answer, "rows": clean_records(interactive_df), "scope": scope}
+        except Exception:
+            return {"answer": "Sorry, I'm having trouble answering that right now. Please try again in a moment.", "rows": [], "scope": ""}
