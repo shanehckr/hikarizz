@@ -7,7 +7,7 @@ df = pd.read_csv('quarries.csv')
 # 2. Create a true SQLite database connection
 conn = sqlite3.connect('LandQuarry.db')
 
-# 3. Write the data into a table named 'cleaned_quarries'
+
 df.to_sql('quarries', conn, if_exists='replace', index=False)
 
 conn.close()

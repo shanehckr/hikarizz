@@ -636,15 +636,16 @@ export default function App() {
 
   const stats = useMemo(() => {
     const areaSum = filteredData.reduce((acc, d) => acc + (parseFloat(d.area_hectares) || 0), 0);
+    const today = new Date().toISOString().split('T')[0];
     return {
       permits: filteredData.length,
       provinces: [...new Set(filteredData.map((d) => d.province).filter(Boolean))].length,
       commodities: [...new Set(filteredData.map((d) => d.commodity).filter(Boolean))].length,
       area: areaSum.toLocaleString(undefined, { maximumFractionDigits: 0 }),
-      validated: filteredData.filter((d) => (d.riskScore || 0) > 0).length,
-      highRisk: filteredData.filter((d) => (d.riskScore || 0) >= 70).length,
-      expired: filteredData.filter((d) => `${d.status || ''} ${d.remarks || ''}`.toLowerCase().includes('expired')).length,
-      producing: filteredData.filter((d) => (d.status || '').toLowerCase().includes('producing')).length,
+      producing: filteredData.filter((d) => (d.status || '').toLowerCase() === 'producing').length,
+      expired: filteredData.filter((d) => d.date_expired && d.date_expired < today).length,
+      noOperation: filteredData.filter((d) => (d.remarks || '').toLowerCase() === 'no operation').length,
+      suspended: filteredData.filter((d) => (d.remarks || '').toLowerCase() === 'suspended').length,
     };
   }, [filteredData]);
 
@@ -769,8 +770,7 @@ export default function App() {
         <aside className={`lqe-sidebar ${sidebarOpen ? '' : 'hidden'}`} aria-hidden={!sidebarOpen}>
           <div className="sidebar-head">
             <div className="sidebar-title">
-              <div className="filter-label">Sidebar</div>
-              <div className="view-label">Filters and overview</div>
+              <div className="filter-label">Filters & Overview</div>
             </div>
             <Tooltip title="Hide sidebar">
               <IconButton size="small" color="primary" onClick={() => setSidebarOpen(false)} aria-label="Hide sidebar">
@@ -782,10 +782,10 @@ export default function App() {
           <div>
             <div className="filter-label" style={{ marginBottom: '8px' }}>Overview</div>
             <div className="overview-grid">
-              <div className="overview-box"><div className="overview-label">Validated</div><div className="overview-val" style={{ color: 'var(--accent)' }}>{stats.validated}</div></div>
-              <div className="overview-box"><div className="overview-label">High Risk</div><div className="overview-val" style={{ color: '#ef4444' }}>{stats.highRisk}</div></div>
-              <div className="overview-box"><div className="overview-label">Expired</div><div className="overview-val" style={{ color: '#f59e0b' }}>{stats.expired}</div></div>
               <div className="overview-box"><div className="overview-label">Producing</div><div className="overview-val" style={{ color: '#22c55e' }}>{stats.producing}</div></div>
+              <div className="overview-box"><div className="overview-label">Expired</div><div className="overview-val" style={{ color: '#f59e0b' }}>{stats.expired}</div></div>
+              <div className="overview-box"><div className="overview-label">No Operation</div><div className="overview-val" style={{ color: '#94a3b8' }}>{stats.noOperation}</div></div>
+              <div className="overview-box"><div className="overview-label">Suspended</div><div className="overview-val" style={{ color: '#ef4444' }}>{stats.suspended}</div></div>
             </div>
           </div>
 
@@ -799,13 +799,20 @@ export default function App() {
 
           <div className="filter-stack">
             <FormControl size="small" fullWidth>
-              <InputLabel id="province-label">Province</InputLabel>
+              <InputLabel id="province-label" shrink>Province</InputLabel>
               <Select
                 labelId="province-label"
                 value={provinceFilter}
                 label="Province"
-                onChange={(e) => setProvinceFilter(e.target.value)}
+                displayEmpty
+                onChange={(e) => { setProvinceFilter(e.target.value); if (e.target.value === '') { setAiRows(null); setAiScopeLabel(''); } }}
                 MenuProps={selectMenuProps}
+                inputProps={{ sx: { textAlign: 'left' } }}
+                renderValue={(value) => (
+                  <span style={{ textAlign: 'left', display: 'block' }}>
+                    {value === '' ? 'All Provinces' : value}
+                  </span>
+                )}
               >
                 <MenuItem value="">All Provinces</MenuItem>
                 {provinceOptions.map((p) => <MenuItem key={p} value={p}>{p}</MenuItem>)}
@@ -813,13 +820,20 @@ export default function App() {
             </FormControl>
 
             <FormControl size="small" fullWidth>
-              <InputLabel id="commodity-label">Commodity</InputLabel>
+              <InputLabel id="commodity-label" shrink>Commodity</InputLabel>
               <Select
                 labelId="commodity-label"
                 value={commodityFilter}
                 label="Commodity"
-                onChange={(e) => setCommodityFilter(e.target.value)}
+                displayEmpty
+                onChange={(e) => { setCommodityFilter(e.target.value); if (e.target.value === '') { setAiRows(null); setAiScopeLabel(''); } }}
                 MenuProps={selectMenuProps}
+                inputProps={{ sx: { textAlign: 'left' } }}
+                renderValue={(value) => (
+                  <span style={{ textAlign: 'left', display: 'block' }}>
+                    {value === '' ? 'All Commodities' : value}
+                  </span>
+                )}
               >
                 <MenuItem value="">All Commodities</MenuItem>
                 {commodityOptions.map((c) => <MenuItem key={c} value={c}>{c}</MenuItem>)}
@@ -889,18 +903,37 @@ export default function App() {
               <DataGrid
                 rows={filteredData}
                 columns={[
-                  { field: 'contractor', headerName: 'Company / Contractor', minWidth: 250, flex: 2 },
+                  {
+                    field: 'region',
+                    headerName: 'Region',
+                    minWidth: 90,
+                    flex: 0.5,
+                    sortComparator: (a, b) => {
+                      const parse = (v) => parseFloat(String(v)) || 0;
+                      return parse(a) - parse(b);
+                    },
+                  },
                   { field: 'province', headerName: 'Province', minWidth: 150, flex: 1 },
                   { field: 'municipality', headerName: 'Municipality', minWidth: 150, flex: 1 },
+                  { field: 'contractor', headerName: 'Company / Contractor', minWidth: 250, flex: 2 },
                   { field: 'commodity', headerName: 'Commodity', minWidth: 220, flex: 2 },
                   { field: 'status', headerName: 'Status', minWidth: 170, flex: 1.5 },
                   { field: 'riskScore', headerName: 'Risk', minWidth: 90, flex: 0.6 },
                   { field: 'area_hectares', headerName: 'Area (ha)', minWidth: 110, flex: 0.8 },
+                  { field: 'year', headerName: 'Year', minWidth: 90, flex: 0.5 },
                   { field: 'date_approved', headerName: 'Approved', minWidth: 130, flex: 1 },
                 ]}
                 rowHeight={52}
                 density="standard"
                 disableRowSelectionOnClick
+                sortModel={[{ field: 'region', sort: 'asc' }]}
+                sortingOrder={['asc', 'desc']}
+                getRowId={(row) => row.id}
+                initialState={{
+                  sorting: {
+                    sortModel: [{ field: 'region', sort: 'asc' }],
+                  },
+                }}
               />
             </div>
           </div>
@@ -942,10 +975,8 @@ export default function App() {
     <ThemeProvider theme={muiTheme}>
       <div className={`lqe-root ${themeMode}`}>
         <header className="lqe-header">
-          <div className="lqe-logo">QuarryMap PH <span className="lqe-badge">HIKARIZZ 2026</span></div>
+          <div className="lqe-logo">QuarryMap PH</div>
           <div className="lqe-actions">
-            <Button variant={page === 'explorer' ? 'contained' : 'outlined'} size="small" onClick={() => setPage('explorer')}>Explorer</Button>
-            <Button variant={page === 'why' ? 'contained' : 'outlined'} size="small" onClick={() => setPage('why')}>Why This Project</Button>
             <Tooltip title={themeMode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}>
               <IconButton color="primary" onClick={() => setThemeMode((value) => (value === 'dark' ? 'light' : 'dark'))} aria-label="Toggle color mode">
                 {themeMode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
@@ -998,18 +1029,91 @@ export default function App() {
         )}
       </div>
 
-      <Dialog open={openSources} onClose={() => setOpenSources(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Sources & Transparency</DialogTitle>
-        <DialogContent dividers>
-          <div style={{ fontSize: '0.95rem', lineHeight: 1.6, textAlign: 'center' }}>
-            The data used in this system is sourced from the official records of the<br /><br />
-            <b>MINES AND GEOSCIENCES BUREAU</b><br/>
-            REGIONAL OFFICE<br/>
-            DIRECTORY OF OPERATING MINES AND QUARRIES
+      <Dialog
+        open={openSources}
+        onClose={() => setOpenSources(false)}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          style: {
+            background: themeMode === 'dark' ? '#13161f' : '#ffffff',
+            color: themeMode === 'dark' ? '#e8e2d4' : '#182018',
+            border: themeMode === 'dark' ? '1px solid #2a2d3a' : '1px solid #d8ded3',
+            borderRadius: '12px',
+          }
+        }}
+      >
+        <DialogTitle style={{
+          fontFamily: "'Google Sans Display', sans-serif",
+          fontSize: '1.1rem',
+          fontWeight: 700,
+          letterSpacing: '0.02em',
+          borderBottom: themeMode === 'dark' ? '1px solid #2a2d3a' : '1px solid #d8ded3',
+          paddingBottom: '1rem',
+          color: themeMode === 'dark' ? '#e8e2d4' : '#182018',
+        }}>
+          Sources &amp; Transparency
+        </DialogTitle>
+
+        <DialogContent style={{ padding: '1.5rem 1.75rem' }}>
+          <div style={{ fontFamily: "'Google Sans', system-ui, sans-serif", fontSize: '0.92rem', lineHeight: 1.7, color: themeMode === 'dark' ? '#8d91a3' : '#66705f' }}>
+
+            <p style={{ marginBottom: '1rem', color: themeMode === 'dark' ? '#e8e2d4' : '#182018' }}>
+              The data used in this system is sourced from the official records of the:
+            </p>
+
+            <p style={{
+              fontWeight: 700,
+              fontSize: '0.88rem',
+              letterSpacing: '0.06em',
+              marginBottom: '1.5rem',
+              color: themeMode === 'dark' ? '#d4a855' : '#2f7d58',
+            }}>
+              MINES AND GEOSCIENCES BUREAU (MGB) DIRECTORY OF<br />
+              OPERATING MINES AND QUARRIES
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', borderTop: themeMode === 'dark' ? '1px solid #2a2d3a' : '1px solid #d8ded3', paddingTop: '1.25rem' }}>
+
+              <div>
+                <span style={{ fontWeight: 700, color: themeMode === 'dark' ? '#e8e2d4' : '#182018' }}>Official Origin — </span>
+                All information is derived from the public administrative records maintained by the Mines and Geosciences Bureau (MGB).
+              </div>
+
+              <div>
+                <span style={{ fontWeight: 700, color: themeMode === 'dark' ? '#e8e2d4' : '#182018' }}>Data Content — </span>
+                The dataset includes registered permit holders, specific commodity types (such as Sand and Gravel or Limestone), and official operational statuses.
+              </div>
+
+              <div>
+                <span style={{ fontWeight: 700, color: themeMode === 'dark' ? '#e8e2d4' : '#182018' }}>Accuracy Statement — </span>
+                To ensure the system reflects current conditions, all records are based on the most recent government disclosures and mineral industry directories available.
+              </div>
+
+            </div>
           </div>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenSources(false)}>Close</Button>
+
+        <DialogActions style={{
+          padding: '1rem 1.75rem',
+          borderTop: themeMode === 'dark' ? '1px solid #2a2d3a' : '1px solid #d8ded3',
+        }}>
+          <Button
+            onClick={() => setOpenSources(false)}
+            variant="contained"
+            size="small"
+            style={{
+              background: themeMode === 'dark' ? '#d4a855' : '#2f7d58',
+              color: '#fff',
+              fontFamily: "'Google Sans', sans-serif",
+              fontWeight: 600,
+              textTransform: 'none',
+              borderRadius: '6px',
+              padding: '6px 20px',
+            }}
+          >
+            Close
+          </Button>
         </DialogActions>
       </Dialog>
     </ThemeProvider>
