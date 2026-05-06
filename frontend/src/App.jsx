@@ -380,7 +380,7 @@ function renderMessageText(text) {
   const paragraphs = text.split(/\n\n+/);
   return paragraphs.map((para, pi) => {
     const lines = para.split('\n');
-    const isList = lines.every(l => l.trim() === '' || /^[*\-]/.test(l.trim()));
+    const isList = lines.every(l => l.trim() === '' || /^[*-]/.test(l.trim()));
     if (isList) {
       const items = lines.filter(l => l.trim());
       return (
@@ -390,7 +390,7 @@ function renderMessageText(text) {
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(
                   item
-                    .replace(/^[*\-]\s*/, '')
+                    .replace(/^[*-]\s*/, '')
                     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
                 )
               }}
