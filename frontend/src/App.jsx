@@ -395,7 +395,7 @@ styleTag.textContent = `
     border-bottom: 1px solid var(--line);
   }
 
-  .lqe-logo { font-family: 'Google Sans Display', sans-serif; font-size: 1.28rem; font-weight: 700; color: var(--text); white-space: nowrap; }
+  .lqe-logo { font-family: 'Google Sans Display', sans-serif; font-size: 1.28rem; font-weight: 700; color: var(--text); white-space: nowrap; text-align: left; }
   .lqe-badge { font-size: 0.62rem; background: var(--accent); color: var(--accent-text); padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
   .lqe-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
   .lqe-actions .MuiButton-root { min-height: 34px; padding: 5px 12px; font-size: 0.84rem; }
@@ -519,11 +519,18 @@ styleTag.textContent = `
   .workspace.map .lqe-table-container { display: none; }
   .workspace.table .lqe-table-container { flex: 1; }
 
-  .chat-fab {
+  .chat-widget {
     position: fixed;
     bottom: 14px;
     right: 14px;
     z-index: 1000;
+    width: fit-content;
+    max-width: calc(100vw - 28px);
+  }
+
+  .chat-fab {
+    position: relative;
+    z-index: 2;
     min-width: 178px;
     height: 44px;
     padding: 0 16px;
@@ -542,6 +549,10 @@ styleTag.textContent = `
     letter-spacing: 0;
     touch-action: none;
   }
+  .chat-widget.open .chat-fab {
+    border-radius: 0 0 22px 22px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+  }
   .chat-fab svg { font-size: 1.05rem; }
   .chat-fab.dragging {
     user-select: none;
@@ -549,10 +560,10 @@ styleTag.textContent = `
   }
 
   .chat-window {
-    position: fixed;
-    right: 24px;
-    bottom: 84px;
-    z-index: 1001;
+    position: absolute;
+    right: 0;
+    bottom: 43px;
+    z-index: 1;
     width: min(380px, calc(100vw - 32px));
     height: auto;
     min-width: 300px;
@@ -561,12 +572,17 @@ styleTag.textContent = `
     max-height: calc(100vh - 110px);
     background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: 14px 14px 0 14px;
     display: flex;
     flex-direction: column;
     box-shadow: 0 18px 48px rgba(0,0,0,0.36);
     overflow: hidden;
     resize: none;
+  }
+  .chat-widget.open-right .chat-window {
+    left: 0;
+    right: auto;
+    border-radius: 14px 14px 14px 0;
   }
   .chat-window.large { width: min(680px, calc(100vw - 32px)); height: min(720px, calc(100vh - 110px)); resize: both; }
   .chat-window.dragging { user-select: none; }
@@ -651,7 +667,7 @@ styleTag.textContent = `
 
   @media (max-width: 900px) {
     .lqe-header { height: auto; min-height: 52px; align-items: center; padding: 8px 10px; gap: 8px; }
-    .lqe-logo { flex: 1 1 auto; min-width: 0; font-size: clamp(0.95rem, 3vw, 1.2rem); overflow: hidden; text-overflow: ellipsis; }
+    .lqe-logo { flex: 1 1 auto; min-width: 0; font-size: clamp(0.95rem, 3vw, 1.2rem); overflow: hidden; text-overflow: ellipsis; text-align: left; }
     .lqe-badge { font-size: 0.52rem; margin-left: 5px; padding: 2px 5px; }
     .lqe-actions { flex: 0 0 auto; gap: 6px; justify-content: flex-end; flex-wrap: nowrap; }
     .lqe-actions .MuiButton-root { min-width: 0; padding: 5px 8px; font-size: 0.68rem; }
@@ -702,11 +718,6 @@ export default function App() {
   const [chatLarge, setChatLarge] = useState(false);
   const [chatPosition, setChatPosition] = useState(null);
   const [isDraggingChat, setIsDraggingChat] = useState(false);
-  
-  // FAB Drag States
-  const [fabPosition, setFabPosition] = useState(null);
-  const [isDraggingFab, setIsDraggingFab] = useState(false);
-  const fabDragRef = useRef(null);
   const fabClickPreventRef = useRef(false);
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -721,6 +732,12 @@ export default function App() {
   
   const messagesRef = useRef(null);
   const dragRef = useRef(null);
+  const chatPopupWidth = chatLarge
+    ? Math.min(680, window.innerWidth - 32)
+    : Math.min(380, window.innerWidth - 32);
+  const chatWidgetLeft = chatPosition?.left ?? window.innerWidth - 192;
+  const chatWidgetWidth = 178;
+  const shouldOpenChatRight = chatWidgetLeft + chatWidgetWidth - chatPopupWidth < 8;
 
   const muiTheme = useMemo(
     () =>
@@ -769,6 +786,10 @@ export default function App() {
       const drag = dragRef.current;
       if (!drag) return;
 
+      if (Math.abs(event.clientX - drag.startX) > 3 || Math.abs(event.clientY - drag.startY) > 3) {
+        fabClickPreventRef.current = true;
+      }
+
       const maxLeft = Math.max(8, window.innerWidth - drag.width - 8);
       const maxTop = Math.max(8, window.innerHeight - drag.height - 8);
       const nextLeft = Math.min(Math.max(8, event.clientX - drag.offsetX), maxLeft);
@@ -788,40 +809,6 @@ export default function App() {
       window.removeEventListener('pointerup', handlePointerUp);
     };
   }, [isDraggingChat]);
-
-  // Handle FAB Dragging
-  useEffect(() => {
-    if (!isDraggingFab) return undefined;
-
-    const handlePointerMove = (event) => {
-      const drag = fabDragRef.current;
-      if (!drag) return;
-
-      // Determine if a meaningful drag occurred to prevent triggering the click handler
-      if (Math.abs(event.clientX - drag.startX) > 3 || Math.abs(event.clientY - drag.startY) > 3) {
-        fabClickPreventRef.current = true;
-      }
-
-      const maxLeft = Math.max(8, window.innerWidth - drag.width - 8);
-      const maxTop = Math.max(8, window.innerHeight - drag.height - 8);
-      const nextLeft = Math.min(Math.max(8, event.clientX - drag.offsetX), maxLeft);
-      const nextTop = Math.min(Math.max(8, event.clientY - drag.offsetY), maxTop);
-      
-      setFabPosition({ left: nextLeft, top: nextTop });
-    };
-
-    const handlePointerUp = () => {
-      fabDragRef.current = null;
-      setIsDraggingFab(false);
-    };
-
-    window.addEventListener('pointermove', handlePointerMove);
-    window.addEventListener('pointerup', handlePointerUp);
-    return () => {
-      window.removeEventListener('pointermove', handlePointerMove);
-      window.removeEventListener('pointerup', handlePointerUp);
-    };
-  }, [isDraggingFab]);
 
   useEffect(() => {
     if (!isResizingTable) return undefined;
@@ -962,30 +949,13 @@ export default function App() {
 
   const startChatDrag = (event) => {
     if (event.button !== 0) return;
-    if (event.target.closest('button')) return;
+    if (event.currentTarget.classList.contains('chat-header') && event.target.closest('button')) return;
 
-    const panel = event.currentTarget.closest('.chat-window');
-    if (!panel) return;
+    const widget = event.currentTarget.closest('.chat-widget');
+    if (!widget) return;
 
-    const rect = panel.getBoundingClientRect();
+    const rect = widget.getBoundingClientRect();
     dragRef.current = {
-      offsetX: event.clientX - rect.left,
-      offsetY: event.clientY - rect.top,
-      width: rect.width,
-      height: rect.height,
-    };
-    setChatPosition({ left: rect.left, top: rect.top });
-    setIsDraggingChat(true);
-    event.preventDefault();
-  };
-
-  const startFabDrag = (event) => {
-    if (event.button !== 0) return; // Only trigger for main button
-    
-    const fab = event.currentTarget;
-    const rect = fab.getBoundingClientRect();
-
-    fabDragRef.current = {
       offsetX: event.clientX - rect.left,
       offsetY: event.clientY - rect.top,
       width: rect.width,
@@ -993,9 +963,8 @@ export default function App() {
       startX: event.clientX,
       startY: event.clientY,
     };
-    
-    setFabPosition({ left: rect.left, top: rect.top });
-    setIsDraggingFab(true);
+    setChatPosition({ left: rect.left, top: rect.top });
+    setIsDraggingChat(true);
     fabClickPreventRef.current = false;
     event.preventDefault();
   };
@@ -1428,20 +1397,13 @@ export default function App() {
 
         {page === 'explorer' ? renderExplorer() : renderProjectPage()}
 
-        <button 
-          className={`chat-fab ${isDraggingFab ? 'dragging' : ''}`} 
-          style={fabPosition ? { left: fabPosition.left, top: fabPosition.top, right: 'auto', bottom: 'auto' } : undefined}
-          onPointerDown={startFabDrag}
-          onClick={handleFabClick}
+        <div
+          className={`chat-widget ${chatOpen ? 'open' : ''} ${shouldOpenChatRight ? 'open-right' : 'open-left'}`}
+          style={chatPosition ? { left: chatPosition.left, top: chatPosition.top, right: 'auto', bottom: 'auto' } : undefined}
         >
-          {chatOpen ? <CloseIcon fontSize="small" /> : <ChatBubbleOutlinedIcon fontSize="small" />}
-          <span>{chatOpen ? 'Close Chat' : 'Ask About Quarry Land'}</span>
-        </button>
-
-        {chatOpen && (
+          {chatOpen && (
           <div
             className={`chat-window ${chatLarge ? 'large' : ''} ${isDraggingChat ? 'dragging' : ''}`}
-            style={chatPosition ? { left: chatPosition.left, top: chatPosition.top, right: 'auto', bottom: 'auto' } : undefined}
           >
             <div className="chat-header" onPointerDown={startChatDrag}>
               <div className="chat-title">
@@ -1489,7 +1451,17 @@ export default function App() {
               </Tooltip>
             </div>
           </div>
-        )}
+          )}
+
+          <button 
+            className={`chat-fab ${isDraggingChat ? 'dragging' : ''}`} 
+            onPointerDown={startChatDrag}
+            onClick={handleFabClick}
+          >
+            {chatOpen ? <CloseIcon fontSize="small" /> : <ChatBubbleOutlinedIcon fontSize="small" />}
+            <span>{chatOpen ? 'Close Chat' : 'Ask About Quarry Land'}</span>
+          </button>
+        </div>
       </div>
 
       <Dialog
