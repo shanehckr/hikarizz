@@ -604,8 +604,8 @@ styleTag.textContent = `
     height: 44px;
     padding: 0 16px;
     border-radius: 22px;
-    background: linear-gradient(135deg, #0f766e, #065f46);
-    color: #ffffff;
+    background: var(--accent); 
+    color: var(--accent-text);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(14px);
     border: 5px solid rgba(255,255,255,0.15);
