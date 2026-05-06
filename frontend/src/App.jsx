@@ -446,7 +446,7 @@ styleTag.textContent = `
   .overview-box:hover,
   .overview-box.active { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
   .overview-label { font-size: 0.58rem; color: var(--muted); text-transform: uppercase; font-weight: 700; margin-bottom: 3px; }
-  .overview-val { font-family: 'Google Sans Display', sans-serif; font-size: 1.22rem; font-weight: 700; }
+  .overview-val { font-family: 'Google Sans Display', sans-serif; font-size: 1.22rem; font-weight: 700; color: var(--accent); }
   .filter-label { font-size: 0.68rem; color: var(--muted); font-weight: 700; text-transform: uppercase; }
   .filter-stack { display: flex; flex-direction: column; gap: 11px; }
   .filter-stack .MuiButton-root { min-height: 36px; padding: 7px 10px; font-size: 0.8rem; }
@@ -1095,19 +1095,19 @@ export default function App() {
               <div className="overview-grid">
                 <button className={`overview-box ${overviewFilter === 'producing' ? 'active' : ''}`} type="button" onClick={() => toggleOverviewFilter('producing')} title="Show records where Status is Producing">
                   <div className="overview-label">Producing</div>
-                  <div className="overview-val" style={{ color: '#22c55e' }}>{stats.producing}</div>
+                  <div className="overview-val">{stats.producing}</div>
                 </button>
                 <button className={`overview-box ${overviewFilter === 'expired' ? 'active' : ''}`} type="button" onClick={() => toggleOverviewFilter('expired')} title="Show records where Date Expired is before today">
                   <div className="overview-label">Expired by Date</div>
-                  <div className="overview-val" style={{ color: '#f59e0b' }}>{stats.expired}</div>
+                  <div className="overview-val">{stats.expired}</div>
                 </button>
                 <button className={`overview-box ${overviewFilter === 'noOperation' ? 'active' : ''}`} type="button" onClick={() => toggleOverviewFilter('noOperation')} title="Show records where Remarks is No Operation">
                   <div className="overview-label">No Operation</div>
-                  <div className="overview-val" style={{ color: '#94a3b8' }}>{stats.noOperation}</div>
+                  <div className="overview-val">{stats.noOperation}</div>
                 </button>
                 <button className={`overview-box ${overviewFilter === 'suspended' ? 'active' : ''}`} type="button" onClick={() => toggleOverviewFilter('suspended')} title="Show records where Remarks is Suspended">
                   <div className="overview-label">Suspended</div>
-                  <div className="overview-val" style={{ color: '#ef4444' }}>{stats.suspended}</div>
+                  <div className="overview-val">{stats.suspended}</div>
                 </button>
               </div>
               {overviewFilter && (
