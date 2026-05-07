@@ -604,8 +604,8 @@ styleTag.textContent = `
 
   .chat-widget {
     position: fixed;
-    bottom: 14px;
-    left: 51px;
+    bottom: 43px;
+    left: 60px;
     right: auto;
     z-index: 1000;
     width: 360px;
@@ -619,8 +619,8 @@ styleTag.textContent = `
     height: 44px;
     padding: 0 16px;
     border-radius: 22px;
-    background: var(--accent); 
-    color: var(--accent-text);
+    background: linear-gradient(135deg, #57ae6e, #663f27);
+    color: #ffffff;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(14px);
     border: 5px solid rgba(255,255,255,0.15);
@@ -637,6 +637,15 @@ styleTag.textContent = `
     letter-spacing: 0;
     touch-action: none;
   }
+
+  .chat-fab:hover {
+    background: linear-gradient(135deg, #0d6b63, #21a07c);
+    box-shadow: 0 12px 32px rgba(59, 168, 159, 0.55), inset 0 1px 0 rgba(255,255,255,0.25);
+    outline-color: rgba(15,118,110,0.6);
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+  }
+
  .chat-widget.open .chat-fab {
     min-width: 56px;
     width: 56px;
