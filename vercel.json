@@ -1,12 +1,14 @@
+
+
 {
   "rewrites": [
     {
-      "source": "/api/(.*)",
+      "source": "/api/:path*",
       "destination": "/api/index.py"
     },
     {
       "source": "/(.*)",
-      "destination": "/frontend/dist/$1"
+      "destination": "/index.html"
     }
   ],
   "buildCommand": "cd frontend && npm install && npm run build",
