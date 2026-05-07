@@ -1,14 +1,19 @@
 import pandas as pd
 import sqlite3
+from pathlib import Path
 
-# 1. Load the cleaned CSV data
-df = pd.read_csv('quarries.csv')
+BASE_DIR = Path(__file__).resolve().parent
+CSV_PATH = BASE_DIR / "quarries.csv"
+DB_PATH = BASE_DIR / "LandQuarry.db"
 
-# 2. Create a true SQLite database connection
-conn = sqlite3.connect('LandQuarry.db')
+df = pd.read_csv(CSV_PATH)
 
+with sqlite3.connect(DB_PATH) as conn:
+    df.to_sql("quarries", conn, if_exists="replace", index=False)
 
-df.to_sql('quarries', conn, if_exists='replace', index=False)
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_quarries_province ON quarries (province)")
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_quarries_commodity ON quarries (commodity)")
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_quarries_contractor ON quarries (contractor)")
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_quarries_status ON quarries (status)")
 
-conn.close()
-print("Database generated successfully!")
+print(f"Database generated successfully at {DB_PATH}")

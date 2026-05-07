@@ -1,12 +1,38 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import pandas as pd
 import sqlite3
 import math
 import os
-import traceback
+import logging
 from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+PROJECT_DIR = BASE_DIR.parent
+
+logging.basicConfig(
+    level=os.getenv("LOG_LEVEL", "INFO"),
+    format="%(asctime)s %(levelname)s %(name)s - %(message)s",
+)
+logger = logging.getLogger("land_quarry_api")
+
+def parse_cors_origins():
+    raw_origins = os.getenv("CORS_ORIGINS", "")
+    return [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
+
+def resolve_database_path():
+    database_url = os.getenv("DATABASE_URL")
+    if database_url:
+        if database_url.startswith("sqlite:///"):
+            raw_path = Path(database_url.removeprefix("sqlite:///"))
+            return raw_path.resolve() if raw_path.is_absolute() else (PROJECT_DIR / raw_path).resolve()
+        if database_url.startswith("sqlite://"):
+            raw_path = Path(database_url.removeprefix("sqlite://"))
+            return raw_path.resolve() if raw_path.is_absolute() else (PROJECT_DIR / raw_path).resolve()
+        logger.warning("Only sqlite DATABASE_URL values are supported; falling back to LAND_QUARRY_DB_PATH")
+
+    return Path(os.getenv("LAND_QUARRY_DB_PATH") or BASE_DIR / "LandQuarry.db").resolve()
 
 DATA_SCOPE_MESSAGE = "\n".join([
     "I\'m the **Quarry Land Assistant** — I only help with Philippine land quarry permit data.",
@@ -33,9 +59,6 @@ GREETING_REPLY = "\n".join([
     "",
     "What would you like to know?",
 ])
-
-def log(message):
-    print(str(message).encode("ascii", errors="replace").decode("ascii"))
 
 def classify_question(question):
     q = question.strip().lower()
@@ -67,10 +90,14 @@ def classify_question(question):
 # ── dotenv ────────────────────────────────────────────────────────────────────
 try:
     from dotenv import load_dotenv
-    load_dotenv()
-    log("[OK] dotenv loaded")
+    load_dotenv(PROJECT_DIR / ".env")
+    load_dotenv(BASE_DIR / ".env", override=True)
+    logger.info("dotenv loaded")
 except ImportError:
-    log("[WARN] python-dotenv not installed. Install with: pip install python-dotenv")
+    logger.warning("python-dotenv not installed. Install with: pip install python-dotenv")
+
+DB_PATH = resolve_database_path()
+GEMINI_MODEL = os.getenv("GEMINI_MODEL") or "gemini-2.5-flash"
 
 # ── Gemini import (catches ALL errors, not just ImportError) ──────────────────
 genai = None
@@ -80,54 +107,44 @@ try:
     from google.genai import types as _types
     genai = _genai
     types = _types
-    log("[OK] google-genai imported successfully")
+    logger.info("google-genai imported successfully")
 except ImportError:
-    log("[ERROR] google-genai is NOT installed.")
-    log("   Fix: pip install google-genai")
+    logger.error("google-genai is not installed. Fix: pip install google-genai")
 except Exception as e:
     # Catches AttributeError, etc. from namespace package collisions
-    log(f"[ERROR] importing google-genai: {type(e).__name__}: {e}")
-    log("   This can happen if 'google-generativeai' (old SDK) conflicts with 'google-genai' (new SDK).")
-    log("   Fix: pip uninstall google-generativeai google-genai -y && pip install google-genai")
+    logger.exception("importing google-genai failed: %s: %s", type(e).__name__, e)
+    logger.error("This can happen if google-generativeai conflicts with google-genai. Fix: pip uninstall google-generativeai google-genai -y && pip install google-genai")
 
 # ── API key ───────────────────────────────────────────────────────────────────
 api_key = os.getenv("GEMINI_API_KEY")
 if api_key:
-    log(f"[OK] GEMINI_API_KEY found (starts with: {api_key[:8]}...)")
+    logger.info("GEMINI_API_KEY found (starts with: %s...)", api_key[:8])
 else:
-    log("[ERROR] GEMINI_API_KEY not found in environment.")
-    log("   Fix: Add GEMINI_API_KEY=your_key_here to your .env file")
-    log(f"   Current working directory: {Path.cwd()}")
-    log(f"   .env file exists: {Path('.env').exists()}")
+    logger.error("GEMINI_API_KEY not found in environment.")
+    logger.error("Fix: Add GEMINI_API_KEY=your_key_here to your .env file")
+    logger.error("Current working directory: %s", Path.cwd())
+    logger.error(".env file exists: %s", Path(".env").exists())
 
 # ── Gemini client ─────────────────────────────────────────────────────────────
 client = None
 if genai and api_key:
     try:
         client = genai.Client(api_key=api_key)
-        log("[OK] Gemini client initialized - AI mode ACTIVE")
+        logger.info("Gemini client initialized - AI mode active")
     except Exception as e:
-        log(f"[ERROR] creating Gemini client: {e}")
-        log("   Falling back to local dataset summaries.")
+        logger.exception("creating Gemini client failed: %s", e)
+        logger.info("Falling back to local dataset summaries.")
 else:
     reasons = []
     if not genai:   reasons.append("google-genai not installed")
     if not api_key: reasons.append("GEMINI_API_KEY missing")
-    log(f"[WARN] Gemini DISABLED ({'; '.join(reasons)}) - using local fallback")
+    logger.warning("Gemini disabled (%s) - using local fallback", "; ".join(reasons))
 
 # ── App setup ─────────────────────────────────────────────────────────────────
-BASE_DIR = Path(__file__).resolve().parent
-DB_PATH  = BASE_DIR / "LandQuarry.db"
-
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:5174",
-        "http://127.0.0.1:5174",
-    ],
+    allow_origins=parse_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -139,7 +156,7 @@ def get_db_connection():
     return conn
 
 class ChatRequest(BaseModel):
-    question: str
+    question: str = Field(..., min_length=1, max_length=1000)
 
 # ── NEW: /api/status — paste this URL in your browser to diagnose ─────────────
 @app.get("/api/status")
@@ -148,10 +165,13 @@ def get_status():
     return {
         "gemini_package_installed": genai is not None,
         "api_key_found": api_key is not None,
-        "api_key_preview": (api_key[:8] + "...") if api_key else None,
         "client_ready": client is not None,
         "mode": "gemini" if client else "local_fallback",
+        "gemini_model": GEMINI_MODEL,
+        "env_mode": os.getenv("ENV_MODE", "development"),
+        "port": os.getenv("PORT", "8000"),
         "db_exists": DB_PATH.exists(),
+        "cors_origins_configured": len(parse_cors_origins()),
         "dotenv_file_exists": (BASE_DIR / ".env").exists(),
     }
 
@@ -190,6 +210,53 @@ def clean_records(df):
         {key: clean_json_value(value) for key, value in record.items()}
         for record in records
     ]
+
+def load_quarries_dataframe():
+    if not DB_PATH.exists():
+        logger.error("Database not found: %s", DB_PATH)
+        return pd.DataFrame()
+
+    with get_db_connection() as conn:
+        df = pd.read_sql_query("SELECT * FROM quarries", conn)
+
+    if df.empty:
+        return df
+
+    df["riskScore"] = df.apply(lambda r: calc_risk(r), axis=1)
+    if "id" not in df.columns:
+        df["id"] = df.index
+    else:
+        fallback_ids = pd.Series(df.index, index=df.index)
+        df["id"] = df["id"].where(pd.notnull(df["id"]), fallback_ids)
+    status_col = df["status"] if "status" in df.columns else pd.Series("", index=df.index)
+    df["is_expired_flag"] = status_col.astype(str).str.lower() == "expired"
+    return df
+
+def build_dashboard(df):
+    if df.empty:
+        return {"total": 0, "expired": 0, "producing": 0, "high_risk": 0, "top_risk": []}
+
+    status = df["status"] if "status" in df.columns else pd.Series("", index=df.index)
+    remarks = df["remarks"] if "remarks" in df.columns else pd.Series("", index=df.index)
+    status_col = status.astype(str).str.lower()
+    remarks_col = remarks.astype(str).str.lower()
+    top_risk_df = df.sort_values("riskScore", ascending=False).head(5)
+
+    return {
+        "total": int(len(df)),
+        "expired": int(len(df[remarks_col.str.contains("renewal", na=False) | status_col.str.contains("expired", na=False)])),
+        "producing": int(len(df[status_col == "producing"])),
+        "high_risk": int(len(df[df["riskScore"] >= 70])),
+        "top_risk": clean_records(top_risk_df),
+    }
+
+QUARRIES_DF = load_quarries_dataframe()
+QUARRIES_RECORDS = clean_records(QUARRIES_DF) if not QUARRIES_DF.empty else []
+DASHBOARD_CACHE = build_dashboard(QUARRIES_DF)
+logger.info("Loaded %s quarry records from %s", len(QUARRIES_DF), DB_PATH)
+
+def get_quarries_dataframe():
+    return QUARRIES_DF.copy()
 
 def pick_interactive_rows(df, question, limit=15):
     if df.empty:
@@ -304,56 +371,15 @@ def local_dataset_answer(question, scoped_df, scope):
 # ── Routes ────────────────────────────────────────────────────────────────────
 @app.get("/api/quarries")
 def read_quarries():
-    try:
-        conn   = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM quarries")
-        rows   = cursor.fetchall()
-        conn.close()
-        result = []
-        for i, row in enumerate(rows):
-            r = dict(row)
-            r["id"]             = r.get("id") or i
-            r["riskScore"]      = calc_risk(r)
-            r["is_expired_flag"]= (str(r.get("status")).lower() == "expired")
-            for k, v in r.items():
-                if isinstance(v, float) and (math.isnan(v) or math.isinf(v)):
-                    r[k] = None
-            result.append(r)
-        return result
-    except Exception as e:
-        traceback.print_exc()
-        raise HTTPException(status_code=500, detail=str(e))
+    if not DB_PATH.exists():
+        raise HTTPException(status_code=500, detail="Database is not available")
+    return QUARRIES_RECORDS
 
 @app.get("/api/dashboard")
 def get_dashboard():
-    try:
-        conn = get_db_connection()
-        df   = pd.read_sql_query("SELECT * FROM quarries", conn)
-        conn.close()
-        if df.empty:
-            return {"total": 0, "expired": 0, "producing": 0, "high_risk": 0, "top_risk": []}
-
-        df["riskScore"] = df.apply(lambda r: calc_risk(r), axis=1)
-        df["status"]    = df.get("status",  "").astype(str)
-        df["remarks"]   = df.get("remarks", "").astype(str)
-        status_col  = df["status"].str.lower()
-        remarks_col = df["remarks"].str.lower()
-
-        top_risk_df = df.sort_values("riskScore", ascending=False).head(5)
-        top_risk_df = top_risk_df.replace([float("inf"), float("-inf")], 0).fillna("")
-        top_risk    = top_risk_df.to_dict(orient="records")
-
-        return {
-            "total":     int(len(df)),
-            "expired":   int(len(df[remarks_col.str.contains("renewal", na=False) | status_col.str.contains("expired", na=False)])),
-            "producing": int(len(df[status_col == "producing"])),
-            "high_risk": int(len(df[df["riskScore"] >= 70])),
-            "top_risk":  top_risk,
-        }
-    except Exception as e:
-        traceback.print_exc()
-        raise HTTPException(status_code=500, detail=str(e))
+    if not DB_PATH.exists():
+        raise HTTPException(status_code=500, detail="Database is not available")
+    return DASHBOARD_CACHE
 
 @app.post("/api/analyze")
 def analyze_data(request: ChatRequest):
@@ -364,16 +390,12 @@ def analyze_data(request: ChatRequest):
         if question_type == "out_of_scope":
             return {"answer": DATA_SCOPE_MESSAGE, "rows": [], "scope": "Outside quarry data scope"}
 
-        conn = get_db_connection()
-        df   = pd.read_sql_query("SELECT * FROM quarries", conn)
-        conn.close()
-
-        df["riskScore"]          = df.apply(lambda r: calc_risk(r), axis=1)
+        df = get_quarries_dataframe()
         interactive_df, scope    = pick_interactive_rows(df, request.question)
 
         # ── Fallback if Gemini is not configured ──────────────────────────────
         if not client:
-            log("[WARN] /api/analyze: Gemini client not available - using local fallback")
+            logger.warning("/api/analyze: Gemini client not available - using local fallback")
             answer = local_dataset_answer(request.question, interactive_df, scope)
             return {"answer": answer, "rows": clean_records(interactive_df), "scope": scope}
 
@@ -407,10 +429,10 @@ RULES:
 4. Never invent data not present in the provided JSON.
 5. If fewer than 3 records match, say so clearly and suggest a broader query."""
 
-        log(f"[INFO] Sending {len(interactive_df)} records to Gemini for: {request.question!r}")
+        logger.info("Sending %s records to Gemini for: %r", len(interactive_df), request.question)
 
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model=GEMINI_MODEL,
             contents=prompt,
             config=types.GenerateContentConfig(
                 system_instruction=(
@@ -427,18 +449,14 @@ RULES:
         if not answer:
             raise ValueError("Gemini returned an empty response")
 
-        log(f"[OK] Gemini responded ({len(answer)} chars)")
+        logger.info("Gemini responded (%s chars)", len(answer))
         return {"answer": answer, "rows": clean_records(interactive_df), "scope": scope}
 
     except Exception as e:
-        log(f"[ERROR] /api/analyze error: {type(e).__name__}: {e}")
-        traceback.print_exc()
+        logger.exception("/api/analyze error: %s: %s", type(e).__name__, e)
         # Graceful fallback — return local answer instead of crashing
         try:
-            conn = get_db_connection()
-            df = pd.read_sql_query("SELECT * FROM quarries", conn)
-            conn.close()
-            df["riskScore"] = df.apply(lambda r: calc_risk(r), axis=1)
+            df = get_quarries_dataframe()
             interactive_df, scope = pick_interactive_rows(df, request.question)
             answer = local_dataset_answer(request.question, interactive_df, scope)
             return {"answer": answer, "rows": clean_records(interactive_df), "scope": scope}
