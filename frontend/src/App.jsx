@@ -619,8 +619,8 @@ styleTag.textContent = `
     height: 44px;
     padding: 0 16px;
     border-radius: 22px;
-    background: var(--accent); 
-    color: var(--accent-text);
+     background: linear-gradient(135deg, #64be6e, #c67e50);
+    color: #ffffff;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(14px);
     border: 5px solid rgba(255,255,255,0.15);
@@ -636,6 +636,13 @@ styleTag.textContent = `
     text-transform: none;
     letter-spacing: 0;
     touch-action: none;
+  }
+    .chat-fab:hover {
+    background: linear-gradient(135deg, #468d87, #14644e);
+    box-shadow: 0 12px 32px rgba(59, 144, 137, 0.55), inset 0 1px 0 rgba(255,255,255,0.25);
+    outline-color: rgba(15,118,110,0.6);
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
   }
  .chat-widget.open .chat-fab {
     min-width: 56px;
